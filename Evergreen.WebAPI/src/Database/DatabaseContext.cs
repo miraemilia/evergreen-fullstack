@@ -24,7 +24,7 @@ public class DatabaseContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         var dataSourceBuilder = new NpgsqlDataSourceBuilder(_config.GetConnectionString("LocalDb"));
-        dataSourceBuilder.MapEnum<Role>();
+        dataSourceBuilder.MapEnum<UserRole>();
         dataSourceBuilder.MapEnum<ProductSize>();
         dataSourceBuilder.MapEnum<DetailsOption>();
         dataSourceBuilder.MapEnum<OrderStatus>();
@@ -39,8 +39,8 @@ public class DatabaseContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.HasPostgresEnum<Role>();
-        modelBuilder.Entity<User>(entity => entity.Property(e => e.Role).HasColumnType("role"));
+        modelBuilder.HasPostgresEnum<UserRole>();
+        modelBuilder.Entity<User>(entity => entity.Property(e => e.Role).HasColumnType("user_role"));
 
         modelBuilder.HasPostgresEnum<DetailsOption>();
         modelBuilder.HasPostgresEnum<ProductSize>();
@@ -54,6 +54,9 @@ public class DatabaseContext : DbContext
 
         modelBuilder.Entity<OrderProduct>()
             .HasKey(e => new { e.OrderId, e.ProductId });
+
+        modelBuilder.Entity<Product>().ToTable(p => p.HasCheckConstraint("CHK_Product_Price_Positive", "price >= 0"));
+        modelBuilder.Entity<OrderProduct>().ToTable(p => p.HasCheckConstraint("CHK_OrderProduct_Quantity_Positive", "quantity >= 0"));
 
         modelBuilder.Entity<User>().HasIndex(u => u.Email).IsUnique();
     }

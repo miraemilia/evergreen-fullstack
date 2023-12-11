@@ -1,6 +1,6 @@
 namespace Evergreen.Core.src.Enum;
 
-public enum Role
+public enum UserRole
 {
     Customer,
     Admin

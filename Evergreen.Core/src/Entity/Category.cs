@@ -1,9 +1,8 @@
 namespace Evergreen.Core.src.Entity;
 
-public class Category
+public class Category : BaseEntity
 {
-    public int Id { get; set; }
     public string Name { get; set; }
-    public Image Image { get; set; }
+    public string ImageUrl { get; set; }
     public List<Product> Products { get; set; }
 }

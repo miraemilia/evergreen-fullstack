@@ -24,32 +24,36 @@ namespace Evergreen.WebAPI.Migrations
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "details_option", new[] { "low", "medium", "high" });
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "order_status", new[] { "pending", "processing", "cancelled", "shipped", "delivered" });
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "product_size", new[] { "small", "medium", "large" });
-            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "role", new[] { "customer", "admin" });
+            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "user_role", new[] { "customer", "admin" });
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
             modelBuilder.Entity("Evergreen.Core.src.Entity.Category", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
+                        .HasColumnType("uuid")
                         .HasColumnName("id");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at");
 
-                    b.Property<int>("ImageId")
-                        .HasColumnType("integer")
-                        .HasColumnName("image_id");
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("image_url");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("name");
 
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("updated_at");
+
                     b.HasKey("Id")
                         .HasName("pk_categories");
-
-                    b.HasIndex("ImageId")
-                        .HasDatabaseName("ix_categories_image_id");
 
                     b.ToTable("categories", (string)null);
                 });
@@ -130,7 +134,10 @@ namespace Evergreen.WebAPI.Migrations
                     b.HasIndex("ProductId")
                         .HasDatabaseName("ix_orders_products_product_id");
 
-                    b.ToTable("orders_products", (string)null);
+                    b.ToTable("orders_products", null, t =>
+                        {
+                            t.HasCheckConstraint("CHK_OrderProduct_Quantity_Positive", "quantity >= 0");
+                        });
                 });
 
             modelBuilder.Entity("Evergreen.Core.src.Entity.Product", b =>
@@ -140,8 +147,8 @@ namespace Evergreen.WebAPI.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("id");
 
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("integer")
+                    b.Property<Guid>("CategoryId")
+                        .HasColumnType("uuid")
                         .HasColumnName("category_id");
 
                     b.Property<DateTime>("CreatedAt")
@@ -176,7 +183,10 @@ namespace Evergreen.WebAPI.Migrations
                     b.HasIndex("CategoryId")
                         .HasDatabaseName("ix_products_category_id");
 
-                    b.ToTable("products", (string)null);
+                    b.ToTable("products", null, t =>
+                        {
+                            t.HasCheckConstraint("CHK_Product_Price_Positive", "price >= 0");
+                        });
                 });
 
             modelBuilder.Entity("Evergreen.Core.src.Entity.ProductDetails", b =>
@@ -267,8 +277,8 @@ namespace Evergreen.WebAPI.Migrations
                         .HasColumnType("text")
                         .HasColumnName("password");
 
-                    b.Property<Role>("Role")
-                        .HasColumnType("role")
+                    b.Property<UserRole>("Role")
+                        .HasColumnType("user_role")
                         .HasColumnName("role");
 
                     b.Property<DateTime>("UpdatedAt")
@@ -302,18 +312,6 @@ namespace Evergreen.WebAPI.Migrations
                         .HasDatabaseName("ix_image_product_products_id");
 
                     b.ToTable("image_product", (string)null);
-                });
-
-            modelBuilder.Entity("Evergreen.Core.src.Entity.Category", b =>
-                {
-                    b.HasOne("Evergreen.Core.src.Entity.Image", "Image")
-                        .WithMany("Categories")
-                        .HasForeignKey("ImageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_categories_images_image_id");
-
-                    b.Navigation("Image");
                 });
 
             modelBuilder.Entity("Evergreen.Core.src.Entity.Order", b =>
@@ -389,11 +387,6 @@ namespace Evergreen.WebAPI.Migrations
             modelBuilder.Entity("Evergreen.Core.src.Entity.Category", b =>
                 {
                     b.Navigation("Products");
-                });
-
-            modelBuilder.Entity("Evergreen.Core.src.Entity.Image", b =>
-                {
-                    b.Navigation("Categories");
                 });
 
             modelBuilder.Entity("Evergreen.Core.src.Entity.Order", b =>

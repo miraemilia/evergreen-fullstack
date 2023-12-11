@@ -3,9 +3,9 @@
     "version": "2.2.11",
     "width": 2000,
     "height": 2000,
-    "scrollTop": -108.83333333333348,
-    "scrollLeft": -217,
-    "zoomLevel": 0.9,
+    "scrollTop": -158,
+    "scrollLeft": -196,
+    "zoomLevel": 0.8,
     "show": {
       "tableComment": true,
       "columnComment": true,
@@ -235,7 +235,7 @@
           "active": false,
           "left": 1089.5305,
           "top": 207.3621,
-          "zIndex": 126,
+          "zIndex": 7,
           "widthName": 60,
           "widthComment": 60
         },
@@ -364,7 +364,7 @@
           {
             "name": "category_id",
             "comment": "",
-            "dataType": "INTEGER",
+            "dataType": "uuid",
             "default": "",
             "option": {
               "autoIncrement": false,
@@ -458,7 +458,7 @@
           "active": false,
           "left": 158.6666,
           "top": 439.083,
-          "zIndex": 115,
+          "zIndex": 2,
           "widthName": 60,
           "widthComment": 60
         },
@@ -472,7 +472,7 @@
           {
             "name": "id",
             "comment": "",
-            "dataType": "INTEGER",
+            "dataType": "uuid",
             "default": "",
             "option": {
               "autoIncrement": false,
@@ -516,9 +516,9 @@
             "id": "3c86931a-f584-4f5c-8af6-003ddec4a360"
           },
           {
-            "name": "image_id",
+            "name": "image_url",
             "comment": "",
-            "dataType": "INTEGER",
+            "dataType": "TEXT",
             "default": "",
             "option": {
               "autoIncrement": false,
@@ -529,7 +529,7 @@
             "ui": {
               "active": false,
               "pk": false,
-              "fk": true,
+              "fk": false,
               "pfk": false,
               "widthName": 60,
               "widthComment": 60,
@@ -543,7 +543,7 @@
           "active": false,
           "left": 165.1935,
           "top": 817.0827,
-          "zIndex": 116,
+          "zIndex": 17,
           "widthName": 61.97900390625,
           "widthComment": 60
         },
@@ -605,7 +605,7 @@
           "active": false,
           "left": 732.1106,
           "top": 575.0558,
-          "zIndex": 120,
+          "zIndex": 3,
           "widthName": 100.998046875,
           "widthComment": 60
         },
@@ -736,7 +736,7 @@
           "active": false,
           "left": 604.1194,
           "top": 17.0557,
-          "zIndex": 125,
+          "zIndex": 6,
           "widthName": 60,
           "widthComment": 60
         },
@@ -821,7 +821,7 @@
           "active": false,
           "left": 620.915,
           "top": 305.8049,
-          "zIndex": 124,
+          "zIndex": 5,
           "widthName": 95.93896484375,
           "widthComment": 60
         },
@@ -906,7 +906,7 @@
           "active": false,
           "left": 731.2227,
           "top": 817.8609,
-          "zIndex": 121,
+          "zIndex": 4,
           "widthName": 60,
           "widthComment": 60
         },
@@ -1129,7 +1129,7 @@
           "active": false,
           "left": 148.8889,
           "top": 59.7227,
-          "zIndex": 114,
+          "zIndex": 1,
           "widthName": 90.1689453125,
           "widthComment": 60
         },
@@ -1247,32 +1247,6 @@
         "constraintName": "fk_images_to_products_images",
         "visible": true,
         "id": "4e42bfb8-e95a-434d-9290-231d85df4ee6"
-      },
-      {
-        "identification": false,
-        "relationshipType": "OneN",
-        "startRelationshipType": "Dash",
-        "start": {
-          "tableId": "be320c3d-c86a-47b5-b3e4-9ba4430442ec",
-          "columnIds": [
-            "8b965b9e-6227-453a-b80d-abc3534a0c23"
-          ],
-          "x": 731.2227,
-          "y": 883.1109,
-          "direction": "left"
-        },
-        "end": {
-          "tableId": "ae68557e-1f60-4ace-a1c0-66c2bf50d67d",
-          "columnIds": [
-            "aeb4f1da-b909-4dc1-a1c8-14fa5ee3993f"
-          ],
-          "x": 516.80043359375,
-          "y": 882.3327,
-          "direction": "right"
-        },
-        "constraintName": "fk_images_to_categories",
-        "visible": true,
-        "id": "b53691f0-c55a-41c7-b98b-ba8b7f0bd61f"
       },
       {
         "identification": false,

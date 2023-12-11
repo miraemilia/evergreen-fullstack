@@ -8,7 +8,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Evergreen.WebAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class CreateDatabase : Migration
+    public partial class CreateDatabase3 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -17,7 +17,22 @@ namespace Evergreen.WebAPI.Migrations
                 .Annotation("Npgsql:Enum:details_option", "low,medium,high")
                 .Annotation("Npgsql:Enum:order_status", "pending,processing,cancelled,shipped,delivered")
                 .Annotation("Npgsql:Enum:product_size", "small,medium,large")
-                .Annotation("Npgsql:Enum:role", "customer,admin");
+                .Annotation("Npgsql:Enum:user_role", "customer,admin");
+
+            migrationBuilder.CreateTable(
+                name: "categories",
+                columns: table => new
+                {
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    name = table.Column<string>(type: "text", nullable: false),
+                    image_url = table.Column<string>(type: "text", nullable: false),
+                    created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    updated_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_categories", x => x.id);
+                });
 
             migrationBuilder.CreateTable(
                 name: "images",
@@ -42,7 +57,7 @@ namespace Evergreen.WebAPI.Migrations
                     email = table.Column<string>(type: "text", nullable: false),
                     password = table.Column<string>(type: "text", nullable: false),
                     avatar = table.Column<string>(type: "text", nullable: false),
-                    role = table.Column<Role>(type: "role", nullable: false),
+                    role = table.Column<UserRole>(type: "user_role", nullable: false),
                     created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     updated_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
@@ -52,21 +67,26 @@ namespace Evergreen.WebAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "categories",
+                name: "products",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    name = table.Column<string>(type: "text", nullable: false),
-                    image_id = table.Column<int>(type: "integer", nullable: false)
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    title = table.Column<string>(type: "text", nullable: false),
+                    latin_name = table.Column<string>(type: "text", nullable: true),
+                    price = table.Column<decimal>(type: "numeric", nullable: false),
+                    description = table.Column<string>(type: "text", nullable: false),
+                    category_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    updated_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("pk_categories", x => x.id);
+                    table.PrimaryKey("pk_products", x => x.id);
+                    table.CheckConstraint("CHK_Product_Price_Positive", "price >= 0");
                     table.ForeignKey(
-                        name: "fk_categories_images_image_id",
-                        column: x => x.image_id,
-                        principalTable: "images",
+                        name: "fk_products_categories_category_id",
+                        column: x => x.category_id,
+                        principalTable: "categories",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -93,30 +113,6 @@ namespace Evergreen.WebAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "products",
-                columns: table => new
-                {
-                    id = table.Column<Guid>(type: "uuid", nullable: false),
-                    title = table.Column<string>(type: "text", nullable: false),
-                    latin_name = table.Column<string>(type: "text", nullable: true),
-                    price = table.Column<decimal>(type: "numeric", nullable: false),
-                    description = table.Column<string>(type: "text", nullable: false),
-                    category_id = table.Column<int>(type: "integer", nullable: false),
-                    created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    updated_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("pk_products", x => x.id);
-                    table.ForeignKey(
-                        name: "fk_products_categories_category_id",
-                        column: x => x.category_id,
-                        principalTable: "categories",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "image_product",
                 columns: table => new
                 {
@@ -135,31 +131,6 @@ namespace Evergreen.WebAPI.Migrations
                     table.ForeignKey(
                         name: "fk_image_product_products_products_id",
                         column: x => x.products_id,
-                        principalTable: "products",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "orders_products",
-                columns: table => new
-                {
-                    order_id = table.Column<Guid>(type: "uuid", nullable: false),
-                    product_id = table.Column<Guid>(type: "uuid", nullable: false),
-                    quantity = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("pk_orders_products", x => new { x.order_id, x.product_id });
-                    table.ForeignKey(
-                        name: "fk_orders_products_orders_order_id",
-                        column: x => x.order_id,
-                        principalTable: "orders",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "fk_orders_products_products_product_id",
-                        column: x => x.product_id,
                         principalTable: "products",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
@@ -192,10 +163,31 @@ namespace Evergreen.WebAPI.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateIndex(
-                name: "ix_categories_image_id",
-                table: "categories",
-                column: "image_id");
+            migrationBuilder.CreateTable(
+                name: "orders_products",
+                columns: table => new
+                {
+                    order_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    product_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    quantity = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_orders_products", x => new { x.order_id, x.product_id });
+                    table.CheckConstraint("CHK_OrderProduct_Quantity_Positive", "quantity >= 0");
+                    table.ForeignKey(
+                        name: "fk_orders_products_orders_order_id",
+                        column: x => x.order_id,
+                        principalTable: "orders",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "fk_orders_products_products_product_id",
+                        column: x => x.product_id,
+                        principalTable: "products",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
 
             migrationBuilder.CreateIndex(
                 name: "ix_image_product_products_id",
@@ -243,6 +235,9 @@ namespace Evergreen.WebAPI.Migrations
                 name: "product_details");
 
             migrationBuilder.DropTable(
+                name: "images");
+
+            migrationBuilder.DropTable(
                 name: "orders");
 
             migrationBuilder.DropTable(
@@ -253,9 +248,6 @@ namespace Evergreen.WebAPI.Migrations
 
             migrationBuilder.DropTable(
                 name: "categories");
-
-            migrationBuilder.DropTable(
-                name: "images");
         }
     }
 }

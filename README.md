@@ -88,7 +88,7 @@ The frontend code and documentation are found in [this repository]().
 
 ### Database
 
-![ERD](databaseDesign/erd_diagram.png)
+![ERD](databaseDesign/erd.png)
 
 ### Design and layers
 
