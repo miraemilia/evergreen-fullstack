@@ -1,6 +1,6 @@
 namespace Evergreen.Core.src.Enum;
 
-public enum DetailsOption
+public enum ProductSize
 {
     Small,
     Medium,
