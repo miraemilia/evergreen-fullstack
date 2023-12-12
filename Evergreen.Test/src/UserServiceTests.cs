@@ -110,7 +110,7 @@ public class UserServiceTests
 
         userService.GetUserById(It.IsAny<Guid>());
 
-        repo.Verify(repo => repo.GetUser(It.IsAny<Guid>()), Times.Once);
+        repo.Verify(repo => repo.GetUserById(It.IsAny<Guid>()), Times.Once);
     }
 
     [Theory]
@@ -118,7 +118,7 @@ public class UserServiceTests
     public void GetUserById_ShouldReturnValidResponse(User repoResponse, UserReadDTO expected)
     {
         var repo = new Mock<IUserRepository>();
-        repo.Setup(repo => repo.GetUser(It.IsAny<Guid>())).Returns(repoResponse);
+        repo.Setup(repo => repo.GetUserById(It.IsAny<Guid>())).Returns(repoResponse);
         var userService = new UserService(repo.Object, _mapper);
         
         var response = userService.GetUserById(It.IsAny<Guid>());
@@ -193,6 +193,7 @@ public class UserServiceTests
 
         userService.Login(It.IsAny<LoginDTO>());
 
-        repo.Verify(repo => repo.GenerateToken(It.IsAny<User>()), Times.Once);
+        repo.Verify(repo => repo.GetUserByCredentials(It.IsAny<string>(), It.IsAny<string>()), Times.Once);
+        //repo.Verify(repo => repo.GenerateToken(It.IsAny<User>()), Times.Once);
     } */
 }

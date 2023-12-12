@@ -16,6 +16,12 @@ public class UserController : ControllerBase
         _userService = userService;
     }
 
+    [HttpPost("login")]
+    public ActionResult<string> Login([FromBody] LoginDTO loginDTO)
+    {
+        return Ok(_userService.Login(loginDTO));
+    }
+
     //[Authorize]
     [HttpGet()]
     public ActionResult<IEnumerable<UserReadDTO>> GetAll([FromQuery] GetAllParams options)

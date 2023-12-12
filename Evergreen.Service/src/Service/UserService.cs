@@ -47,13 +47,15 @@ public class UserService : IUserService
 
     public UserReadDTO GetUserById(Guid id)
     {
-        var result = _userRepo.GetUser(id);
+        var result = _userRepo.GetUserById(id);
         return _mapper.Map<User, UserReadDTO>(result);
     }
 
     public string Login(LoginDTO loginDTO)
     {
-        throw new NotImplementedException();
+        User user = _userRepo.GetUserByCredentials(loginDTO.Email, loginDTO.Password);
+        Console.WriteLine(user);
+        return _userRepo.GenerateToken(user);
     }
 
     public UserReadDTO UpdateUser(UserUpdateDTO update)

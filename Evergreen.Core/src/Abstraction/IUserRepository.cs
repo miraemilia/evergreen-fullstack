@@ -7,11 +7,11 @@ namespace Evergreen.Core.src.Abstraction;
 public interface IUserRepository
 {
     IEnumerable<User> GetAllUsers(GetAllParams options);
-    User GetUser(Guid id);
+    User GetUserById(Guid id);
+    User GetUserByCredentials(string email, string password);
     User AddUser(User user);
     bool DeleteUser(Guid id);
-    User UpdateUser(Guid id, string Name);
-    User ChangeUserRole(Guid id, UserRole role);
+    User UpdateUser(Guid id, User user);
     string GenerateToken(User user);
     bool EmailAvailable(string email);
 }
