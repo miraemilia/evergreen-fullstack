@@ -22,4 +22,10 @@ public class UserController : ControllerBase
     {
         return Ok(_userService.GetAllUsers(options));
     }
+
+    [HttpPost()]
+    public ActionResult<UserReadDTO> CreateOne([FromBody] UserCreateDTO userCreateDTO)
+    {
+        return CreatedAtAction(nameof(CreateOne), _userService.CreateUser(userCreateDTO));
+    }
 }

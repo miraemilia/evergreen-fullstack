@@ -16,6 +16,11 @@ public class DatabaseContext : DbContext
     public DbSet<Order> Orders { get; set; }
     public DbSet<OrderProduct> Orders_Products { get; set; }
 
+    static DatabaseContext()
+    {
+        AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+    }
+
     public DatabaseContext(DbContextOptions options, IConfiguration config) : base(options)
     {
         _config = config;

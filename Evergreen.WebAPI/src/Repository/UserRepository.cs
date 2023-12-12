@@ -21,7 +21,9 @@ public class UserRepository : IUserRepository
 
     public User AddUser(User user)
     {
-        throw new NotImplementedException();
+        _users.Add(user);
+        _database.SaveChanges();
+        return user;
     }
 
     public User ChangeUserRole(Guid id, UserRole role)

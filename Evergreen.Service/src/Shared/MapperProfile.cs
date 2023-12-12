@@ -9,5 +9,6 @@ public class MapperProfile : Profile
     public MapperProfile()
     {
         CreateMap<User, UserReadDTO>();
+        CreateMap<UserCreateDTO, User>();
     }
 }

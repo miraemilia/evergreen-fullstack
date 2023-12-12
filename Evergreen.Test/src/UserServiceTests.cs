@@ -41,10 +41,10 @@ public class UserServiceTests
 
 /*     [Theory]
     [ClassData(typeof(GetAllUsersData))]
-    public void GetAll_ShouldReturnValidResponse(IEnumerable<UserReadDTO> repoResponse, IEnumerable<UserReadDTO> expected)
+    public void GetAll_ShouldReturnValidResponse(IEnumerable<User> repoResponse, IEnumerable<UserReadDTO> expected)
     {
         var repo = new Mock<IUserRepository>();
-        GetAllParams options = new GetAllParams(10, 0);
+        GetAllParams options = new GetAllParams(){Limit = 10, Offset = 0};
         repo.Setup(repo => repo.GetAllUsers(options).Returns(repoResponse));
         var userService = new UserService(repo.Object, _mapper);
         
@@ -57,7 +57,46 @@ public class UserServiceTests
     {
         public GetAllUsersData()
         {
-            //User user1 = new User( Name = "John Doe", Email = "john@example.com");
+            User user1 = new User(){Name = "John Doe", Email = "john@example.com", Password = "12345", Avatar = "https://picsum.photos/200"};
+            User user2 = new User(){Name = "Jane Doe", Email = "jane@example.com", Password = "12345", Avatar = "https://picsum.photos/200"};
+            User user3 = new User(){Name = "Jack Doe", Email = "jack@example.com", Password = "12345", Avatar = "https://picsum.photos/200"};
+            IEnumerable<User> users = new List<User>(){user1, user2, user3};
+            Add(users, _mapper.Map<User, UserReadDTO>(users));
+        }
+    } */
+
+    [Fact]
+    public void CreateUser_ShouldInvokeRepoMethod()
+    {
+        var repo = new Mock<IUserRepository>();
+        var mapper = new Mock<IMapper>();
+        var userService = new UserService(repo.Object, _mapper);
+
+        userService.CreateUser(It.IsAny<UserCreateDTO>());
+
+        repo.Verify(repo => repo.AddUser(It.IsAny<User>()), Times.Once);
+    }
+
+/*     [Theory]
+    [ClassData(typeof(GetAllUsersData))]
+    public void CreateUser_ShouldReturnValidResponse(User repoResponse, UserReadDTO expected)
+    {
+        var repo = new Mock<IUserRepository>();
+        repo.Setup(repo => repo.AddUser(It.IsAny<User>()).Returns(repoResponse));
+        var userService = new UserService(repo.Object, _mapper);
+        
+        var response = userService.CreateUser(It.IsAny<User>());
+
+        Assert.Equivalent(expected, response);
+    }
+
+    public class CreateUserData : TheoryData<User, UserReadDTO>
+    {
+        public CreateUserData()
+        {
+            User user1 = new User(){Name = "John Doe", Email = "john@example.com", Password = "12345", Avatar = "https://picsum.photos/200"};
+            UserReadDTO user1Read = new UserReadDTO(){};
+            Add(user1, user1Read);
         }
     } */
 }

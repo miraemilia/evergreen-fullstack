@@ -25,7 +25,8 @@ public class UserService : IUserService
 
     public UserReadDTO CreateUser(UserCreateDTO user)
     {
-        throw new NotImplementedException();
+        var result = _userRepo.AddUser(_mapper.Map<UserCreateDTO, User>(user));
+        return _mapper.Map<User, UserReadDTO>(result);
     }
 
     public bool DeleteUser(Guid id)
