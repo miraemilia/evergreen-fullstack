@@ -53,7 +53,7 @@ public class UserRepository : IUserRepository
 
     public User GetUser(Guid id)
     {
-        throw new NotImplementedException();
+        return (User)_users.Where(u => u.Id.Equals(id));
     }
 
     public User UpdateUser(Guid id, string Name)

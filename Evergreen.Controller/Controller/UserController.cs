@@ -23,6 +23,13 @@ public class UserController : ControllerBase
         return Ok(_userService.GetAllUsers(options));
     }
 
+    //[Authorize]
+    [HttpGet()]
+    public ActionResult<UserReadDTO> GetOne([FromQuery] Guid id)
+    {
+        return Ok(_userService.GetUserById(id));
+    }
+
     [HttpPost()]
     public ActionResult<UserReadDTO> CreateOne([FromBody] UserCreateDTO userCreateDTO)
     {

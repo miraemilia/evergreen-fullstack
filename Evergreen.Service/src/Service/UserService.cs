@@ -47,7 +47,8 @@ public class UserService : IUserService
 
     public UserReadDTO GetUserById(Guid id)
     {
-        throw new NotImplementedException();
+        var result = _userRepo.GetUser(id);
+        return _mapper.Map<User, UserReadDTO>(result);
     }
 
     public string Login(LoginDTO loginDTO)
