@@ -24,8 +24,8 @@ public class UserController : ControllerBase
     }
 
     //[Authorize]
-    [HttpGet()]
-    public ActionResult<UserReadDTO> GetOne([FromQuery] Guid id)
+    [HttpGet("{id:Guid}")]
+    public ActionResult<UserReadDTO> GetOne([FromRoute] Guid id)
     {
         return Ok(_userService.GetUserById(id));
     }

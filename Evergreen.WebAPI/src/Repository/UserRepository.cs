@@ -53,7 +53,7 @@ public class UserRepository : IUserRepository
 
     public User GetUser(Guid id)
     {
-        return (User)_users.Where(u => u.Id.Equals(id));
+        return _users.Single(u => u.Id == id);
     }
 
     public User UpdateUser(Guid id, string Name)
