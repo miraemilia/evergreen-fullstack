@@ -19,13 +19,12 @@ public class AuthService : IAuthService
         _tokenService = tokenService;
     }
 
-    // change
     public async Task<string> Login(LoginParams loginParams)
     {
 /*         var foundUser = await _userRepo.GetOneByEmailAsync(loginParams.Email);
         if (foundUser == null)
         {
-            throw new Exception(); //change
+            throw CustomException.WrongCredentialsException("Wrong email");
         }
         var isPasswordMatch = PasswordService.VerifyPassword(loginParams.Password, foundUser.Password, foundUser.Salt);
         if (isPasswordMatch)
@@ -33,7 +32,7 @@ public class AuthService : IAuthService
             var token = _tokenService.GenerateToken(foundUser);
             return token;
         }
-        throw new Exception(); //change */
-        return "";
+        throw CustomException.WrongCredentialsException("Wrong password"); */
+        return "token";
     }
 }

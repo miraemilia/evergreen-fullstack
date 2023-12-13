@@ -43,12 +43,12 @@ public class UserRepository : IUserRepository
 
     public async Task<User?> GetOneByEmailAsync(string email)
     {
-        return await _users.Where(u => u.Email == email).SingleAsync();
+        return await _users.FirstOrDefaultAsync(u => u.Email == email);
     }
 
     public async Task<User?> GetOneByIdAsync(Guid id)
     {
-        return await _users.Where(u => u.Id == id).SingleAsync();
+        return await _users.FirstOrDefaultAsync(u => u.Id == id);
     }
 
     public async Task<User> UpdateOneAsync(User userUpdate)

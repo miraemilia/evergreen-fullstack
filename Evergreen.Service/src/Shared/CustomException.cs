@@ -13,4 +13,9 @@ public class CustomException : Exception
     {
         return new CustomException (404, msg);
     }
+
+    public static CustomException WrongCredentialsException(string msg = "Wrong credentials")
+    {
+        return new CustomException (401, msg);
+    }
 }
