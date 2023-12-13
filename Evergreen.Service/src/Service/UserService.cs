@@ -22,12 +22,11 @@ public class UserService : IUserService
     //add exception
     public async Task<UserReadDTO> CreateUserAsync(UserCreateDTO userCreateDTO)
     {
-        //Console.WriteLine("creating hash");
-        //PasswordService.HashPassword(userCreateDTO.Password, out string hashedPassword, out byte[] salt);
-        //Console.WriteLine("hash created");
+        PasswordService.HashPassword(userCreateDTO.Password, out string hashedPassword, out byte[] salt);
+        Console.WriteLine(hashedPassword);
         var user = _mapper.Map<UserCreateDTO, User>(userCreateDTO);
-        //user.Password = hashedPassword;
-        //user.Salt = salt;
+        user.Password = hashedPassword;
+        user.Salt = salt;
         var result = await _userRepo.CreateOneAsync(user);
         return _mapper.Map<User, UserReadDTO>(result);
     }

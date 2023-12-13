@@ -21,7 +21,7 @@ public class AuthService : IAuthService
 
     public async Task<string> Login(LoginParams loginParams)
     {
-/*         var foundUser = await _userRepo.GetOneByEmailAsync(loginParams.Email);
+        var foundUser = await _userRepo.GetOneByEmailAsync(loginParams.Email);
         if (foundUser == null)
         {
             throw CustomException.WrongCredentialsException("Wrong email");
@@ -29,10 +29,11 @@ public class AuthService : IAuthService
         var isPasswordMatch = PasswordService.VerifyPassword(loginParams.Password, foundUser.Password, foundUser.Salt);
         if (isPasswordMatch)
         {
+            Console.WriteLine("generating token");
             var token = _tokenService.GenerateToken(foundUser);
+            Console.WriteLine("token generated");
             return token;
         }
-        throw CustomException.WrongCredentialsException("Wrong password"); */
-        return "token";
+        throw CustomException.WrongCredentialsException("Wrong password");
     }
 }
