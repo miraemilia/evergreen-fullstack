@@ -4,14 +4,7 @@ using Evergreen.Core.src.Parameter;
 
 namespace Evergreen.Core.src.Abstraction;
 
-public interface IUserRepository
+public interface IUserRepository : IBaseRepository<User>
 {
-    IEnumerable<User> GetAllUsers(GetAllParams options);
-    User GetUserById(Guid id);
-    User GetUserByCredentials(string email, string password);
-    User AddUser(User user);
-    bool DeleteUser(Guid id);
-    User UpdateUser(Guid id, User user);
-    string GenerateToken(User user);
-    bool EmailAvailable(string email);
+    Task<User?> GetOneByEmailAsync(string email);
 }

@@ -5,6 +5,7 @@ using Evergreen.Service.src.Shared;
 using Evergreen.WebAPI.src.Database;
 using Evergreen.WebAPI.src.Middleware;
 using Evergreen.WebAPI.src.Repository;
+using Evergreen.WebAPI.src.Service;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,6 +21,8 @@ builder.Services.AddSwaggerGen();
 //declare services
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<ITokenService, TokenService>();
 
 //add automapper dependency injection
 builder.Services.AddAutoMapper(typeof(MapperProfile).Assembly);

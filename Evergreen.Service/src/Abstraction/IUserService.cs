@@ -6,12 +6,10 @@ namespace Evergreen.Service.src.Abstraction;
 
 public interface IUserService
 {
-    IEnumerable<UserReadDTO> GetAllUsers(GetAllParams options);
-    UserReadDTO GetUserById(Guid id);
-    UserReadDTO CreateUser(UserCreateDTO user);
-    bool DeleteUser(Guid id);
-    UserReadDTO UpdateUser(UserUpdateDTO update);
-    UserReadDTO ChangeUserRole(UserRoleUpdateDTO update);
-    string Login(LoginDTO loginDTO);
-    bool EmailAvailable(string email);
+    Task<IEnumerable<UserReadDTO>> GetAllUsersAsync(GetAllParams options);
+    Task<UserReadDTO> GetUserByIdAsync(Guid id);
+    Task<UserReadDTO> CreateUserAsync(UserCreateDTO user);
+    Task<bool> DeleteUserAsync(Guid id);
+    Task<UserReadDTO> UpdateUserAsync(Guid id, UserUpdateDTO update);
+    Task<bool> EmailAvailableAsync(string email);
 }

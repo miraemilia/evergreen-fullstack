@@ -1,12 +1,8 @@
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
 using Evergreen.Core.src.Abstraction;
 using Evergreen.Core.src.Entity;
 using Evergreen.Core.src.Parameter;
 using Evergreen.WebAPI.src.Database;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 
 namespace Evergreen.WebAPI.src.Repository;
 
@@ -14,74 +10,51 @@ public class UserRepository : IUserRepository
 {
     private DbSet<User> _users;
     private DatabaseContext _database;
-    private IConfiguration _config;
 
-    public UserRepository(DatabaseContext database, IConfiguration config)
+    public UserRepository(DatabaseContext database)
     {
         _users = database.Users;
         _database = database;
-        _config = config;
     }
 
-    public User AddUser(User user)
+    public async Task<User> CreateOneAsync(User user)
     {
         _users.Add(user);
-        _database.SaveChanges();
+        await _database.SaveChangesAsync();
         return user;
     }
 
-    public bool DeleteUser(Guid id)
+    public async Task<bool> DeleteOneAsync(Guid id)
     {
-        throw new NotImplementedException();
-    }
-
-    public bool EmailAvailable(string email)
-    {
-        throw new NotImplementedException();
-    }
-
-    public string GenerateToken(User user)
-    {
-        var issuer = _config.GetSection("Jwt:Issuer").Value;
-        var claims = new List<Claim>{
-            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-            new Claim(ClaimTypes.Role, user.Role.ToString())
-        };
-        var audience = _config.GetSection("Jwt:Audience").Value;
-        var tokenHandler = new JwtSecurityTokenHandler();
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.GetSection("Jwt:Key").Value!));
-        var signingKey = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature);
-        var descriptor = new SecurityTokenDescriptor
+        var user = await _users.Where(u => u.Id == id).SingleAsync();
+        if (user != null)
         {
-            Issuer = issuer,
-            Audience = audience,
-            Expires = DateTime.Now.AddDays(2),
-            Subject = new ClaimsIdentity(claims),
-            SigningCredentials = signingKey
-        };
-        Console.WriteLine("about to create token..."); //is logged, bug after this point
-        var token = tokenHandler.CreateToken(descriptor);
-        Console.WriteLine("after creating token"); //not logged
-        return token.ToString()!;
+            _users.Remove(user);
+            await _database.SaveChangesAsync();
+            return true;
+        }
+        return false;
     }
 
-    public IEnumerable<User> GetAllUsers(GetAllParams options)
+    public async Task<IEnumerable<User>> GetAllAsync(GetAllParams options)
     {
-        return _users.Skip(options.Offset).Take(options.Limit);
+        return await _users.Skip(options.Offset).Take(options.Limit).ToListAsync();
     }
 
-    public User GetUserByCredentials(string email, string password)
+    public async Task<User?> GetOneByEmailAsync(string email)
     {
-        return _users.Single(u => u.Email == email && u.Password == password);
+        return await _users.Where(u => u.Email == email).SingleAsync();
     }
 
-    public User GetUserById(Guid id)
+    public async Task<User?> GetOneByIdAsync(Guid id)
     {
-        return _users.Single(u => u.Id == id);
+        return await _users.Where(u => u.Id == id).SingleAsync();
     }
 
-    public User UpdateUser(Guid id, User user)
+    public async Task<User> UpdateOneAsync(User userUpdate)
     {
-        throw new NotImplementedException();
+        _users.Update(userUpdate);
+        await _database.SaveChangesAsync();
+        return userUpdate;
     }
 }

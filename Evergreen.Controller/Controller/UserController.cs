@@ -1,6 +1,7 @@
 using Evergreen.Core.src.Parameter;
 using Evergreen.Service.src.Abstraction;
 using Evergreen.Service.src.DTO;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Evergreen.Controller.src.Controller;
@@ -16,29 +17,45 @@ public class UserController : ControllerBase
         _userService = userService;
     }
 
-    [HttpPost("login")]
-    public ActionResult<string> Login([FromBody] LoginDTO loginDTO)
-    {
-        return Ok(_userService.Login(loginDTO));
-    }
-
     //[Authorize]
     [HttpGet()]
-    public ActionResult<IEnumerable<UserReadDTO>> GetAll([FromQuery] GetAllParams options)
+    public async Task<ActionResult<IEnumerable<UserReadDTO>>> GetAll([FromQuery] GetAllParams options)
     {
-        return Ok(_userService.GetAllUsers(options));
+        return Ok(await _userService.GetAllUsersAsync(options));
     }
 
     //[Authorize]
     [HttpGet("{id:Guid}")]
-    public ActionResult<UserReadDTO> GetOne([FromRoute] Guid id)
+    public async Task<ActionResult<UserReadDTO>> GetOne([FromRoute] Guid id)
     {
-        return Ok(_userService.GetUserById(id));
+        return Ok(await _userService.GetUserByIdAsync(id));
     }
 
+    [AllowAnonymous]
     [HttpPost()]
-    public ActionResult<UserReadDTO> CreateOne([FromBody] UserCreateDTO userCreateDTO)
+    public async Task<ActionResult<UserReadDTO>> CreateOne([FromBody] UserCreateDTO userCreateDTO)
     {
-        return CreatedAtAction(nameof(CreateOne), _userService.CreateUser(userCreateDTO));
+        return CreatedAtAction(nameof(CreateOne), await _userService.CreateUserAsync(userCreateDTO));
+    }
+
+    //[Authorize]
+    [HttpDelete("{id:Guid}")]
+    public async Task<ActionResult<bool>> DeleteOne([FromRoute] Guid id)
+    {
+        return Ok(await _userService.DeleteUserAsync(id));
+    }
+
+    //[Authorize]
+    [HttpPut("{id:Guid}")]
+    public async Task<ActionResult<UserReadDTO>> UpdateOne([FromRoute] Guid id, [FromBody] UserUpdateDTO updates)
+    {
+        return Ok(await _userService.UpdateUserAsync(id, updates));
+    }
+
+    [AllowAnonymous]
+    [HttpPost("email")]
+    public async Task<ActionResult<bool>> EmailAvailable([FromBody] string email)
+    {
+        return Ok(await _userService.EmailAvailableAsync(email));
     }
 }
