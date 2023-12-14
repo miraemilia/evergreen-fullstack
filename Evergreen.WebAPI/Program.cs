@@ -24,6 +24,8 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 
+//builder.Services.AddAuthentication(jwtBearerDefault)
+
 //add automapper dependency injection
 builder.Services.AddAutoMapper(typeof(MapperProfile).Assembly);
 

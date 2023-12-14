@@ -23,4 +23,9 @@ public class CustomException : Exception
     {
         return new CustomException (400, msg);
     }
+
+    public static CustomException TokenNotCreated(string msg = "Unable to create token")
+    {
+        return new CustomException (500, msg);
+    }
 }

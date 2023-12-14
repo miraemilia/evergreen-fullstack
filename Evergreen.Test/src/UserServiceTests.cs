@@ -142,6 +142,7 @@ public class UserServiceTests
     public async void DeleteUser_ShouldInvokeRepoMethod()
     {
         var repo = new Mock<IUserRepository>();
+        repo.Setup(repo => repo.GetOneByIdAsync(It.IsAny<Guid>())).Returns(Task.FromResult(It.IsAny<User>())).Verifiable();
         var mapper = new Mock<IMapper>();
         var userService = new UserService(repo.Object, _mapper);
 

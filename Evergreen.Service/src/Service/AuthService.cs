@@ -29,10 +29,16 @@ public class AuthService : IAuthService
         var isPasswordMatch = PasswordService.VerifyPassword(loginParams.Password, foundUser.Password, foundUser.Salt);
         if (isPasswordMatch)
         {
-            Console.WriteLine("generating token");
-            var token = _tokenService.GenerateToken(foundUser);
-            Console.WriteLine("token generated");
-            return token;
+            try
+            {
+                var token = _tokenService.GenerateToken(foundUser);
+                return token;
+            }
+            catch
+            {
+                throw CustomException.TokenNotCreated();
+            }
+
         }
         throw CustomException.WrongCredentialsException("Wrong password");
     }
