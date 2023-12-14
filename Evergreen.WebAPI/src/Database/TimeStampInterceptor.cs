@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Diagnostics;
 
 public class TimeStampInterceptor : SaveChangesInterceptor
     {
-        public override InterceptionResult<int> SavingChanges(DbContextEventData eventData, InterceptionResult<int> result)
+        public override ValueTask<InterceptionResult<int>> SavingChangesAsync(DbContextEventData eventData, InterceptionResult<int> result, CancellationToken token)
         {
             var changedData = eventData.Context.ChangeTracker.Entries();
             var updatedEntries = changedData.Where(entity => entity.State == EntityState.Modified);
@@ -26,6 +26,6 @@ public class TimeStampInterceptor : SaveChangesInterceptor
                     entity.CreatedAt = DateTime.Now;
                 }
             }
-            return base.SavingChanges(eventData, result);
+            return base.SavingChangesAsync(eventData, result, token);
         }
     }
