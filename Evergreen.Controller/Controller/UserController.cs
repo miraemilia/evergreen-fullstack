@@ -17,14 +17,14 @@ public class UserController : ControllerBase
         _userService = userService;
     }
 
-    //[Authorize]
+    [Authorize]
     [HttpGet()]
     public async Task<ActionResult<IEnumerable<UserReadDTO>>> GetAll([FromQuery] GetAllParams options)
     {
         return Ok(await _userService.GetAllUsersAsync(options));
     }
 
-    //[Authorize]
+    [Authorize]
     [HttpGet("{id:Guid}")]
     public async Task<ActionResult<UserReadDTO>> GetOne([FromRoute] Guid id)
     {
@@ -38,14 +38,14 @@ public class UserController : ControllerBase
         return CreatedAtAction(nameof(CreateOne), await _userService.CreateUserAsync(userCreateDTO));
     }
 
-    //[Authorize]
+    [Authorize]
     [HttpDelete("{id:Guid}")]
     public async Task<ActionResult<bool>> DeleteOne([FromRoute] Guid id)
     {
         return Ok(await _userService.DeleteUserAsync(id));
     }
 
-    //[Authorize]
+    [Authorize]
     [HttpPut("{id:Guid}")]
     public async Task<ActionResult<UserReadDTO>> UpdateOne([FromRoute] Guid id, [FromBody] UserUpdateDTO updates)
     {

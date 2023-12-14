@@ -1,0 +1,15 @@
+###
+POST http://localhost:5180/api/v1/profile/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "email": "nooa@mail.com",
+    "password": "qwerty"
+}
+
+###
+GET http://localhost:5180/api/v1/users HTTP/1.1
+content-type: application/json
+
+###
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJlOTNkZGM5NC01ZjJiLTQxMjktODEwZS05ZGJlMWRjNTA1NTkiLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE3MDI1NTg0NjgsImV4cCI6MTcwMjczMTI2OCwiaWF0IjoxNzAyNTU4NDY4LCJpc3MiOiJFdmVyZ3JlZW5BZG1pbiIsImF1ZCI6IkV2ZXJncmVlbiJ9.kxruk6pLTtGuS7e6nmsi-tfBmantz3hPWiIwlbFmjV0

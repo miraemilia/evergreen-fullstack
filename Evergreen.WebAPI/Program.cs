@@ -1,3 +1,4 @@
+using System.Text;
 using Evergreen.Core.src.Abstraction;
 using Evergreen.Service.src.Abstraction;
 using Evergreen.Service.src.Service;
@@ -6,7 +7,9 @@ using Evergreen.WebAPI.src.Database;
 using Evergreen.WebAPI.src.Middleware;
 using Evergreen.WebAPI.src.Repository;
 using Evergreen.WebAPI.src.Service;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,7 +27,21 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 
-//builder.Services.AddAuthentication(jwtBearerDefault)
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(
+    options => 
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidIssuer = builder.Configuration["Jwt:Issuer"],
+            ValidAudience = builder.Configuration["Jwt:Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!)),
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true
+        };
+    }
+);
 
 //add automapper dependency injection
 builder.Services.AddAutoMapper(typeof(MapperProfile).Assembly);
@@ -50,9 +67,9 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-//app.UseAuthentication();
+app.UseAuthentication();
 
-//app.UseAuthorization();
+app.UseAuthorization();
 
 app.MapControllers();
 

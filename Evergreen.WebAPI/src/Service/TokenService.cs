@@ -35,9 +35,7 @@ public class TokenService : ITokenService
             Subject = new ClaimsIdentity(claims),
             SigningCredentials = signingKey
         };
-        Console.WriteLine("about to generate token");
         var token = tokenHandler.CreateToken(descriptor);
-        Console.WriteLine("after generating");
         return tokenHandler.WriteToken(token);
     }
 }
