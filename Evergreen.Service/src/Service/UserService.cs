@@ -19,11 +19,14 @@ public class UserService : IUserService
         _mapper = mapper;
     }
 
-    //add exception
     public async Task<UserReadDTO> CreateUserAsync(UserCreateDTO userCreateDTO)
     {
+        var emailAvailable = await EmailAvailableAsync(userCreateDTO.Email);
+        if (!emailAvailable)
+        {
+            throw CustomException.EmailNotAvailable($"Email {userCreateDTO.Email} is already in use.");
+        }
         PasswordService.HashPassword(userCreateDTO.Password, out string hashedPassword, out byte[] salt);
-        Console.WriteLine(hashedPassword);
         var user = _mapper.Map<UserCreateDTO, User>(userCreateDTO);
         user.Password = hashedPassword;
         user.Salt = salt;
@@ -33,7 +36,12 @@ public class UserService : IUserService
 
     public async Task<bool> DeleteUserAsync(Guid id)
     {
-        return await _userRepo.DeleteOneAsync(id);
+        var userToDelete = await _userRepo.GetOneByIdAsync(id);
+        if (userToDelete != null)
+        {
+            return await _userRepo.DeleteOneAsync(userToDelete);            
+        }
+        throw CustomException.NotFoundException("User not found");
     }
 
     public async Task<bool> EmailAvailableAsync(string email)

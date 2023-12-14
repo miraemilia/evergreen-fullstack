@@ -18,4 +18,9 @@ public class CustomException : Exception
     {
         return new CustomException (401, msg);
     }
+
+    public static CustomException EmailNotAvailable(string msg = "Email not available")
+    {
+        return new CustomException (400, msg);
+    }
 }

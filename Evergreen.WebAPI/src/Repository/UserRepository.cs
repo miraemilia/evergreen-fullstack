@@ -24,16 +24,11 @@ public class UserRepository : IUserRepository
         return user;
     }
 
-    public async Task<bool> DeleteOneAsync(Guid id)
+    public async Task<bool> DeleteOneAsync(User user)
     {
-        var user = await _users.Where(u => u.Id == id).SingleAsync();
-        if (user != null)
-        {
-            _users.Remove(user);
-            await _database.SaveChangesAsync();
-            return true;
-        }
-        return false;
+        _users.Remove(user);
+        await _database.SaveChangesAsync();
+        return true;
     }
 
     public async Task<IEnumerable<User>> GetAllAsync(GetAllParams options)

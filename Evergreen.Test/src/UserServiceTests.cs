@@ -147,7 +147,7 @@ public class UserServiceTests
 
         await userService.DeleteUserAsync(It.IsAny<Guid>());
 
-        repo.Verify(repo => repo.DeleteOneAsync(It.IsAny<Guid>()), Times.Once);
+        repo.Verify(repo => repo.DeleteOneAsync(It.IsAny<User>()), Times.Once);
     }
 
     //fails
