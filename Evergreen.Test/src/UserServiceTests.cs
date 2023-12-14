@@ -71,6 +71,7 @@ public class UserServiceTests
     public async void CreateOneAsync_ShouldInvokeRepoMethod()
     {
         var repo = new Mock<IUserRepository>();
+        repo.Setup(repo => repo.GetOneByEmailAsync(It.IsAny<string>())).Returns(Task.FromResult(It.IsAny<User>()));
         var mapper = new Mock<IMapper>();
         var userService = new UserService(repo.Object, _mapper);
 

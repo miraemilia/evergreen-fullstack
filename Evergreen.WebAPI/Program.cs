@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using System.Text;
 using Evergreen.Core.src.Abstraction;
 using Evergreen.Service.src.Abstraction;
@@ -42,6 +43,12 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
         };
     }
 );
+
+/* builder.Services.AddAuthorization(policy =>
+    {
+        policy.AddPolicy("SuperAdmin", policy => policy.RequireClaim(ClaimTypes.Email, "admin@mail.com"));
+    }
+); */
 
 //add automapper dependency injection
 builder.Services.AddAutoMapper(typeof(MapperProfile).Assembly);

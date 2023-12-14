@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Evergreen.Controller.src.Controller;
 
 [ApiController]
-[Route("api/v1/profile")]
+[Route("api/v1/[controller]")]
 public class AuthController : ControllerBase
 {
 

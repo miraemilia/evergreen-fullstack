@@ -17,14 +17,14 @@ public class UserController : ControllerBase
         _userService = userService;
     }
 
-    [Authorize]
+    [Authorize (Roles= "Admin")]
     [HttpGet()]
     public async Task<ActionResult<IEnumerable<UserReadDTO>>> GetAll([FromQuery] GetAllParams options)
     {
         return Ok(await _userService.GetAllUsersAsync(options));
     }
 
-    [Authorize]
+    [Authorize (Roles= "Admin")]
     [HttpGet("{id:Guid}")]
     public async Task<ActionResult<UserReadDTO>> GetOne([FromRoute] Guid id)
     {
@@ -38,15 +38,15 @@ public class UserController : ControllerBase
         return CreatedAtAction(nameof(CreateOne), await _userService.CreateUserAsync(userCreateDTO));
     }
 
-    [Authorize]
+    [Authorize (Roles= "Admin")]
     [HttpDelete("{id:Guid}")]
     public async Task<ActionResult<bool>> DeleteOne([FromRoute] Guid id)
     {
         return Ok(await _userService.DeleteUserAsync(id));
     }
 
-    [Authorize]
-    [HttpPut("{id:Guid}")]
+    [Authorize (Roles= "Admin")]
+    [HttpPatch("{id:Guid}")]
     public async Task<ActionResult<UserReadDTO>> UpdateOne([FromRoute] Guid id, [FromBody] UserUpdateDTO updates)
     {
         return Ok(await _userService.UpdateUserAsync(id, updates));
