@@ -23,7 +23,7 @@ POST http://localhost:5180/api/v1/auth/login HTTP/1.1
 Content-Type: application/json
 
 {
-    "email": "matti@mail.com",
+    "email": "mattias@email.com",
     "password": "12345"
 }
 
@@ -38,7 +38,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI3ZmYzM
 ###
 PATCH http://localhost:5180/api/v1/auth/profile/password/c8a57e46-26e2-4954-bd8a-423e2780c202 HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJlOTNkZGM5NC01ZjJiLTQxMjktODEwZS05ZGJlMWRjNTA1NTkiLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE3MDI3MTQ5MzQsImV4cCI6MTcwMjg4NzczNCwiaWF0IjoxNzAyNzE0OTM0LCJpc3MiOiJFdmVyZ3JlZW5BZG1pbiIsImF1ZCI6IkV2ZXJncmVlbiJ9.vwu7_4MIvOGMHIh3AJ3b_NLws32__AGFb8-G5sm_7d0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJjOGE1N2U0Ni0yNmUyLTQ5NTQtYmQ4YS00MjNlMjc4MGMyMDIiLCJyb2xlIjoiQ3VzdG9tZXIiLCJuYmYiOjE3MDI3MTU1NTUsImV4cCI6MTcwMjg4ODM1NSwiaWF0IjoxNzAyNzE1NTU1LCJpc3MiOiJFdmVyZ3JlZW5BZG1pbiIsImF1ZCI6IkV2ZXJncmVlbiJ9.UuE8_FPOjRb9cM72EzmaEjjwmS-eGqpiBS70WF-Jdg0
 
 {
   "password": "sdfgh"
@@ -48,3 +48,17 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJlOTNkZ
 DELETE http://localhost:5180/api/v1/auth/profile/7ff316c9-6b6d-49c5-9ca2-9298b6370856 HTTP/1.1
 content-type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI3ZmYzMTZjOS02YjZkLTQ5YzUtOWNhMi05Mjk4YjYzNzA4NTYiLCJyb2xlIjoiQ3VzdG9tZXIiLCJuYmYiOjE3MDI3MTI2MzAsImV4cCI6MTcwMjg4NTQzMCwiaWF0IjoxNzAyNzEyNjMwLCJpc3MiOiJFdmVyZ3JlZW5BZG1pbiIsImF1ZCI6IkV2ZXJncmVlbiJ9.8I_xpbP9Krr1hc00BdwwZzf-ljQB5BYNdQZk_GY-bmE
+
+###
+PATCH http://localhost:5180/api/v1/users/c8a57e46-26e2-4954-bd8a-423e2780c202 HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJlOTNkZGM5NC01ZjJiLTQxMjktODEwZS05ZGJlMWRjNTA1NTkiLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE3MDI3MTU2MjcsImV4cCI6MTcwMjg4ODQyNywiaWF0IjoxNzAyNzE1NjI3LCJpc3MiOiJFdmVyZ3JlZW5BZG1pbiIsImF1ZCI6IkV2ZXJncmVlbiJ9.thHAADbS5OFqw4y8Y_n1IfIHpGBPSFVTmKipKO0UCOc
+
+{
+  "role": "Admin"
+}
+
+###
+DELETE http://localhost:5180/api/v1/users/c8a57e46-26e2-4954-bd8a-423e2780c202 HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJlOTNkZGM5NC01ZjJiLTQxMjktODEwZS05ZGJlMWRjNTA1NTkiLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE3MDI3MTU2MjcsImV4cCI6MTcwMjg4ODQyNywiaWF0IjoxNzAyNzE1NjI3LCJpc3MiOiJFdmVyZ3JlZW5BZG1pbiIsImF1ZCI6IkV2ZXJncmVlbiJ9.thHAADbS5OFqw4y8Y_n1IfIHpGBPSFVTmKipKO0UCOc

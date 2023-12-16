@@ -61,8 +61,7 @@ public class UserService : IUserService
         var result = await _userRepo.GetOneByIdAsync(id);
         if (result != null)
         {
-            var dto = _mapper.Map<User, UserReadDTO>(result);
-            return dto;
+            return _mapper.Map<User, UserReadDTO>(result);
         }
         else
         {

@@ -28,6 +28,7 @@ public class UserServiceTests
         }
     }
 
+    //pass
     [Fact]
     public async void GetAllAsync_ShouldInvokeRepoMethod()
     {
@@ -41,6 +42,7 @@ public class UserServiceTests
         repo.Verify(repo => repo.GetAllAsync(options), Times.Once);
     }
 
+    //pass
     [Theory]
     [ClassData(typeof(GetAllUsersData))]
     public async void GetAllAsync_ShouldReturnValidResponse(IEnumerable<User> repoResponse, IEnumerable<UserReadDTO> expected)
@@ -67,50 +69,12 @@ public class UserServiceTests
         }
     }
 
-    //fails
-    [Fact]
-    public async void CreateOneAsync_ShouldInvokeRepoMethod()
-    {
-        var repo = new Mock<IUserRepository>();
-        repo.Setup(repo => repo.GetOneByEmailAsync(It.IsAny<string>())).Returns(Task.FromResult(It.IsAny<User>()));
-        var mapper = new Mock<IMapper>();
-        var userService = new UserService(repo.Object, _mapper);
-
-        await userService.CreateUserAsync(It.IsAny<UserWithRoleCreateDTO>());
-
-        repo.Verify(repo => repo.CreateOneAsync(It.IsAny<User>()), Times.Once);
-    }
-
-    [Theory]
-    [ClassData(typeof(CreateUserData))]
-    public async void CreateOneAsync_ShouldReturnValidResponse(bool emailAvailableResponse, User repoResponse, UserReadDTO expected)
-    {
-        var repo = new Mock<IUserRepository>();
-        repo.Setup(repo => repo.CreateOneAsync(It.IsAny<User>())).Returns(Task.FromResult(repoResponse));
-        var userService = new UserService(repo.Object, _mapper);
-        var userServiceMock = new Mock<IUserService>();
-        //userServiceMock.Setup(serv => serv.EmailAvailableAsync(It.IsAny<string>())).Returns(Task.FromResult(emailAvailableResponse));
-        
-        var response = await userService.CreateUserAsync(It.IsAny<UserWithRoleCreateDTO>());
-
-        Assert.Equivalent(expected, response);
-    }
-
-    public class CreateUserData : TheoryData<bool, User, UserReadDTO>
-    {
-        public CreateUserData()
-        {
-            User user1 = new User(){Name = "John Doe", Email = "john@example.com", Password = "12345", Avatar = "https://picsum.photos/200"};
-            UserReadDTO user1Read = _mapper.Map<User, UserReadDTO>(user1);
-            Add(true, user1, user1Read);
-        }
-    }
-
-    //fails
     [Fact]
     public async void GetUserById_ShouldInvokeRepoMethod()
     {
         var repo = new Mock<IUserRepository>();
+        User user1 = new User(){Name = "John Doe", Email = "john@example.com", Password = "12345", Avatar = "https://picsum.photos/200"};
+        repo.Setup(repo => repo.GetOneByIdAsync(It.IsAny<Guid>())).ReturnsAsync(user1);
         var mapper = new Mock<IMapper>();
         var userService = new UserService(repo.Object, _mapper);
 
@@ -143,10 +107,52 @@ public class UserServiceTests
     }
 
     [Fact]
+    public async void CreateOneAsync_ShouldInvokeRepoMethod()
+    {
+        var repo = new Mock<IUserRepository>();
+        repo.Setup(repo => repo.EmailAvailable(It.IsAny<string>())).ReturnsAsync(true);
+        var mapper = new Mock<IMapper>();
+        var userService = new UserService(repo.Object, _mapper);
+        UserWithRoleCreateDTO dto = new UserWithRoleCreateDTO(){ Name = "John Doe", Email = "john@example.com", Password = "12345", Avatar = "placeholder", Role = UserRole.Admin};
+
+        await userService.CreateUserAsync(dto);
+
+        repo.Verify(repo => repo.CreateOneAsync(It.IsAny<User>()), Times.Once);
+    }
+
+    [Theory]
+    [ClassData(typeof(CreateUserData))]
+    public async void CreateOneAsync_ShouldReturnValidResponse(bool emailAvailableResponse, User repoResponse, UserReadDTO expected)
+    {
+        var repo = new Mock<IUserRepository>();
+        repo.Setup(repo => repo.CreateOneAsync(It.IsAny<User>())).ReturnsAsync(repoResponse);
+        repo.Setup(repo => repo.EmailAvailable(It.IsAny<string>())).ReturnsAsync(emailAvailableResponse);
+        var userService = new UserService(repo.Object, _mapper);
+        var userServiceMock = new Mock<IUserService>();
+        UserWithRoleCreateDTO dto = new UserWithRoleCreateDTO(){ Name = "John Doe", Email = "john@example.com", Password = "12345", Avatar = "placeholder", Role = UserRole.Admin};
+
+        
+        var response = await userService.CreateUserAsync(dto);
+
+        Assert.Equivalent(expected, response);
+    }
+
+    public class CreateUserData : TheoryData<bool, User, UserReadDTO>
+    {
+        public CreateUserData()
+        {
+            User user1 = new User(){Name = "John Doe", Email = "john@example.com", Password = "12345", Avatar = "https://picsum.photos/200"};
+            UserReadDTO user1Read = _mapper.Map<User, UserReadDTO>(user1);
+            Add(true, user1, user1Read);
+        }
+    }
+
+    [Fact]
     public async void DeleteUser_ShouldInvokeRepoMethod()
     {
         var repo = new Mock<IUserRepository>();
-        repo.Setup(repo => repo.GetOneByIdAsync(It.IsAny<Guid>())).Returns(Task.FromResult(It.IsAny<User>())).Verifiable();
+        User user1 = new User(){Name = "John Doe", Email = "john@example.com", Password = "12345", Avatar = "https://picsum.photos/200"};
+        repo.Setup(repo => repo.GetOneByIdAsync(It.IsAny<Guid>())).ReturnsAsync(user1);
         var mapper = new Mock<IMapper>();
         var userService = new UserService(repo.Object, _mapper);
 
@@ -155,22 +161,21 @@ public class UserServiceTests
         repo.Verify(repo => repo.DeleteOneAsync(It.IsAny<User>()), Times.Once);
     }
 
-    //fails
     [Fact]
     public async void UpdateUser_ShouldInvokeRepoMethod()
     {
         var repo = new Mock<IUserRepository>();
+        User user1 = new User(){Name = "John Doe", Email = "john@example.com", Password = "12345", Avatar = "https://picsum.photos/200"};
+        repo.Setup(repo => repo.GetOneByIdAsync(It.IsAny<Guid>())).ReturnsAsync(user1);
         var mapper = new Mock<IMapper>();
         var userService = new UserService(repo.Object, _mapper);
 
         await userService.UpdateUserRoleAsync(It.IsAny<Guid>(), It.IsAny<UserRole>());
 
-        repo.Verify(repo => repo.GetOneByIdAsync(It.IsAny<Guid>()), Times.Once);
         repo.Verify(repo => repo.UpdateOneAsync(It.IsAny<User>()), Times.Once);
     }
 
-//to authServiceTests
-/*     [Fact]
+    [Fact]
     public async void EmailAvailable_ShouldInvokeRepoMethod()
     {
         var repo = new Mock<IUserRepository>();
@@ -179,7 +184,7 @@ public class UserServiceTests
 
         await userService.EmailAvailableAsync(It.IsAny<string>());
 
-        repo.Verify(repo => repo.GetOneByEmailAsync(It.IsAny<string>()), Times.Once);
-    } */
+        repo.Verify(repo => repo.EmailAvailable(It.IsAny<string>()), Times.Once);
+    }
 
 }

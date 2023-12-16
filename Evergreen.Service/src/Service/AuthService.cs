@@ -45,7 +45,6 @@ public class AuthService : IAuthService
         throw CustomException.WrongCredentialsException("Wrong password");
     }
 
-    // change to use mapper?
     public async Task<UserReadDTO> UpdateProfileAsync(Guid id, UserUpdateDTO update)
     {
         var userToUpdate = await _userRepo.GetOneByIdAsync(id);
