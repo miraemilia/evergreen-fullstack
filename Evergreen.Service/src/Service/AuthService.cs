@@ -60,7 +60,6 @@ public class AuthService : IAuthService
             }
             //var updatedUser = _mapper.Map(update, userToUpdate);
             var updatedUser = update.Merge(userToUpdate);
-            Console.WriteLine(updatedUser);
             var updated = await _userRepo.UpdateOneAsync(updatedUser);
             return _mapper.Map<User, UserReadDTO>(updated);
         }
