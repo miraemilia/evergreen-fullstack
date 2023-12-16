@@ -1,10 +1,10 @@
 ###
-POST http://localhost:5180/api/v1/users HTTP/1.1
+POST http://localhost:5180/api/v1/auth/profile HTTP/1.1
 content-type: application/json
 
 {
-  "name": "Maija",
-  "email": "maija@mail.com",
+  "name": "Matti",
+  "email": "matti@mail.com",
   "password": "12345",
   "avatar": "https://picsum.photos/200"
 }
@@ -23,14 +23,28 @@ POST http://localhost:5180/api/v1/auth/login HTTP/1.1
 Content-Type: application/json
 
 {
-    "email": "maija@mail.com",
+    "email": "matti@mail.com",
     "password": "12345"
 }
 
 ###
 GET http://localhost:5180/api/v1/users HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJlOTNkZGM5NC01ZjJiLTQxMjktODEwZS05ZGJlMWRjNTA1NTkiLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE3MDI1NTk2MDUsImV4cCI6MTcwMjczMjQwNSwiaWF0IjoxNzAyNTU5NjA1LCJpc3MiOiJFdmVyZ3JlZW5BZG1pbiIsImF1ZCI6IkV2ZXJncmVlbiJ9.ty6QBLGRVJrcZdZUYyBEYdxY-drIn8CFl7qJura0hPU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJlOTNkZGM5NC01ZjJiLTQxMjktODEwZS05ZGJlMWRjNTA1NTkiLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE3MDI1NjI4OTAsImV4cCI6MTcwMjczNTY5MCwiaWF0IjoxNzAyNTYyODkwLCJpc3MiOiJFdmVyZ3JlZW5BZG1pbiIsImF1ZCI6IkV2ZXJncmVlbiJ9.OWKFAm_ia6Lz-jmnJjYIU2ws-8B8ZkV59QSsI4H_CQo
 
 ###
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJlOTNkZGM5NC01ZjJiLTQxMjktODEwZS05ZGJlMWRjNTA1NTkiLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE3MDI1NTk2MDUsImV4cCI6MTcwMjczMjQwNSwiaWF0IjoxNzAyNTU5NjA1LCJpc3MiOiJFdmVyZ3JlZW5BZG1pbiIsImF1ZCI6IkV2ZXJncmVlbiJ9.ty6QBLGRVJrcZdZUYyBEYdxY-drIn8CFl7qJura0hPU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI3ZmYzMTZjOS02YjZkLTQ5YzUtOWNhMi05Mjk4YjYzNzA4NTYiLCJyb2xlIjoiQ3VzdG9tZXIiLCJuYmYiOjE3MDI3MTI2MzAsImV4cCI6MTcwMjg4NTQzMCwiaWF0IjoxNzAyNzEyNjMwLCJpc3MiOiJFdmVyZ3JlZW5BZG1pbiIsImF1ZCI6IkV2ZXJncmVlbiJ9.8I_xpbP9Krr1hc00BdwwZzf-ljQB5BYNdQZk_GY-bmE
+
+###
+PATCH http://localhost:5180/api/v1/auth/profile/password/c8a57e46-26e2-4954-bd8a-423e2780c202 HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJlOTNkZGM5NC01ZjJiLTQxMjktODEwZS05ZGJlMWRjNTA1NTkiLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE3MDI3MTQ5MzQsImV4cCI6MTcwMjg4NzczNCwiaWF0IjoxNzAyNzE0OTM0LCJpc3MiOiJFdmVyZ3JlZW5BZG1pbiIsImF1ZCI6IkV2ZXJncmVlbiJ9.vwu7_4MIvOGMHIh3AJ3b_NLws32__AGFb8-G5sm_7d0
+
+{
+  "password": "sdfgh"
+}
+
+###
+DELETE http://localhost:5180/api/v1/auth/profile/7ff316c9-6b6d-49c5-9ca2-9298b6370856 HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI3ZmYzMTZjOS02YjZkLTQ5YzUtOWNhMi05Mjk4YjYzNzA4NTYiLCJyb2xlIjoiQ3VzdG9tZXIiLCJuYmYiOjE3MDI3MTI2MzAsImV4cCI6MTcwMjg4NTQzMCwiaWF0IjoxNzAyNzEyNjMwLCJpc3MiOiJFdmVyZ3JlZW5BZG1pbiIsImF1ZCI6IkV2ZXJncmVlbiJ9.8I_xpbP9Krr1hc00BdwwZzf-ljQB5BYNdQZk_GY-bmE

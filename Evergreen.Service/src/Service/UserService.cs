@@ -1,6 +1,7 @@
 using AutoMapper;
 using Evergreen.Core.src.Abstraction;
 using Evergreen.Core.src.Entity;
+using Evergreen.Core.src.Enum;
 using Evergreen.Core.src.Parameter;
 using Evergreen.Service.src.Abstraction;
 using Evergreen.Service.src.DTO;
@@ -19,15 +20,15 @@ public class UserService : IUserService
         _mapper = mapper;
     }
 
-    public async Task<UserReadDTO> CreateUserAsync(UserCreateDTO userCreateDTO)
+    public async Task<UserReadDTO> CreateUserAsync(UserWithRoleCreateDTO userCreateDTO)
     {
-        var emailAvailable = await EmailAvailableAsync(userCreateDTO.Email);
+        var emailAvailable = await _userRepo.EmailAvailable(userCreateDTO.Email);
         if (!emailAvailable)
         {
-            throw CustomException.EmailNotAvailable($"Email {userCreateDTO.Email} is already in use.");
+            throw CustomException.EmailNotAvailable($"Email {userCreateDTO.Email} is unavailable.");
         }
         PasswordService.HashPassword(userCreateDTO.Password, out string hashedPassword, out byte[] salt);
-        var user = _mapper.Map<UserCreateDTO, User>(userCreateDTO);
+        var user = _mapper.Map<UserWithRoleCreateDTO, User>(userCreateDTO);
         user.Password = hashedPassword;
         user.Salt = salt;
         var result = await _userRepo.CreateOneAsync(user);
@@ -46,12 +47,7 @@ public class UserService : IUserService
 
     public async Task<bool> EmailAvailableAsync(string email)
     {
-        var found = await _userRepo.GetOneByEmailAsync(email);
-        if (found is null)
-        {
-            return true;
-        }
-        return false;
+        return await _userRepo.EmailAvailable(email);
     }
 
     public async Task<IEnumerable<UserReadDTO>> GetAllUsersAsync(GetAllParams options)
@@ -74,28 +70,12 @@ public class UserService : IUserService
         }
     }
 
-    // change to use mapper?
-    public async Task<UserReadDTO> UpdateUserAsync(Guid id, UserUpdateDTO update)
+    public async Task<UserReadDTO> UpdateUserRoleAsync(Guid id, UserRole newRole)
     {
         var userToUpdate = await _userRepo.GetOneByIdAsync(id);
         if (userToUpdate != null)
         {
-            if (update.Name is not null)
-            {
-                userToUpdate.Name = update.Name;
-            }
-            if (update.Email is not null && await EmailAvailableAsync(update.Email))
-            {
-                userToUpdate.Email = update.Email;
-            }
-            if (update.Avatar is not null)
-            {
-                userToUpdate.Avatar = update.Avatar;
-            }
-            if (update.Role is not null)
-            {
-                userToUpdate.Role = (Core.src.Enum.UserRole)update.Role;
-            }
+            userToUpdate.Role = newRole;
             var updated = await _userRepo.UpdateOneAsync(userToUpdate);
             return _mapper.Map<User, UserReadDTO>(updated);
         }
@@ -103,7 +83,5 @@ public class UserService : IUserService
         {
             throw CustomException.NotFoundException("User not found");
         }
-        
-
     }
 }

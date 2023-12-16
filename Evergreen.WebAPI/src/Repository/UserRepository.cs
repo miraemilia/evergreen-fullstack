@@ -31,6 +31,16 @@ public class UserRepository : IUserRepository
         return true;
     }
 
+    public async Task<bool> EmailAvailable(string email)
+    {
+        var found = await _users.FirstOrDefaultAsync(u => u.Email == email);
+        if (found is null)
+        {
+            return true;
+        }
+        return false;
+    }
+
     public async Task<IEnumerable<User>> GetAllAsync(GetAllParams options)
     {
         return await _users.Skip(options.Offset).Take(options.Limit).ToListAsync();
@@ -52,4 +62,5 @@ public class UserRepository : IUserRepository
         await _database.SaveChangesAsync();
         return userUpdate;
     }
+    
 }

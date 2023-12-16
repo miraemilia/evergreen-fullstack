@@ -1,3 +1,4 @@
+using Evergreen.Core.src.Enum;
 using Evergreen.Core.src.Parameter;
 using Evergreen.Service.src.Abstraction;
 using Evergreen.Service.src.DTO;
@@ -31,11 +32,18 @@ public class UserController : ControllerBase
         return Ok(await _userService.GetUserByIdAsync(id));
     }
 
-    [AllowAnonymous]
+    [Authorize (Roles = "Admin")]
     [HttpPost()]
-    public async Task<ActionResult<UserReadDTO>> CreateOne([FromBody] UserCreateDTO userCreateDTO)
+    public async Task<ActionResult<UserReadDTO>> CreateOne([FromBody] UserWithRoleCreateDTO userCreateDTO)
     {
         return CreatedAtAction(nameof(CreateOne), await _userService.CreateUserAsync(userCreateDTO));
+    }
+
+    [Authorize (Roles = "Admin")]
+    [HttpPatch("{id:Guid}")]
+    public async Task<ActionResult<UserReadDTO>> UpdateRole([FromRoute] Guid id, [FromBody] ChangeRoleParams role)
+    {
+        return Ok(await _userService.UpdateUserRoleAsync(id, role.Role));
     }
 
     [Authorize (Roles= "Admin")]
@@ -45,17 +53,11 @@ public class UserController : ControllerBase
         return Ok(await _userService.DeleteUserAsync(id));
     }
 
-    [Authorize (Roles= "Admin")]
-    [HttpPatch("{id:Guid}")]
-    public async Task<ActionResult<UserReadDTO>> UpdateOne([FromRoute] Guid id, [FromBody] UserUpdateDTO updates)
-    {
-        return Ok(await _userService.UpdateUserAsync(id, updates));
-    }
-
     [AllowAnonymous]
-    [HttpPost("email")]
+    [HttpPost("emailAvailable")]
     public async Task<ActionResult<bool>> EmailAvailable([FromBody] string email)
     {
         return Ok(await _userService.EmailAvailableAsync(email));
     }
+
 }

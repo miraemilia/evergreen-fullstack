@@ -8,8 +8,8 @@ public interface IUserService
 {
     Task<IEnumerable<UserReadDTO>> GetAllUsersAsync(GetAllParams options);
     Task<UserReadDTO> GetUserByIdAsync(Guid id);
-    Task<UserReadDTO> CreateUserAsync(UserCreateDTO user);
+    Task<UserReadDTO> CreateUserAsync(UserWithRoleCreateDTO newUser);
     Task<bool> DeleteUserAsync(Guid id);
-    Task<UserReadDTO> UpdateUserAsync(Guid id, UserUpdateDTO update);
+    Task<UserReadDTO> UpdateUserRoleAsync(Guid id, UserRole newRole);
     Task<bool> EmailAvailableAsync(string email);
 }

@@ -3,6 +3,7 @@ using Evergreen.Core.src.Abstraction;
 using Evergreen.Core.src.Entity;
 using Evergreen.Core.src.Enum;
 using Evergreen.Core.src.Parameter;
+using Evergreen.Service.src.Abstraction;
 using Evergreen.Service.src.DTO;
 using Evergreen.Service.src.Service;
 using Evergreen.Service.src.Shared;
@@ -75,31 +76,33 @@ public class UserServiceTests
         var mapper = new Mock<IMapper>();
         var userService = new UserService(repo.Object, _mapper);
 
-        await userService.CreateUserAsync(It.IsAny<UserCreateDTO>());
+        await userService.CreateUserAsync(It.IsAny<UserWithRoleCreateDTO>());
 
         repo.Verify(repo => repo.CreateOneAsync(It.IsAny<User>()), Times.Once);
     }
 
     [Theory]
     [ClassData(typeof(CreateUserData))]
-    public async void CreateOneAsync_ShouldReturnValidResponse(User repoResponse, UserReadDTO expected)
+    public async void CreateOneAsync_ShouldReturnValidResponse(bool emailAvailableResponse, User repoResponse, UserReadDTO expected)
     {
         var repo = new Mock<IUserRepository>();
         repo.Setup(repo => repo.CreateOneAsync(It.IsAny<User>())).Returns(Task.FromResult(repoResponse));
         var userService = new UserService(repo.Object, _mapper);
+        var userServiceMock = new Mock<IUserService>();
+        //userServiceMock.Setup(serv => serv.EmailAvailableAsync(It.IsAny<string>())).Returns(Task.FromResult(emailAvailableResponse));
         
-        var response = await userService.CreateUserAsync(It.IsAny<UserCreateDTO>());
+        var response = await userService.CreateUserAsync(It.IsAny<UserWithRoleCreateDTO>());
 
         Assert.Equivalent(expected, response);
     }
 
-    public class CreateUserData : TheoryData<User, UserReadDTO>
+    public class CreateUserData : TheoryData<bool, User, UserReadDTO>
     {
         public CreateUserData()
         {
             User user1 = new User(){Name = "John Doe", Email = "john@example.com", Password = "12345", Avatar = "https://picsum.photos/200"};
             UserReadDTO user1Read = _mapper.Map<User, UserReadDTO>(user1);
-            Add(user1, user1Read);
+            Add(true, user1, user1Read);
         }
     }
 
@@ -160,13 +163,14 @@ public class UserServiceTests
         var mapper = new Mock<IMapper>();
         var userService = new UserService(repo.Object, _mapper);
 
-        await userService.UpdateUserAsync(It.IsAny<Guid>(), It.IsAny<UserUpdateDTO>());
+        await userService.UpdateUserRoleAsync(It.IsAny<Guid>(), It.IsAny<UserRole>());
 
         repo.Verify(repo => repo.GetOneByIdAsync(It.IsAny<Guid>()), Times.Once);
         repo.Verify(repo => repo.UpdateOneAsync(It.IsAny<User>()), Times.Once);
     }
 
-    [Fact]
+//to authServiceTests
+/*     [Fact]
     public async void EmailAvailable_ShouldInvokeRepoMethod()
     {
         var repo = new Mock<IUserRepository>();
@@ -176,6 +180,6 @@ public class UserServiceTests
         await userService.EmailAvailableAsync(It.IsAny<string>());
 
         repo.Verify(repo => repo.GetOneByEmailAsync(It.IsAny<string>()), Times.Once);
-    }
+    } */
 
 }
