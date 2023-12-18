@@ -204,7 +204,7 @@ public class CategoryServiceTests
     }
 
     [Fact]
-    public async void UpdateCategory_ShouldInvokeRepoMethod()
+    public async void UpdateCategoryAsync_ShouldInvokeRepoMethod()
     {
         var repo = new Mock<ICategoryRepository>();
         Category category1 = new Category(){Name = "Air plants", ImageUrl = "https://picsum.photos/200"};
@@ -220,7 +220,7 @@ public class CategoryServiceTests
 
     [Theory]
     [ClassData(typeof(UpdateCategoryData))]
-    public async void UpdateCategoryRoleAsync_ShouldReturnValidResponse(CategoryUpdateDTO updates, Category? foundResponse, Category repoResponse, CategoryReadDTO? expected, Type? exceptionType)
+    public async void UpdateCategoryAsync_ShouldReturnValidResponse(CategoryUpdateDTO updates, Category? foundResponse, Category repoResponse, CategoryReadDTO? expected, Type? exceptionType)
     {
         var repo = new Mock<ICategoryRepository>();
         repo.Setup(repo => repo.GetOneByIdAsync(It.IsAny<Guid>())).ReturnsAsync(foundResponse);
