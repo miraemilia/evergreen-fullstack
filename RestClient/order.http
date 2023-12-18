@@ -1,0 +1,59 @@
+###
+POST http://localhost:5180/api/v1/auth/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "email": "nooa@mail.com",
+    "password": "qwerty"
+}
+
+###
+POST http://localhost:5180/api/v1/auth/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "email": "maija@mail.com",
+    "password": "12345"
+}
+
+###
+GET http://localhost:5180/api/v1/orders HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJlOTNkZGM5NC01ZjJiLTQxMjktODEwZS05ZGJlMWRjNTA1NTkiLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE3MDI5Mjg4NjgsImV4cCI6MTcwMzEwMTY2OCwiaWF0IjoxNzAyOTI4ODY4LCJpc3MiOiJFdmVyZ3JlZW5BZG1pbiIsImF1ZCI6IkV2ZXJncmVlbiJ9.agiBW5IgwmslJ8tFQ0HZA2TeXXN-9P8HRPzdxyQyRBg
+
+###
+POST http://localhost:5180/api/v1/orders HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJjMzExYTcxZS1jZTJjLTRhZTYtYjg0OC0wMzI2ZjdjMTMzM2EiLCJyb2xlIjoiQ3VzdG9tZXIiLCJuYmYiOjE3MDI5MjY5ODcsImV4cCI6MTcwMzA5OTc4NywiaWF0IjoxNzAyOTI2OTg3LCJpc3MiOiJFdmVyZ3JlZW5BZG1pbiIsImF1ZCI6IkV2ZXJncmVlbiJ9.ztqAoEGSyNZK3VRARHPr9j-U1B99FIaSbJfzK3FtPPQ
+
+{
+  "userId": "c311a71e-ce2c-4ae6-b848-0326f7c1333a",
+  "orderDetails": [
+    {
+      "productId": "0bfb3b77-d015-4a52-b7d2-d2a15eae2f0e",
+      "quantity": 2
+    },
+    {
+      "productId": "0bfc5e2c-d6f3-4e3b-826d-95db5466f873",
+      "quantity": 4
+    },
+        {
+      "productId": "2c3d7c12-7f50-44c3-9250-b66fc233d26e",
+      "quantity": 1
+    }
+  ]
+}
+
+###
+PATCH http://localhost:5180/api/v1/orders/3b2ba914-2428-4da7-aa15-85ef92c143e8 HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJlOTNkZGM5NC01ZjJiLTQxMjktODEwZS05ZGJlMWRjNTA1NTkiLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE3MDI4OTgzODIsImV4cCI6MTcwMzA3MTE4MiwiaWF0IjoxNzAyODk4MzgyLCJpc3MiOiJFdmVyZ3JlZW5BZG1pbiIsImF1ZCI6IkV2ZXJncmVlbiJ9.K_96WBmrznTJuO6g82h-iexhpNaDvfPHSmLRj7TqFWg
+
+{
+  "orderStatus": "Shipped"
+}
+
+###
+DELETE http://localhost:5180/api/v1/orders/63acdf80-c6d5-4d88-ab67-4ea07e30a4e4 HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJlOTNkZGM5NC01ZjJiLTQxMjktODEwZS05ZGJlMWRjNTA1NTkiLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE3MDI4OTgzODIsImV4cCI6MTcwMzA3MTE4MiwiaWF0IjoxNzAyODk4MzgyLCJpc3MiOiJFdmVyZ3JlZW5BZG1pbiIsImF1ZCI6IkV2ZXJncmVlbiJ9.K_96WBmrznTJuO6g82h-iexhpNaDvfPHSmLRj7TqFWg

@@ -29,5 +29,15 @@ public class MapperProfile : Profile
             .ForMember(dest => dest.Category, opt => opt.Ignore())
             .ForMember(dest => dest.ProductDetails, opt => opt.MapFrom(s => s.ProductDetails))
             .ForMember(dest => dest.ProductImages, opt => opt.MapFrom(s => s.ProductImages));
+
+        CreateMap<OrderProduct, OrderProductReadDTO>();
+        CreateMap<OrderProductCreateDTO, OrderProduct>();
+
+        CreateMap<Order, OrderReadDTO>()
+            .ForMember(dest => dest.OrderDetails, opt => opt.MapFrom(s => s.OrderDetails));
+        CreateMap<OrderCreateDTO, Order>()
+            .ForMember(dest => dest.User, opt => opt.Ignore())
+            .ForMember(dest => dest.OrderDetails, opt => opt.MapFrom(s => s.OrderDetails));
+        CreateMap<OrderUpdateDTO, Order>();
     }
 }

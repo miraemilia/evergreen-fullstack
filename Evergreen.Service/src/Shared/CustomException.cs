@@ -28,4 +28,9 @@ public class CustomException : Exception
     {
         return new CustomException (500, msg);
     }
+
+    public static CustomException OrderEditingNotAllowed(string msg = "Editing not allowes: order has been processed.")
+    {
+        return new CustomException (405, msg);
+    }
 }
