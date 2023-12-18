@@ -31,13 +31,15 @@ public class AuthServiceTests
     public async void Login_ShouldInvokeTokenService()
     {
         var repo = new Mock<IUserRepository>();
-        //User user = new User(){Name = "John Doe", Email = "john@example.com", Password = "12345", Avatar = "https://picsum.photos/200">};
-        repo.Setup(repo => repo.GetOneByEmailAsync("user@mail.com")).ReturnsAsync(It.IsAny<User>);
+        User user = new User(){};
+        repo.Setup(repo => repo.GetOneByEmailAsync(It.IsAny<string>())).ReturnsAsync(user);
         var mapper = new Mock<IMapper>();
         var tokenService = new Mock<ITokenService>();
         tokenService.Setup(ts => ts.GenerateToken(It.IsAny<User>())).Returns("token");
+        //var passwordService = new Mock<IPasswordService>();
+        //passwordService.Setup(ps => ps.VerifyPassword(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<byte[]>())).Returns(true);
         var authService = new AuthService(repo.Object, _mapper, tokenService.Object);
-        //var loginParams = new LoginParams(){Email = "user@mail.com", Password = "password"};
+        var loginParams = new LoginParams(){Email = "user@mail.com", Password = "password"};
 
         await authService.Login(It.IsAny<LoginParams>());
 
@@ -54,7 +56,7 @@ public class AuthServiceTests
         var tokenService = new Mock<ITokenService>();
         tokenService.Setup(ts => ts.GenerateToken(It.IsAny<User>())).Returns(tokenServiceResponse);
         var authService = new AuthService(repo.Object, _mapper, tokenService.Object);
-        //var passwordService = new Mock<PasswordService>();
+        //var passwordService = new Mock<IPasswordService>();
         //passwordService.Setup(ps => ps.VerifyPassword(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<byte[]>())).Returns(true);
         var loginParams = new LoginParams(){Email = "user@mail.com", Password = "password"};
 
