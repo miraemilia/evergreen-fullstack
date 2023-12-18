@@ -12,5 +12,8 @@ public class MapperProfile : Profile
         CreateMap<UserCreateDTO, User>();
         CreateMap<UserUpdateDTO, User>();
         CreateMap<UserWithRoleCreateDTO, User>();
+
+        CreateMap<Category, CategoryReadDTO>();
+        CreateMap<CategoryCreateDTO, Category>();
     }
 }

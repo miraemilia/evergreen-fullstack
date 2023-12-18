@@ -135,7 +135,6 @@ public class UserServiceTests
         repo.Setup(repo => repo.CreateOneAsync(It.IsAny<User>())).ReturnsAsync(repoResponse);
         repo.Setup(repo => repo.EmailAvailable(It.IsAny<string>())).ReturnsAsync(emailAvailableResponse);
         var userService = new UserService(repo.Object, _mapper);
-        var userServiceMock = new Mock<IUserService>();
         UserWithRoleCreateDTO dto = new UserWithRoleCreateDTO(){ Name = "John Doe", Email = "john@example.com", Password = "12345", Avatar = "placeholder", Role = UserRole.Admin};
 
         if (exceptionType is not null)
