@@ -10,5 +10,6 @@ public class Product : BaseEntity
     public Category Category { get; set; }
     public IEnumerable<Image> ProductImages { get; set; }
     public ProductDetails? ProductDetails { get; set; }
+    public int Inventory { get; set; }
     public IEnumerable<OrderProduct> OrderDetails { get; set; }
 }

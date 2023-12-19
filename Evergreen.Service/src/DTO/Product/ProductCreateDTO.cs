@@ -11,4 +11,5 @@ public class ProductCreateDTO
     public Guid CategoryId { get; set; }
     public IEnumerable<ImageCreateDTO> ProductImages { get; set; }
     public ProductDetailsCreateDTO? ProductDetails { get; set; }
+    public int Inventory { get; set; }
 }

@@ -33,12 +33,12 @@ public class OrderRepository : IOrderRepository
 
     public async Task<IEnumerable<Order>> GetAllAsync(GetAllParams options)
     {
-        return await _orders.Skip(options.Offset).Take(options.Limit).ToListAsync();
+        return await _orders.Include("OrderDetails").Skip(options.Offset).Take(options.Limit).ToListAsync();
     }
 
     public async Task<Order?> GetOneByIdAsync(Guid id)
     {
-        return await _orders.FirstOrDefaultAsync(u => u.Id == id);
+        return await _orders.Include("OrderDetails").FirstOrDefaultAsync(u => u.Id == id);
     }
 
     public async Task<Order> UpdateOneAsync(Order updateItem)

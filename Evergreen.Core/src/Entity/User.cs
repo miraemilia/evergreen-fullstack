@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using Evergreen.Core.src.Enum;
 
 namespace Evergreen.Core.src.Entity;
@@ -5,6 +6,7 @@ namespace Evergreen.Core.src.Entity;
 public class User : BaseEntity
 {
     public string Name { get; set; }
+    [EmailAddress]
     public string Email { get; set; }
     public string Password { get; set; }
     public byte[] Salt { get; set; }

@@ -10,4 +10,5 @@ public class ProductUpdateDTO
     public Guid? CategoryId { get; set; }
     public IEnumerable<string>? ImageUrls { get; set; }
     public ProductDetailsUpdateDTO? ProductDetails { get; set; }
+    public int Inventory { get; set; }
 }

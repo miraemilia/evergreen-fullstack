@@ -32,19 +32,12 @@ public class ProductRepository : IProductRepository
 
     public async Task<IEnumerable<Product>> GetAllAsync(GetAllParams options)
     {
-        return await _products.Skip(options.Offset).Take(options.Limit).ToListAsync();
+        return await _products.Include("Category").Include("ProductDetails").Include("ProductImages").Skip(options.Offset).Take(options.Limit).ToListAsync();
     }
 
     public async Task<Product?> GetOneByIdAsync(Guid id)
     {
-        return await _products.FirstOrDefaultAsync(u => u.Id == id);
-
-/*         Join(_database.ProductDetails,
-            product => product.Id,
-            details => details.ProductId,
-            (product, details) => new {
-                
-            }) */
+        return await _products.Include("Category").Include("ProductDetails").Include("ProductImages").FirstOrDefaultAsync(u => u.Id == id);
     }
 
     public async Task<Product> UpdateOneAsync(Product updateItem)

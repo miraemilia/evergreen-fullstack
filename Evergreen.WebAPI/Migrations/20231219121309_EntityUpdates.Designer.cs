@@ -13,8 +13,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Evergreen.WebAPI.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20231213205542_UpdatedUser")]
-    partial class UpdatedUser
+    [Migration("20231219121309_EntityUpdates")]
+    partial class EntityUpdates
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -63,12 +63,14 @@ namespace Evergreen.WebAPI.Migrations
 
             modelBuilder.Entity("Evergreen.Core.src.Entity.Image", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
+                        .HasColumnType("uuid")
                         .HasColumnName("id");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("created_at");
 
                     b.Property<string>("Description")
                         .HasColumnType("text")
@@ -78,6 +80,10 @@ namespace Evergreen.WebAPI.Migrations
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("image_url");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("updated_at");
 
                     b.HasKey("Id")
                         .HasName("pk_images");
@@ -162,6 +168,10 @@ namespace Evergreen.WebAPI.Migrations
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("description");
+
+                    b.Property<int>("Inventory")
+                        .HasColumnType("integer")
+                        .HasColumnName("inventory");
 
                     b.Property<string>("LatinName")
                         .HasColumnType("text")
@@ -305,8 +315,8 @@ namespace Evergreen.WebAPI.Migrations
 
             modelBuilder.Entity("ImageProduct", b =>
                 {
-                    b.Property<int>("ProductImagesId")
-                        .HasColumnType("integer")
+                    b.Property<Guid>("ProductImagesId")
+                        .HasColumnType("uuid")
                         .HasColumnName("product_images_id");
 
                     b.Property<Guid>("ProductsId")
