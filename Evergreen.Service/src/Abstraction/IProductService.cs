@@ -10,4 +10,6 @@ public interface IProductService
     Task<ProductReadDTO> CreateProductAsync(ProductCreateDTO newProduct);
     Task<bool> DeleteProductAsync(Guid id);
     Task<ProductReadDTO> UpdateProductAsync(Guid id, ProductUpdateDTO updates);
+    Task<ProductReadDTO> UpdateProductInventoryAsync(Guid id, ProductInventoryUpdateDTO updates);
+    Task<ProductReadDTO> AddImageToProductAsync(Guid id, ProductImageAddDTO addDTO);
 }

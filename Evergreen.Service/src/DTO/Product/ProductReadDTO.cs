@@ -1,5 +1,3 @@
-using Evergreen.Core.src.Entity;
-
 namespace Evergreen.Service.src.DTO;
 
 public class ProductReadDTO
@@ -12,4 +10,5 @@ public class ProductReadDTO
     public CategoryReadDTO Category { get; set; }
     public IEnumerable<ImageReadDTO> ProductImages { get; set; }
     public ProductDetailsReadDTO? ProductDetails { get; set; }
+    public int Inventory { get; set; }
 }

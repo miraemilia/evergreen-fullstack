@@ -8,7 +8,4 @@ public class ProductUpdateDTO
     public string? LatinName { get; set; }
     public decimal? Price { get; set; }
     public Guid? CategoryId { get; set; }
-    public IEnumerable<string>? ImageUrls { get; set; }
-    public ProductDetailsUpdateDTO? ProductDetails { get; set; }
-    public int Inventory { get; set; }
 }

@@ -33,4 +33,9 @@ public class CustomException : Exception
     {
         return new CustomException (405, msg);
     }
+
+    public static CustomException InsufficientInventory(string msg = "Action cannot be implemented: not enough products in inventory.")
+    {
+        return new CustomException (405, msg);
+    }
 }

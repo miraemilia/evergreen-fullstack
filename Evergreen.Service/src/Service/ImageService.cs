@@ -8,6 +8,6 @@ namespace Evergreen.Service.src.Service;
 
 public class ImageService : BaseService<Image, ImageReadDTO, ImageCreateDTO, ImageUpdateDTO>, IImageService
 {
-    public ImageService(IBaseRepository<Image> repo, IMapper mapper) : base(repo, mapper)
+    public ImageService(IImageRepository repo, IMapper mapper) : base(repo, mapper)
     {}
 }

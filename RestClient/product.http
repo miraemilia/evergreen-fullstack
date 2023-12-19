@@ -60,11 +60,53 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIwYzYxN
 ###
 PATCH http://localhost:5180/api/v1/products/e88c76fd-2eb7-4e80-b9b9-17e778ddd8f0 HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIwYzYxNWRkYS1hMTUwLTRmNGItOGU2Ni0xMzcxYTllMGIzMTgiLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE3MDI5OTE0NDgsImV4cCI6MTcwMzE2NDI0OCwiaWF0IjoxNzAyOTkxNDQ4LCJpc3MiOiJFdmVyZ3JlZW5BZG1pbiIsImF1ZCI6IkV2ZXJncmVlbiJ9.SjCHnlVscAEByTwifDYtGIlwBGQuNVS38xG74nrDbKI
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIwYzYxNWRkYS1hMTUwLTRmNGItOGU2Ni0xMzcxYTllMGIzMTgiLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE3MDMwMTI2NjgsImV4cCI6MTcwMzE4NTQ2OCwiaWF0IjoxNzAzMDEyNjY4LCJpc3MiOiJFdmVyZ3JlZW5BZG1pbiIsImF1ZCI6IkV2ZXJncmVlbiJ9.axfS_TgpgyDxt_8TRgcgv4j2gjpZinHBo1LqbixbNxs
 
 {
   "title": "Tillandsia color mix"
 }
+
+###
+PATCH http://localhost:5180/api/v1/products/inventory/e88c76fd-2eb7-4e80-b9b9-17e778ddd8f0 HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIwYzYxNWRkYS1hMTUwLTRmNGItOGU2Ni0xMzcxYTllMGIzMTgiLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE3MDMwMTI2NjgsImV4cCI6MTcwMzE4NTQ2OCwiaWF0IjoxNzAzMDEyNjY4LCJpc3MiOiJFdmVyZ3JlZW5BZG1pbiIsImF1ZCI6IkV2ZXJncmVlbiJ9.axfS_TgpgyDxt_8TRgcgv4j2gjpZinHBo1LqbixbNxs
+
+{
+  "inventoryChange": 8
+}
+
+###
+PATCH http://localhost:5180/api/v1/products/details/e88c76fd-2eb7-4e80-b9b9-17e778ddd8f0 HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIwYzYxNWRkYS1hMTUwLTRmNGItOGU2Ni0xMzcxYTllMGIzMTgiLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE3MDMwMTI2NjgsImV4cCI6MTcwMzE4NTQ2OCwiaWF0IjoxNzAzMDEyNjY4LCJpc3MiOiJFdmVyZ3JlZW5BZG1pbiIsImF1ZCI6IkV2ZXJncmVlbiJ9.axfS_TgpgyDxt_8TRgcgv4j2gjpZinHBo1LqbixbNxs
+
+{
+  "watering": "Low"
+}
+
+###
+PATCH  http://localhost:5180/api/v1/products/productimages HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIwYzYxNWRkYS1hMTUwLTRmNGItOGU2Ni0xMzcxYTllMGIzMTgiLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE3MDI5OTE0NDgsImV4cCI6MTcwMzE2NDI0OCwiaWF0IjoxNzAyOTkxNDQ4LCJpc3MiOiJFdmVyZ3JlZW5BZG1pbiIsImF1ZCI6IkV2ZXJncmVlbiJ9.SjCHnlVscAEByTwifDYtGIlwBGQuNVS38xG74nrDbKI
+
+{
+  "imageUrl": "https://picsum.photos/400",
+  "productId": "e88c76fd-2eb7-4e80-b9b9-17e778ddd8f0"
+}
+
+###
+PATCH  http://localhost:5180/api/v1/products/images/011ba55f-16b5-4e54-afe4-cdef00522056 HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIwYzYxNWRkYS1hMTUwLTRmNGItOGU2Ni0xMzcxYTllMGIzMTgiLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE3MDI5OTE0NDgsImV4cCI6MTcwMzE2NDI0OCwiaWF0IjoxNzAyOTkxNDQ4LCJpc3MiOiJFdmVyZ3JlZW5BZG1pbiIsImF1ZCI6IkV2ZXJncmVlbiJ9.SjCHnlVscAEByTwifDYtGIlwBGQuNVS38xG74nrDbKI
+
+{
+  "description": "plant"
+}
+
+###
+DELETE  http://localhost:5180/api/v1/products/images/af73594e-554f-4b3c-9e04-1ccb010bcf13 HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIwYzYxNWRkYS1hMTUwLTRmNGItOGU2Ni0xMzcxYTllMGIzMTgiLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE3MDI5OTE0NDgsImV4cCI6MTcwMzE2NDI0OCwiaWF0IjoxNzAyOTkxNDQ4LCJpc3MiOiJFdmVyZ3JlZW5BZG1pbiIsImF1ZCI6IkV2ZXJncmVlbiJ9.SjCHnlVscAEByTwifDYtGIlwBGQuNVS38xG74nrDbKI
 
 ###
 DELETE http://localhost:5180/api/v1/products/63acdf80-c6d5-4d88-ab67-4ea07e30a4e4 HTTP/1.1
