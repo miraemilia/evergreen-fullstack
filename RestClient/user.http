@@ -4,7 +4,7 @@ content-type: application/json
 
 {
   "name": "Andrew Miller",
-  "email": "andy@mail.com",
+  "email": "andrewm@mail.com",
   "password": "12345",
   "avatar": "https://picsum.photos/200"
 }
@@ -23,7 +23,7 @@ POST http://localhost:5180/api/v1/auth/login HTTP/1.1
 Content-Type: application/json
 
 {
-    "email": "matti@mail.com",
+    "email": "andrewm@mail.com",
     "password": "12345"
 }
 
@@ -45,14 +45,24 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJjOGE1N
 }
 
 ###
+PATCH http://localhost:5180/api/v1/auth/profile/ed6a2c95-e2af-434d-874d-b6eefd54930c HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJlZDZhMmM5NS1lMmFmLTQzNGQtODc0ZC1iNmVlZmQ1NDkzMGMiLCJyb2xlIjoiQ3VzdG9tZXIiLCJuYmYiOjE3MDI5OTQ1NTcsImV4cCI6MTcwMzE2NzM1NywiaWF0IjoxNzAyOTk0NTU3LCJpc3MiOiJFdmVyZ3JlZW5BZG1pbiIsImF1ZCI6IkV2ZXJncmVlbiJ9.CTEH9C0md0QF4qYRvQ1qwPQDiEcS5PMdjZkfKt_4s3Q
+
+{
+  "email": "andrew.miller@mail.com"
+}
+
+
+###
 DELETE http://localhost:5180/api/v1/auth/profile/a72edcea-3572-4432-936e-a1e92f7e8172 HTTP/1.1
 content-type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJhNzJlZGNlYS0zNTcyLTQ0MzItOTM2ZS1hMWU5MmY3ZTgxNzIiLCJyb2xlIjoiQ3VzdG9tZXIiLCJuYmYiOjE3MDI3MzM5NDEsImV4cCI6MTcwMjkwNjc0MSwiaWF0IjoxNzAyNzMzOTQxLCJpc3MiOiJFdmVyZ3JlZW5BZG1pbiIsImF1ZCI6IkV2ZXJncmVlbiJ9.Q4MneJcd3fMxjc-4InM-NLhZH6DabUsczjGmc20fR_c
 
 ###
-PATCH http://localhost:5180/api/v1/users/a72edcea-3572-4432-936e-a1e92f7e8172 HTTP/1.1
+PATCH http://localhost:5180/api/v1/users/ed6a2c95-e2af-434d-874d-b6eefd54930c HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJlOTNkZGM5NC01ZjJiLTQxMjktODEwZS05ZGJlMWRjNTA1NTkiLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE3MDI3MzM4NDIsImV4cCI6MTcwMjkwNjY0MiwiaWF0IjoxNzAyNzMzODQyLCJpc3MiOiJFdmVyZ3JlZW5BZG1pbiIsImF1ZCI6IkV2ZXJncmVlbiJ9.Y-tiFCiO95eyN183zvXrLngXN6kpYG9CWjLkPnmIEys
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJlZDZhMmM5NS1lMmFmLTQzNGQtODc0ZC1iNmVlZmQ1NDkzMGMiLCJyb2xlIjoiQ3VzdG9tZXIiLCJuYmYiOjE3MDI5OTQ1NTcsImV4cCI6MTcwMzE2NzM1NywiaWF0IjoxNzAyOTk0NTU3LCJpc3MiOiJFdmVyZ3JlZW5BZG1pbiIsImF1ZCI6IkV2ZXJncmVlbiJ9.CTEH9C0md0QF4qYRvQ1qwPQDiEcS5PMdjZkfKt_4s3Q
 
 {
   "role": "Customer"

@@ -58,8 +58,7 @@ public class AuthService : IAuthService
                     throw CustomException.EmailNotAvailable($"Email {update.Email} is unavailable.");
                 }
             }
-            //var updatedUser = _mapper.Map(update, userToUpdate);
-            var updatedUser = update.Merge(userToUpdate);
+            var updatedUser = _mapper.Map(update, userToUpdate);
             var updated = await _userRepo.UpdateOneAsync(updatedUser);
             return _mapper.Map<User, UserReadDTO>(updated);
         }

@@ -60,7 +60,7 @@ public class CategoryService : ICategoryService
         var categoryToUpdate = await _categoryRepo.GetOneByIdAsync(id);
         if (categoryToUpdate != null)
         {
-            var updatedCategory = updates.Merge(categoryToUpdate);
+            var updatedCategory = _mapper.Map(updates, categoryToUpdate);
             var updated = await _categoryRepo.UpdateOneAsync(updatedCategory);
             return _mapper.Map<Category, CategoryReadDTO>(updated);
         }
