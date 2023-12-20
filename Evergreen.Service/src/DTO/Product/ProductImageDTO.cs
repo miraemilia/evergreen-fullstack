@@ -1,8 +1,6 @@
-using Evergreen.Core.src.Entity;
-
 namespace Evergreen.Service.src.DTO;
 
-public class ProductImageAddDTO
+public class ProductImageDTO
 {
     public Guid ImageId { get; set; }
 }

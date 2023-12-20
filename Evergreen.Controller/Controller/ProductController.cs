@@ -44,7 +44,6 @@ public class ProductController : ControllerBase
         return CreatedAtAction(nameof(CreateOne), await _productService.CreateProductAsync(productCreateDTO));
     }
 
-// Not working: violates foreign key constraint: category_id
     [Authorize (Roles = "Admin")]
     [HttpPatch("{id:Guid}")]
     public async Task<ActionResult<ProductReadDTO>> UpdateOne([FromRoute] Guid id, [FromBody] ProductUpdateDTO productUpdateDTO)
@@ -66,21 +65,18 @@ public class ProductController : ControllerBase
         return Ok(await _imageService.UpdateOneAsync(id, imageUpdateDTO));
     }
 
-//Not working: only adds to image table, not connecting table
     [Authorize (Roles = "Admin")]
     [HttpPatch("productimages")]
-    public async Task<ActionResult<ProductReadDTO>> CreateImage([FromBody] ImageCreateDTO imageCreateDTO)
+    public async Task<ActionResult<ProductReadDTO>> CreateProductImage([FromBody] ImageCreateDTO imageCreateDTO)
     {
-        await _imageService.CreateOneAsync(imageCreateDTO);
-        return Ok(await _productService.GetProductByIdAsync(imageCreateDTO.ProductId));
+        return Ok(await _productService.CreateProductImageAsync(imageCreateDTO));
     } 
 
-//Not working: how to add to many-to-many connection table?
     [Authorize (Roles = "Admin")]
-    [HttpPatch("productimages/{id:Guid}")]
-    public async Task<ActionResult<ProductReadDTO>> AddImage([FromRoute] Guid id, [FromBody] ProductImageAddDTO imageAddDTO)
+    [HttpPatch("productimages/{productId:Guid}")]
+    public async Task<ActionResult<ProductReadDTO>> AddProductImage([FromRoute] Guid productId, [FromBody] ProductImageDTO imageAddDTO)
     {
-        return Ok(await _productService.AddImageToProductAsync(id, imageAddDTO));
+        return Ok(await _productService.AddProductImageAsync(productId, imageAddDTO));
     }
 
     [Authorize (Roles= "Admin")]
@@ -90,7 +86,13 @@ public class ProductController : ControllerBase
         return Ok(await _imageService.DeleteOneAsync(imageId));
     }
 
-//Not working: service method cannot connect to repo method GetOneByProductId
+    [Authorize (Roles= "Admin")]
+    [HttpDelete("productimages/{productId:Guid}")]
+    public async Task<ActionResult<bool>> RemoveProductImage([FromRoute] Guid productId, [FromBody] ProductImageDTO deleteDTO)
+    {
+        return Ok(await _productService.RemoveProductImageAsync(productId, deleteDTO));
+    }
+
     [Authorize (Roles = "Admin")]
     [HttpPatch("details/{productId:Guid}")]
     public async Task<ActionResult<ProductReadDTO>> UpdateProductDetails([FromRoute] Guid productId, [FromBody] ProductDetailsUpdateDTO detailsUpdateDTO)

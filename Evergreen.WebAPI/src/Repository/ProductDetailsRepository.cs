@@ -14,4 +14,5 @@ public class ProductDetailsRepository : BaseRepository<ProductDetails>, IProduct
     {
        return await _data.FirstOrDefaultAsync(pd => pd.ProductId == productId);
     }
+    
 }

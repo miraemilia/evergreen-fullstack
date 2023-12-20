@@ -1,4 +1,5 @@
 using Evergreen.Service.src.Shared;
+using Microsoft.EntityFrameworkCore;
 
 namespace Evergreen.WebAPI.src.Middleware;
 
@@ -10,15 +11,17 @@ public class ExceptionMiddleware : IMiddleware
         {
             await next(context);
         }
+        catch (DbUpdateException e)
+        {
+            await context.Response.WriteAsync(e.InnerException.Message);
+        }
         catch (CustomException e)
         {
-            Console.WriteLine(e);
             context.Response.StatusCode = e.StatusCode;
             await context.Response.WriteAsJsonAsync(e.Message);
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
             context.Response.StatusCode = 500;
             await context.Response.WriteAsync(e.Message);
         }

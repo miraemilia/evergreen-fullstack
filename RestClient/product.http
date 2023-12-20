@@ -21,6 +21,10 @@ GET http://localhost:5180/api/v1/products HTTP/1.1
 content-type: application/json
 
 ###
+GET http://localhost:5180/api/v1/products/e88c76fd-2eb7-4e80-b9b9-17e778ddd8f0 HTTP/1.1
+content-type: application/json
+
+###
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI3ZmYzMTZjOS02YjZkLTQ5YzUtOWNhMi05Mjk4YjYzNzA4NTYiLCJyb2xlIjoiQ3VzdG9tZXIiLCJuYmYiOjE3MDI3MTI2MzAsImV4cCI6MTcwMjg4NTQzMCwiaWF0IjoxNzAyNzEyNjMwLCJpc3MiOiJFdmVyZ3JlZW5BZG1pbiIsImF1ZCI6IkV2ZXJncmVlbiJ9.8I_xpbP9Krr1hc00BdwwZzf-ljQB5BYNdQZk_GY-bmE
 
 ###
@@ -63,7 +67,7 @@ content-type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIwYzYxNWRkYS1hMTUwLTRmNGItOGU2Ni0xMzcxYTllMGIzMTgiLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE3MDMwMTI2NjgsImV4cCI6MTcwMzE4NTQ2OCwiaWF0IjoxNzAzMDEyNjY4LCJpc3MiOiJFdmVyZ3JlZW5BZG1pbiIsImF1ZCI6IkV2ZXJncmVlbiJ9.axfS_TgpgyDxt_8TRgcgv4j2gjpZinHBo1LqbixbNxs
 
 {
-  "title": "Tillandsia color mix"
+  "title": "Tillandsia mix"
 }
 
 ###
@@ -81,7 +85,7 @@ content-type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIwYzYxNWRkYS1hMTUwLTRmNGItOGU2Ni0xMzcxYTllMGIzMTgiLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE3MDMwMTI2NjgsImV4cCI6MTcwMzE4NTQ2OCwiaWF0IjoxNzAzMDEyNjY4LCJpc3MiOiJFdmVyZ3JlZW5BZG1pbiIsImF1ZCI6IkV2ZXJncmVlbiJ9.axfS_TgpgyDxt_8TRgcgv4j2gjpZinHBo1LqbixbNxs
 
 {
-  "watering": "Low"
+  "watering": "Medium"
 }
 
 ###
@@ -90,8 +94,26 @@ content-type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIwYzYxNWRkYS1hMTUwLTRmNGItOGU2Ni0xMzcxYTllMGIzMTgiLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE3MDI5OTE0NDgsImV4cCI6MTcwMzE2NDI0OCwiaWF0IjoxNzAyOTkxNDQ4LCJpc3MiOiJFdmVyZ3JlZW5BZG1pbiIsImF1ZCI6IkV2ZXJncmVlbiJ9.SjCHnlVscAEByTwifDYtGIlwBGQuNVS38xG74nrDbKI
 
 {
-  "imageUrl": "https://picsum.photos/400",
+  "imageUrl": "https://picsum.photos/600",
   "productId": "e88c76fd-2eb7-4e80-b9b9-17e778ddd8f0"
+}
+
+###
+PATCH  http://localhost:5180/api/v1/products/productimages/e88c76fd-2eb7-4e80-b9b9-17e778ddd8f0 HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIwYzYxNWRkYS1hMTUwLTRmNGItOGU2Ni0xMzcxYTllMGIzMTgiLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE3MDI5OTE0NDgsImV4cCI6MTcwMzE2NDI0OCwiaWF0IjoxNzAyOTkxNDQ4LCJpc3MiOiJFdmVyZ3JlZW5BZG1pbiIsImF1ZCI6IkV2ZXJncmVlbiJ9.SjCHnlVscAEByTwifDYtGIlwBGQuNVS38xG74nrDbKI
+
+{
+  "imageId": "67397370-3727-4e5f-a527-b6a39ca59feb"
+}
+
+###
+DELETE  http://localhost:5180/api/v1/products/productimages/e88c76fd-2eb7-4e80-b9b9-17e778ddd8f0 HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIwYzYxNWRkYS1hMTUwLTRmNGItOGU2Ni0xMzcxYTllMGIzMTgiLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE3MDI5OTE0NDgsImV4cCI6MTcwMzE2NDI0OCwiaWF0IjoxNzAyOTkxNDQ4LCJpc3MiOiJFdmVyZ3JlZW5BZG1pbiIsImF1ZCI6IkV2ZXJncmVlbiJ9.SjCHnlVscAEByTwifDYtGIlwBGQuNVS38xG74nrDbKI
+
+{
+  "imageId": "1f3406e1-1ac1-49be-b710-b805b3548582"
 }
 
 ###

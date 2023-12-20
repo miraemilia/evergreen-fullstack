@@ -38,6 +38,8 @@ public class MapperProfile : Profile
             .ForMember(dest => dest.ProductImages, opt => opt.MapFrom(s => s.ProductImages));
         CreateMap<ProductUpdateDTO, Product>()
             .ForAllMembers(opt => opt.Condition((src, dest, member) => member != null));
+        CreateMap<List<Image>, Product>()
+            .ForMember(dest => dest.ProductImages, opt => opt.MapFrom(s => s));
 
         CreateMap<OrderProduct, OrderProductReadDTO>();
         CreateMap<OrderProductCreateDTO, OrderProduct>();

@@ -13,12 +13,14 @@ public class ProductService : IProductService
     private IProductRepository _productRepo;
     private IMapper _mapper;
     private ICategoryRepository _categoryRepo;
+    private IImageRepository _imageRepo;
 
-    public ProductService(IProductRepository productRepo, IMapper mapper, ICategoryRepository categoryRepo)
+    public ProductService(IProductRepository productRepo, IMapper mapper, ICategoryRepository categoryRepo, IImageRepository imageRepo)
     {
         _productRepo = productRepo;
         _mapper = mapper;
         _categoryRepo = categoryRepo;
+        _imageRepo = imageRepo;
     }
 
     public async Task<ProductReadDTO> CreateProductAsync(ProductCreateDTO newProduct)
@@ -62,7 +64,6 @@ public class ProductService : IProductService
         }
     }
 
-// violates foreign key constraint: category_id
     public async Task<ProductReadDTO> UpdateProductAsync(Guid id, ProductUpdateDTO updates)
     {
         var productToUpdate = await _productRepo.GetOneByIdAsync(id);
@@ -78,6 +79,10 @@ public class ProductService : IProductService
         if (productToUpdate != null)
         {
             var updatedProduct = _mapper.Map(updates, productToUpdate);
+            if (updates.CategoryId == null)
+            {
+                updatedProduct.CategoryId = productToUpdate.Category.Id;
+            }
             var updated = await _productRepo.UpdateOneAsync(updatedProduct);
             return _mapper.Map<Product, ProductReadDTO>(updated);
         }
@@ -106,17 +111,50 @@ public class ProductService : IProductService
         }
     }
 
-// how to add to many-to-many connection table?
-    public async Task<ProductReadDTO> AddImageToProductAsync(Guid id, ProductImageAddDTO addDTO)
+    public async Task<ProductReadDTO> AddProductImageAsync(Guid id, ProductImageDTO addDTO)
     {
         var product = await _productRepo.GetOneByIdAsync(id);
+        var image = await _imageRepo.GetOneByIdAsync(addDTO.ImageId);
+        if (image is null)
+        {
+            throw CustomException.NotFoundException("Image not found");
+        }
         if (product != null)
         {
-            //product.ProductImages.Add(addDTO.ImageId);
+            var productImages = product.ProductImages.Append(image).ToList();
+            var updatedProduct = _mapper.Map(productImages, product);
+            var updated = await _productRepo.UpdateOneAsync(updatedProduct);
+            return _mapper.Map<Product, ProductReadDTO>(updated);
+        }
+        throw CustomException.NotFoundException("Product not found");
+    }
+
+    public async Task<ProductReadDTO> RemoveProductImageAsync(Guid productId, ProductImageDTO removeDTO)
+    {
+        var product = await _productRepo.GetOneByIdAsync(productId);
+        var image = await _imageRepo.GetOneByIdAsync(removeDTO.ImageId);
+        if (product != null)
+        {
+            var productImages = product.ProductImages.Where(i => i.Id != removeDTO.ImageId).ToList();
+            var updatedProduct = _mapper.Map(productImages, product);
             var updated = await _productRepo.UpdateOneAsync(product);
             return _mapper.Map<Product, ProductReadDTO>(updated);
         }
         throw CustomException.NotFoundException("Product not found");
+    }
 
+    public async Task<ProductReadDTO> CreateProductImageAsync(ImageCreateDTO imageCreateDTO)
+    {
+        
+        var product = await _productRepo.GetOneByIdAsync(imageCreateDTO.ProductId);
+        if (product != null)
+        {
+            var newImage = _mapper.Map(imageCreateDTO, new Image(){});
+            var createdImage = await _imageRepo.CreateOneAsync(newImage);
+            await AddProductImageAsync(imageCreateDTO.ProductId, new ProductImageDTO(){ImageId = createdImage.Id});
+            return await GetProductByIdAsync(imageCreateDTO.ProductId);
+        }
+        throw CustomException.NotFoundException("Product not found");
+        
     }
 }
