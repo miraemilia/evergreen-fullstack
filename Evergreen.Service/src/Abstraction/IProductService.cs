@@ -15,4 +15,5 @@ public interface IProductService
     Task<ProductReadDTO> AddProductImageAsync(Guid id, ProductImageDTO addDTO);
     Task<ProductReadDTO> RemoveProductImageAsync(Guid id, ProductImageDTO addDTO);
     Task<ProductReadDTO> CreateProductImageAsync(Guid id, ImageCreateDTO imageCreateDTO);
+    Task<MaxMinPrice> GetMaxMinPrice();
 }

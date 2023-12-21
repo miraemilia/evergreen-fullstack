@@ -33,7 +33,11 @@ public class ProductRepository : IProductRepository
 
     public async Task<IEnumerable<Product>> GetAllAsync(GetAllParams options)
     {
-        return await _products.Include("Category").Include("ProductDetails").Include("ProductImages").Skip(options.Offset).Take(options.Limit).ToListAsync();
+        if (options.Id == null || options.Id == Guid.Parse("00000000-0000-0000-0000-000000000000"))
+        {
+            return await _products.Include("Category").Include("ProductDetails").Include("ProductImages").Where(p => p.Title.ToLower().Contains(options.Search.ToLower())).Skip(options.Offset).Take(options.Limit).ToListAsync();
+        }
+        return await _products.Include("Category").Include("ProductDetails").Include("ProductImages").Where(p => p.Category.Id == options.Id && p.Title.ToLower().Contains(options.Search.ToLower())).Skip(options.Offset).Take(options.Limit).ToListAsync();
     }
 
     public async Task<Product?> GetOneByIdAsync(Guid id)
@@ -56,5 +60,12 @@ public class ProductRepository : IProductRepository
         _products.Update(updateItem);
         await _database.SaveChangesAsync();
         return updateItem;
+    }
+
+    public async Task<MaxMinPrice> GetMaxMinPrice()
+    {
+        var max = await _products.MaxAsync(p => p.Price);
+        var min = await _products.MinAsync(p => p.Price);
+        return new MaxMinPrice(){Max = max, Min = min};
     }
 }

@@ -163,4 +163,9 @@ public class ProductService : IProductService
         var result = await _productRepo.GetProductImages(productId);
         return _mapper.Map<IEnumerable<Image>, IEnumerable<ImageReadDTO>>(result);
     }
+
+    public async Task<MaxMinPrice> GetMaxMinPrice()
+    {
+        return await _productRepo.GetMaxMinPrice();
+    }
 }

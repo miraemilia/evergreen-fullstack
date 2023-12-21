@@ -70,4 +70,11 @@ public class ProductController : ControllerBase
         return Ok(await _productService.DeleteProductAsync(id));
     }
 
+    [AllowAnonymous]
+    [HttpGet ("price-range")]
+    public async Task<ActionResult<MaxMinPrice>> GetPriceRange()
+    {
+        return Ok(await _productService.GetMaxMinPrice());
+    }
+
 }

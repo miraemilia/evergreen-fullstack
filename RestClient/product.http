@@ -67,7 +67,17 @@ content-type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIwYzYxNWRkYS1hMTUwLTRmNGItOGU2Ni0xMzcxYTllMGIzMTgiLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE3MDMwMTI2NjgsImV4cCI6MTcwMzE4NTQ2OCwiaWF0IjoxNzAzMDEyNjY4LCJpc3MiOiJFdmVyZ3JlZW5BZG1pbiIsImF1ZCI6IkV2ZXJncmVlbiJ9.axfS_TgpgyDxt_8TRgcgv4j2gjpZinHBo1LqbixbNxs
 
 {
-  "title": "Tillandsia mix"
+  "price": "14.59"
+}
+
+###
+PATCH http://localhost:5180/api/v1/products/e88c76fd-2eb7-4e80-b9b9-17e778ddd8f0 HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIwYzYxNWRkYS1hMTUwLTRmNGItOGU2Ni0xMzcxYTllMGIzMTgiLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE3MDMwMTI2NjgsImV4cCI6MTcwMzE4NTQ2OCwiaWF0IjoxNzAzMDEyNjY4LCJpc3MiOiJFdmVyZ3JlZW5BZG1pbiIsImF1ZCI6IkV2ZXJncmVlbiJ9.axfS_TgpgyDxt_8TRgcgv4j2gjpZinHBo1LqbixbNxs
+
+{
+  "latinName": "Tillandsia officinalis",
+  "description": "Elegant air plant"
 }
 
 ###
