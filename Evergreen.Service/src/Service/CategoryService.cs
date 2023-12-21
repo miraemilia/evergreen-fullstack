@@ -36,9 +36,9 @@ public class CategoryService : ICategoryService
         throw CustomException.NotFoundException("Category not found");
     }
 
-    public async Task<IEnumerable<CategoryReadDTO>> GetAllCategoriesAsync(GetAllParams options)
+    public async Task<IEnumerable<CategoryReadDTO>> GetAllCategoriesAsync()
     {
-        var result = await _categoryRepo.GetAllAsync(options);
+        var result = await _categoryRepo.GetAllParameterlessAsync();
         return _mapper.Map<IEnumerable<Category>, IEnumerable<CategoryReadDTO>>(result);
     }
 

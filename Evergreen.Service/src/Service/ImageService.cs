@@ -7,7 +7,7 @@ using Evergreen.Service.src.DTO;
 
 namespace Evergreen.Service.src.Service;
 
-public class ImageService : BaseService<Image, IImageRepository, ImageReadDTO, ImageCreateDTO, ImageUpdateDTO>, IImageService
+public class ImageService : BaseService<Image, IImageRepository, ImagePageableReadDTO, ImageReadDTO, ImageCreateDTO, ImageUpdateDTO>, IImageService
 {
     public ImageService(IImageRepository repo, IMapper mapper) : base(repo, mapper)
     {}

@@ -58,10 +58,15 @@ public class OrderService : IOrderService
         return await _orderRepo.DeleteOneAsync(orderToDelete);
     }
 
-    public async Task<IEnumerable<OrderReadDTO>> GetAllOrdersAsync(GetAllParams options)
+    public async Task<OrderPageableReadDTO> GetAllOrdersAsync(GetAllParams options)
     {
         var result = await _orderRepo.GetAllAsync(options);
-        return _mapper.Map<IEnumerable<Order>, IEnumerable<OrderReadDTO>>(result);    }
+        var total = await _orderRepo.GetCountAsync(options);
+        var foundOrders = _mapper.Map<IEnumerable<Order>, IEnumerable<OrderReadDTO>>(result);
+        int pages = (total + options.Limit -1)/options.Limit;
+        var response = new OrderPageableReadDTO(){Items = foundOrders, TotalItems = total, Pages = pages};
+        return response;
+    }
 
     public async Task<OrderReadDTO> GetOrderByIdAsync(Guid id)
     {

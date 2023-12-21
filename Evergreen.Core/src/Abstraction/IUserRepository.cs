@@ -8,4 +8,5 @@ public interface IUserRepository : IBaseRepository<User>
 {
     Task<User?> GetOneByEmailAsync(string email);
     Task<bool> EmailAvailable(string email);
+    Task<int> GetCountAsync(GetAllParams options);
 }

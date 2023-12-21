@@ -35,6 +35,16 @@ public class CategoryRepository : ICategoryRepository
         return await _categories.Skip(options.Offset).Take(options.Limit).ToListAsync();
     }
 
+    public async Task<IEnumerable<Category>> GetAllParameterlessAsync()
+    {
+        return await _categories.ToListAsync();
+    }
+
+    public Task<int> GetCountAsync(GetAllParams options)
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<Category?> GetOneByIdAsync(Guid id)
     {
         return await _categories.FirstOrDefaultAsync(u => u.Id == id);

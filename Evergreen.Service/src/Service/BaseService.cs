@@ -3,11 +3,12 @@ using Evergreen.Core.src.Abstraction;
 using Evergreen.Core.src.Entity;
 using Evergreen.Core.src.Parameter;
 using Evergreen.Service.src.Abstraction;
+using Evergreen.Service.src.DTO;
 using Evergreen.Service.src.Shared;
 
 namespace Evergreen.Service.src.Service;
 
-public class BaseService<T, TRepo, TReadDTO, TCreateDTO, TUpdateDTO> : IBaseService<T, TRepo, TReadDTO, TCreateDTO, TUpdateDTO> where T : BaseEntity where TRepo : IBaseRepository<T>
+public class BaseService<T, TRepo, TPageableReadDTO, TReadDTO, TCreateDTO, TUpdateDTO> : IBaseService<T, TRepo, TPageableReadDTO, TReadDTO, TCreateDTO, TUpdateDTO> where T : BaseEntity where TRepo : IBaseRepository<T> where TPageableReadDTO : BasePageableReadDTO<TReadDTO>
 {
     protected TRepo _repo;
     protected IMapper _mapper;
@@ -34,10 +35,14 @@ public class BaseService<T, TRepo, TReadDTO, TCreateDTO, TUpdateDTO> : IBaseServ
         throw CustomException.NotFoundException("Could not delete: item not found");
     }
 
-    public virtual async Task<IEnumerable<TReadDTO>> GetAllAsync(GetAllParams options)
+    public virtual async Task<BasePageableReadDTO<TReadDTO>> GetAllAsync(GetAllParams options)
     {
         var result = await _repo.GetAllAsync(options);
-        return _mapper.Map<IEnumerable<T>, IEnumerable<TReadDTO>>(result);
+        var total = await _repo.GetCountAsync(options);
+        var foundItems = _mapper.Map<IEnumerable<T>, IEnumerable<TReadDTO>>(result);
+        int pages = (total + options.Limit -1)/options.Limit;
+        var response = new BasePageableReadDTO<TReadDTO>(){Items = foundItems, TotalItems = total, Pages = pages};
+        return response;
     }
 
     public virtual async Task<TReadDTO?> GetOneByIdAsync(Guid id)

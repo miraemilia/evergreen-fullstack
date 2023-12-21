@@ -7,7 +7,7 @@ using Evergreen.Service.src.Shared;
 
 namespace Evergreen.Service.src.Service;
 
-public class ProductDetailsService : BaseService<ProductDetails, IProductDetailsRepository, ProductDetailsReadDTO, ProductDetailsCreateDTO, ProductDetailsUpdateDTO>, IProductDetailsService
+public class ProductDetailsService : BaseService<ProductDetails, IProductDetailsRepository, ProductDetailsPageableReadDTO, ProductDetailsReadDTO, ProductDetailsCreateDTO, ProductDetailsUpdateDTO>, IProductDetailsService
 {
     public ProductDetailsService(IProductDetailsRepository repo, IMapper mapper) : base(repo, mapper)
     {}

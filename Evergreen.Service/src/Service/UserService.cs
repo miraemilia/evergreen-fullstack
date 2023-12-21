@@ -50,10 +50,14 @@ public class UserService : IUserService
         return await _userRepo.EmailAvailable(email);
     }
 
-    public async Task<IEnumerable<UserReadDTO>> GetAllUsersAsync(GetAllParams options)
+    public async Task<UserPageableReadDTO> GetAllUsersAsync(GetAllParams options)
     {
         var result = await _userRepo.GetAllAsync(options);
-        return _mapper.Map<IEnumerable<User>, IEnumerable<UserReadDTO>>(result);
+        var total = await _userRepo.GetCountAsync(options);
+        var foundUsers = _mapper.Map<IEnumerable<User>, IEnumerable<UserReadDTO>>(result);
+        int pages = (total + options.Limit -1)/options.Limit;
+        var response = new UserPageableReadDTO(){Items = foundUsers, TotalItems = total, Pages = pages};
+        return response;
     }
 
     public async Task<UserReadDTO> GetUserByIdAsync(Guid id)

@@ -46,6 +46,11 @@ public class UserRepository : IUserRepository
         return await _users.Skip(options.Offset).Take(options.Limit).ToListAsync();
     }
 
+    public async Task<int> GetCountAsync(GetAllParams options)
+    {
+        return await _users.CountAsync();
+    }
+
     public async Task<User?> GetOneByEmailAsync(string email)
     {
         return await _users.FirstOrDefaultAsync(u => u.Email == email);

@@ -19,9 +19,9 @@ public class CategoryController : ControllerBase
 
     [AllowAnonymous]
     [HttpGet()]
-    public async Task<ActionResult<IEnumerable<CategoryReadDTO>>> GetAll([FromQuery] GetAllParams options)
+    public async Task<ActionResult<IEnumerable<CategoryReadDTO>>> GetAll()
     {
-        return Ok(await _categoryService.GetAllCategoriesAsync(options));
+        return Ok(await _categoryService.GetAllCategoriesAsync());
     }
 
     [AllowAnonymous]

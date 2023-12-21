@@ -68,6 +68,11 @@ public class OrderRepository : IOrderRepository
         return await _orders.Include("OrderDetails").Skip(options.Offset).Take(options.Limit).ToListAsync();
     }
 
+    public async Task<int> GetCountAsync(GetAllParams options)
+    {
+        return await _orders.CountAsync();
+    }
+
     public async Task<Order?> GetOneByIdAsync(Guid id)
     {
         return await _orders.Include("OrderDetails").FirstOrDefaultAsync(u => u.Id == id);

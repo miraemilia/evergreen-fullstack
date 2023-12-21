@@ -20,7 +20,7 @@ public class UserController : ControllerBase
 
     [Authorize (Roles= "Admin")]
     [HttpGet()]
-    public async Task<ActionResult<IEnumerable<UserReadDTO>>> GetAll([FromQuery] GetAllParams options)
+    public async Task<ActionResult<UserPageableReadDTO>> GetAll([FromQuery] GetAllParams options)
     {
         return Ok(await _userService.GetAllUsersAsync(options));
     }

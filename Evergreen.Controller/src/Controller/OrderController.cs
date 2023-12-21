@@ -20,7 +20,7 @@ public class OrderController : ControllerBase
 
     [Authorize (Roles = "Admin")]
     [HttpGet()]
-    public async Task<ActionResult<IEnumerable<OrderReadDTO>>> GetAll([FromQuery] GetAllParams options)
+    public async Task<ActionResult<OrderPageableReadDTO>> GetAll([FromQuery] GetAllParams options)
     {
         return Ok(await _orderService.GetAllOrdersAsync(options));
     }

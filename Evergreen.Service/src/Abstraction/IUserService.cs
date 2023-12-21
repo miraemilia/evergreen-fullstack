@@ -6,7 +6,7 @@ namespace Evergreen.Service.src.Abstraction;
 
 public interface IUserService
 {
-    Task<IEnumerable<UserReadDTO>> GetAllUsersAsync(GetAllParams options);
+    Task<UserPageableReadDTO> GetAllUsersAsync(GetAllParams options);
     Task<UserReadDTO> GetUserByIdAsync(Guid id);
     Task<UserReadDTO> CreateUserAsync(UserWithRoleCreateDTO newUser);
     Task<bool> DeleteUserAsync(Guid id);

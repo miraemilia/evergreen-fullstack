@@ -22,7 +22,7 @@ public class ImageController : ControllerBase
 
     [AllowAnonymous]
     [HttpGet()]
-    public async Task<ActionResult<IEnumerable<ImageReadDTO>>> GetAll([FromQuery] GetAllParams options)
+    public async Task<ActionResult<ImagePageableReadDTO>> GetAll([FromQuery] GetAllParams options)
     {
         return Ok(await _imageService.GetAllAsync(options));
     }

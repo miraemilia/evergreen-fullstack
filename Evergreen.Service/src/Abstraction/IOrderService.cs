@@ -5,7 +5,7 @@ namespace Evergreen.Service.src.Abstraction;
 
 public interface IOrderService
 {
-    Task<IEnumerable<OrderReadDTO>> GetAllOrdersAsync(GetAllParams options);
+    Task<OrderPageableReadDTO> GetAllOrdersAsync(GetAllParams options);
     Task<OrderReadDTO> GetOrderByIdAsync(Guid id);
     Task<OrderReadDTO> CreateOrderAsync(OrderCreateDTO newOrder);
     Task<bool> DeleteOrderAsync(Guid id);

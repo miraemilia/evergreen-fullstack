@@ -36,6 +36,11 @@ public abstract class BaseRepository<T> : IBaseRepository<T> where T : BaseEntit
         return await _data.Skip(options.Offset).Take(options.Limit).ToListAsync();
     }
 
+    public async Task<int> GetCountAsync(GetAllParams options)
+    {
+        return await _data.CountAsync();
+    }
+
     public virtual async Task<T?> GetOneByIdAsync(Guid id)
     {
         return await _data.FirstOrDefaultAsync(u => u.Id == id);
