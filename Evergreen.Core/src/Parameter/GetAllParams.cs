@@ -10,4 +10,6 @@ public class GetAllParams
     public string Search { get; set; } = string.Empty;
     public SortOrder SortOrder { get; set; } = SortOrder.Asc;
     public SortCriterion SortCriterion { get; set; } = SortCriterion.CreatedAt;
+    public int? PriceMax { get; set; }
+    public int? PriceMin { get; set; }
 }

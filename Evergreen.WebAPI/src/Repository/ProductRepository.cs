@@ -1,5 +1,6 @@
 using Evergreen.Core.src.Abstraction;
 using Evergreen.Core.src.Entity;
+using Evergreen.Core.src.Enum;
 using Evergreen.Core.src.Parameter;
 using Evergreen.Service.src.Shared;
 using Evergreen.WebAPI.src.Database;
@@ -33,20 +34,71 @@ public class ProductRepository : IProductRepository
 
     public async Task<IEnumerable<Product>> GetAllAsync(GetAllParams options)
     {
-        if (options.Id == null || options.Id == Guid.Parse("00000000-0000-0000-0000-000000000000"))
+        var query = _products.Include("Category").Include("ProductDetails").Include("ProductImages").Where(p => p.Title.ToLower().Contains(options.Search.ToLower())).AsQueryable();
+        if (options.Id.HasValue && options.Id != Guid.Parse("00000000-0000-0000-0000-000000000000"))
         {
-            return await _products.Include("Category").Include("ProductDetails").Include("ProductImages").Where(p => p.Title.ToLower().Contains(options.Search.ToLower())).Skip(options.Offset).Take(options.Limit).ToListAsync(); 
+            query = query.Where(p => p.Category.Id == options.Id);
         }
-        return await _products.Include("Category").Include("ProductDetails").Include("ProductImages").Where(p => p.Category.Id == options.Id && p.Title.ToLower().Contains(options.Search.ToLower())).Skip(options.Offset).Take(options.Limit).ToListAsync();
+        if (options.SortCriterion == SortCriterion.Price && options.SortOrder == SortOrder.Asc)
+        {
+            query = query.OrderBy(p => p.Price);
+        }
+        if (options.SortCriterion == SortCriterion.CreatedAt && options.SortOrder == SortOrder.Asc)
+        {
+            query = query.OrderBy(p => p.CreatedAt);
+        }
+        if (options.SortCriterion == SortCriterion.Price && options.SortOrder == SortOrder.Desc)
+        {
+            query = query.OrderByDescending(p => p.Price);
+        }
+        if (options.SortCriterion == SortCriterion.CreatedAt && options.SortOrder == SortOrder.Desc)
+        {
+            query = query.OrderByDescending(p => p.CreatedAt);
+        }
+        if (options.PriceMin.HasValue)
+        {
+            query = query.Where(p => p.Price >= Convert.ToDecimal(options.PriceMin));
+        }
+        if (options.PriceMax.HasValue)
+        {
+            query = query.Where(p => p.Price <= Convert.ToDecimal(options.PriceMax));
+        }
+        query = query.Skip(options.Offset).Take(options.Limit);
+        return await query.ToListAsync();
     }
 
     public async Task<int> GetCountAsync(GetAllParams options)
     {
-        if (options.Id == null || options.Id == Guid.Parse("00000000-0000-0000-0000-000000000000"))
+        var query = _products.Include("Category").Include("ProductDetails").Include("ProductImages").Where(p => p.Title.ToLower().Contains(options.Search.ToLower())).AsQueryable();
+        if (options.Id.HasValue && options.Id != Guid.Parse("00000000-0000-0000-0000-000000000000"))
         {
-            return await _products.Include("Category").Include("ProductDetails").Include("ProductImages").Where(p => p.Title.ToLower().Contains(options.Search.ToLower())).CountAsync(); 
+            query = query.Where(p => p.Category.Id == options.Id);
         }
-        return await _products.Include("Category").Include("ProductDetails").Include("ProductImages").Where(p => p.Category.Id == options.Id && p.Title.ToLower().Contains(options.Search.ToLower())).CountAsync();
+        if (options.SortCriterion == SortCriterion.Price && options.SortOrder == SortOrder.Asc)
+        {
+            query = query.OrderBy(p => p.Price);
+        }
+        if (options.SortCriterion == SortCriterion.CreatedAt && options.SortOrder == SortOrder.Asc)
+        {
+            query = query.OrderBy(p => p.CreatedAt);
+        }
+        if (options.SortCriterion == SortCriterion.Price && options.SortOrder == SortOrder.Desc)
+        {
+            query = query.OrderByDescending(p => p.Price);
+        }
+        if (options.SortCriterion == SortCriterion.CreatedAt && options.SortOrder == SortOrder.Desc)
+        {
+            query = query.OrderByDescending(p => p.CreatedAt);
+        }
+        if (options.PriceMin.HasValue)
+        {
+            query = query.Where(p => p.Price >= Convert.ToDecimal(options.PriceMin));
+        }
+        if (options.PriceMax.HasValue)
+        {
+            query = query.Where(p => p.Price <= Convert.ToDecimal(options.PriceMax));
+        }
+        return await query.CountAsync();
     }
 
     public async Task<Product?> GetOneByIdAsync(Guid id)
