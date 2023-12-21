@@ -5,7 +5,7 @@ namespace Evergreen.Service.src.Abstraction;
 
 public interface IProductService
 {
-    Task<IEnumerable<ProductReadDTO>> GetAllProductsAsync(GetAllParams options);
+    Task<ProductPageableReadDTO> GetAllProductsAsync(GetAllParams options);
     Task<ProductReadDTO> GetProductByIdAsync(Guid id);
     Task<ProductReadDTO> CreateProductAsync(ProductCreateDTO newProduct);
     Task<bool> DeleteProductAsync(Guid id);

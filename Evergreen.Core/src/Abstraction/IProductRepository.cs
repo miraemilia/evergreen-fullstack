@@ -7,4 +7,6 @@ public interface IProductRepository : IBaseRepository<Product>
 {
     public Task<IEnumerable<Image>> GetProductImages(Guid productId);
     public Task<MaxMinPrice> GetMaxMinPrice();
+    Task<int> GetCountAsync(GetAllParams options);
+
 }

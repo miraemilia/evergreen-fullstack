@@ -23,7 +23,7 @@ public class ProductController : ControllerBase
 
     [AllowAnonymous]
     [HttpGet()]
-    public async Task<ActionResult<IEnumerable<ProductReadDTO>>> GetAll([FromQuery] GetAllParams options)
+    public async Task<ActionResult<ProductPageableReadDTO>> GetAll([FromQuery] GetAllParams options)
     {
         return Ok(await _productService.GetAllProductsAsync(options));
     }

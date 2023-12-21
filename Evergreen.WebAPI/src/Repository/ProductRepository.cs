@@ -35,9 +35,18 @@ public class ProductRepository : IProductRepository
     {
         if (options.Id == null || options.Id == Guid.Parse("00000000-0000-0000-0000-000000000000"))
         {
-            return await _products.Include("Category").Include("ProductDetails").Include("ProductImages").Where(p => p.Title.ToLower().Contains(options.Search.ToLower())).Skip(options.Offset).Take(options.Limit).ToListAsync();
+            return await _products.Include("Category").Include("ProductDetails").Include("ProductImages").Where(p => p.Title.ToLower().Contains(options.Search.ToLower())).Skip(options.Offset).Take(options.Limit).ToListAsync(); 
         }
         return await _products.Include("Category").Include("ProductDetails").Include("ProductImages").Where(p => p.Category.Id == options.Id && p.Title.ToLower().Contains(options.Search.ToLower())).Skip(options.Offset).Take(options.Limit).ToListAsync();
+    }
+
+    public async Task<int> GetCountAsync(GetAllParams options)
+    {
+        if (options.Id == null || options.Id == Guid.Parse("00000000-0000-0000-0000-000000000000"))
+        {
+            return await _products.Include("Category").Include("ProductDetails").Include("ProductImages").Where(p => p.Title.ToLower().Contains(options.Search.ToLower())).CountAsync(); 
+        }
+        return await _products.Include("Category").Include("ProductDetails").Include("ProductImages").Where(p => p.Category.Id == options.Id && p.Title.ToLower().Contains(options.Search.ToLower())).CountAsync();
     }
 
     public async Task<Product?> GetOneByIdAsync(Guid id)

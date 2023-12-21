@@ -45,10 +45,14 @@ public class ProductService : IProductService
         throw CustomException.NotFoundException("Product not found");
     }
 
-    public async Task<IEnumerable<ProductReadDTO>> GetAllProductsAsync(GetAllParams options)
+    public async Task<ProductPageableReadDTO> GetAllProductsAsync(GetAllParams options)
     {
         var result = await _productRepo.GetAllAsync(options);
-        return _mapper.Map<IEnumerable<Product>, IEnumerable<ProductReadDTO>>(result);
+        var total = await _productRepo.GetCountAsync(options);
+        var foundProducts = _mapper.Map<IEnumerable<Product>, IEnumerable<ProductReadDTO>>(result);
+        int pages = (total + options.Limit -1)/options.Limit;
+        var response = new ProductPageableReadDTO(){Items = foundProducts, TotalItems = total, Pages = pages};
+        return response;
     }
 
     public async Task<ProductReadDTO> GetProductByIdAsync(Guid id)
