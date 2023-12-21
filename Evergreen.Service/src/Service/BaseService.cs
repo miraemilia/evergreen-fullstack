@@ -7,12 +7,12 @@ using Evergreen.Service.src.Shared;
 
 namespace Evergreen.Service.src.Service;
 
-public class BaseService<T, TReadDTO, TCreateDTO, TUpdateDTO> : IBaseService<T, TReadDTO, TCreateDTO, TUpdateDTO> where T : BaseEntity
+public class BaseService<T, TRepo, TReadDTO, TCreateDTO, TUpdateDTO> : IBaseService<T, TRepo, TReadDTO, TCreateDTO, TUpdateDTO> where T : BaseEntity where TRepo : IBaseRepository<T>
 {
-    protected IBaseRepository<T> _repo;
+    protected TRepo _repo;
     protected IMapper _mapper;
 
-    public BaseService(IBaseRepository<T> repo, IMapper mapper)
+    public BaseService(TRepo repo, IMapper mapper)
     {
         _repo = repo;
         _mapper = mapper;

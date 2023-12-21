@@ -11,7 +11,8 @@ public interface IProductService
     Task<bool> DeleteProductAsync(Guid id);
     Task<ProductReadDTO> UpdateProductAsync(Guid id, ProductUpdateDTO updates);
     Task<ProductReadDTO> UpdateProductInventoryAsync(Guid id, ProductInventoryUpdateDTO updates);
+    Task<IEnumerable<ImageReadDTO>> GetImagesByProductAsync(Guid productId);
     Task<ProductReadDTO> AddProductImageAsync(Guid id, ProductImageDTO addDTO);
     Task<ProductReadDTO> RemoveProductImageAsync(Guid id, ProductImageDTO addDTO);
-    Task<ProductReadDTO> CreateProductImageAsync(ImageCreateDTO imageCreateDTO);
+    Task<ProductReadDTO> CreateProductImageAsync(Guid id, ImageCreateDTO imageCreateDTO);
 }

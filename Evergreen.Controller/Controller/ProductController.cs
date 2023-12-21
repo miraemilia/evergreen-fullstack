@@ -13,13 +13,11 @@ namespace Evergreen.Controller.src.Controller;
 public class ProductController : ControllerBase
 {
     private IProductService _productService;
-    private IImageService _imageService;
     private IProductDetailsService _detailsService;
 
-    public ProductController(IProductService productService, IImageService imageService, IProductDetailsService detailsService)
+    public ProductController(IProductService productService, IProductDetailsService detailsService)
     {
         _productService = productService;
-        _imageService = imageService;
         _detailsService = detailsService;
     }
 
@@ -56,41 +54,6 @@ public class ProductController : ControllerBase
     public async Task<ActionResult<ProductReadDTO>> UpdateProductInventory([FromRoute] Guid id, [FromBody] ProductInventoryUpdateDTO productUpdateDTO)
     {
         return Ok(await _productService.UpdateProductInventoryAsync(id, productUpdateDTO));
-    }
-
-    [Authorize (Roles = "Admin")]
-    [HttpPatch("images/{id:Guid}")]
-    public async Task<ActionResult<ImageReadDTO>> UpdateImage([FromRoute] Guid id, [FromBody] ImageUpdateDTO imageUpdateDTO)
-    {
-        return Ok(await _imageService.UpdateOneAsync(id, imageUpdateDTO));
-    }
-
-    [Authorize (Roles = "Admin")]
-    [HttpPatch("productimages")]
-    public async Task<ActionResult<ProductReadDTO>> CreateProductImage([FromBody] ImageCreateDTO imageCreateDTO)
-    {
-        return Ok(await _productService.CreateProductImageAsync(imageCreateDTO));
-    } 
-
-    [Authorize (Roles = "Admin")]
-    [HttpPatch("productimages/{productId:Guid}")]
-    public async Task<ActionResult<ProductReadDTO>> AddProductImage([FromRoute] Guid productId, [FromBody] ProductImageDTO imageAddDTO)
-    {
-        return Ok(await _productService.AddProductImageAsync(productId, imageAddDTO));
-    }
-
-    [Authorize (Roles= "Admin")]
-    [HttpDelete("images/{imageId:Guid}")]
-    public async Task<ActionResult<bool>> DeleteImage([FromRoute] Guid imageId)
-    {
-        return Ok(await _imageService.DeleteOneAsync(imageId));
-    }
-
-    [Authorize (Roles= "Admin")]
-    [HttpDelete("productimages/{productId:Guid}")]
-    public async Task<ActionResult<bool>> RemoveProductImage([FromRoute] Guid productId, [FromBody] ProductImageDTO deleteDTO)
-    {
-        return Ok(await _productService.RemoveProductImageAsync(productId, deleteDTO));
     }
 
     [Authorize (Roles = "Admin")]

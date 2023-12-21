@@ -8,7 +8,7 @@ public class ProductReadDTO
     public decimal Price { get; set; }
     public string Description { get; set; }
     public CategoryReadDTO Category { get; set; }
-    public IEnumerable<ImageReadDTO> ProductImages { get; set; }
+    public IEnumerable<ProductImageReadDTO> ProductImages { get; set; }
     public ProductDetailsReadDTO? ProductDetails { get; set; }
     public int Inventory { get; set; }
 }

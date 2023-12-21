@@ -1,6 +1,7 @@
 using Evergreen.Core.src.Abstraction;
 using Evergreen.Core.src.Entity;
 using Evergreen.Core.src.Parameter;
+using Evergreen.Service.src.Shared;
 using Evergreen.WebAPI.src.Database;
 using Microsoft.EntityFrameworkCore;
 
@@ -38,6 +39,16 @@ public class ProductRepository : IProductRepository
     public async Task<Product?> GetOneByIdAsync(Guid id)
     {
         return await _products.Include("Category").Include("ProductDetails").Include("ProductImages").FirstOrDefaultAsync(u => u.Id == id);
+    }
+
+    public async Task<IEnumerable<Image>> GetProductImages(Guid productId)
+    {
+        var product = await _products.Include("ProductImages").FirstOrDefaultAsync(p => p.Id == productId);
+        if (product is null)
+        {
+            throw CustomException.NotFoundException("Product not found");
+        }
+        return product.ProductImages;
     }
 
     public async Task<Product> UpdateOneAsync(Product updateItem)

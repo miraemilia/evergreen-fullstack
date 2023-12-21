@@ -143,18 +143,24 @@ public class ProductService : IProductService
         throw CustomException.NotFoundException("Product not found");
     }
 
-    public async Task<ProductReadDTO> CreateProductImageAsync(ImageCreateDTO imageCreateDTO)
+    public async Task<ProductReadDTO> CreateProductImageAsync(Guid productId, ImageCreateDTO imageCreateDTO)
     {
         
-        var product = await _productRepo.GetOneByIdAsync(imageCreateDTO.ProductId);
+        var product = await _productRepo.GetOneByIdAsync(productId);
         if (product != null)
         {
             var newImage = _mapper.Map(imageCreateDTO, new Image(){});
             var createdImage = await _imageRepo.CreateOneAsync(newImage);
-            await AddProductImageAsync(imageCreateDTO.ProductId, new ProductImageDTO(){ImageId = createdImage.Id});
-            return await GetProductByIdAsync(imageCreateDTO.ProductId);
+            await AddProductImageAsync(productId, new ProductImageDTO(){ImageId = createdImage.Id});
+            return await GetProductByIdAsync(productId);
         }
         throw CustomException.NotFoundException("Product not found");
         
+    }
+
+    public async Task<IEnumerable<ImageReadDTO>> GetImagesByProductAsync(Guid productId)
+    {
+        var result = await _productRepo.GetProductImages(productId);
+        return _mapper.Map<IEnumerable<Image>, IEnumerable<ImageReadDTO>>(result);
     }
 }

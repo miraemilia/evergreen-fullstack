@@ -25,6 +25,7 @@ public class MapperProfile : Profile
             .ForAllMembers(opt => opt.Condition((src, dest, member) => member != null));
 
         CreateMap<Image, ImageReadDTO>();
+        CreateMap<Image, ProductImageReadDTO>();
         CreateMap<ImageCreateDTO, Image>();
         CreateMap<ImageUpdateDTO, Image>()
             .ForAllMembers(opt => opt.Condition((src, dest, member) => member != null));

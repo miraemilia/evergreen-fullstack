@@ -7,17 +7,13 @@ using Evergreen.Service.src.Shared;
 
 namespace Evergreen.Service.src.Service;
 
-public class ProductDetailsService : BaseService<ProductDetails, ProductDetailsReadDTO, ProductDetailsCreateDTO, ProductDetailsUpdateDTO>, IProductDetailsService
+public class ProductDetailsService : BaseService<ProductDetails, IProductDetailsRepository, ProductDetailsReadDTO, ProductDetailsCreateDTO, ProductDetailsUpdateDTO>, IProductDetailsService
 {
-    private readonly IProductDetailsRepository _detailsRepo;
     public ProductDetailsService(IProductDetailsRepository repo, IMapper mapper) : base(repo, mapper)
-    {
-        _detailsRepo = repo;
-        _repo = repo;
-    }
+    {}
     public override async Task<ProductDetailsReadDTO> UpdateOneAsync(Guid id, ProductDetailsUpdateDTO updates)
     {
-        ProductDetails? details = await _detailsRepo.GetOneByProductIdAsync(id);
+        ProductDetails? details = await _repo.GetOneByProductIdAsync(id);
         if (details is null)
         {
             throw CustomException.NotFoundException("Product details not found");
