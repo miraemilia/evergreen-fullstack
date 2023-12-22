@@ -1,32 +1,11 @@
 ###
-POST http://localhost:5180/api/v1/auth/login HTTP/1.1
-Content-Type: application/json
-
-{
-    "email": "nooa@mail.com",
-    "password": "qwerty"
-}
-
-###
-POST http://localhost:5180/api/v1/auth/login HTTP/1.1
-Content-Type: application/json
-
-{
-    "email": "maija@mail.com",
-    "password": "12345"
-}
-
-###
 GET http://localhost:5180/api/v1/categories HTTP/1.1
 content-type: application/json
 
 ###
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI3ZmYzMTZjOS02YjZkLTQ5YzUtOWNhMi05Mjk4YjYzNzA4NTYiLCJyb2xlIjoiQ3VzdG9tZXIiLCJuYmYiOjE3MDI3MTI2MzAsImV4cCI6MTcwMjg4NTQzMCwiaWF0IjoxNzAyNzEyNjMwLCJpc3MiOiJFdmVyZ3JlZW5BZG1pbiIsImF1ZCI6IkV2ZXJncmVlbiJ9.8I_xpbP9Krr1hc00BdwwZzf-ljQB5BYNdQZk_GY-bmE
-
-###
 POST http://localhost:5180/api/v1/categories HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIwYzYxNWRkYS1hMTUwLTRmNGItOGU2Ni0xMzcxYTllMGIzMTgiLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE3MDI5OTE0NDgsImV4cCI6MTcwMzE2NDI0OCwiaWF0IjoxNzAyOTkxNDQ4LCJpc3MiOiJFdmVyZ3JlZW5BZG1pbiIsImF1ZCI6IkV2ZXJncmVlbiJ9.SjCHnlVscAEByTwifDYtGIlwBGQuNVS38xG74nrDbKI
+Authorization: Bearer 
 
 {
   "name": "Air-purifying plants",
@@ -36,7 +15,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIwYzYxN
 ###
 PATCH http://localhost:5180/api/v1/categories/22f2e07f-6b00-4239-989c-64a0339dfd95 HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIwYzYxNWRkYS1hMTUwLTRmNGItOGU2Ni0xMzcxYTllMGIzMTgiLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE3MDI5OTE0NDgsImV4cCI6MTcwMzE2NDI0OCwiaWF0IjoxNzAyOTkxNDQ4LCJpc3MiOiJFdmVyZ3JlZW5BZG1pbiIsImF1ZCI6IkV2ZXJncmVlbiJ9.SjCHnlVscAEByTwifDYtGIlwBGQuNVS38xG74nrDbKI
+Authorization: Bearer 
 
 {
   "name": "Non-toxic plants"
@@ -45,4 +24,4 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIwYzYxN
 ###
 DELETE http://localhost:5180/api/v1/categories/4735d66d-032f-4bc1-ac1b-2cbd6a93a184 HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJlOTNkZGM5NC01ZjJiLTQxMjktODEwZS05ZGJlMWRjNTA1NTkiLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE3MDI4OTAwNDMsImV4cCI6MTcwMzA2Mjg0MywiaWF0IjoxNzAyODkwMDQzLCJpc3MiOiJFdmVyZ3JlZW5BZG1pbiIsImF1ZCI6IkV2ZXJncmVlbiJ9.PMK8NQntgkSNk7-8jZwpf-LGg-ndOcDRy1hiw5b2ODw
+Authorization: Bearer 

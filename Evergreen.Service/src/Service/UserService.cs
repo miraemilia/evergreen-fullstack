@@ -56,7 +56,7 @@ public class UserService : IUserService
         var total = await _userRepo.GetCountAsync(options);
         var foundUsers = _mapper.Map<IEnumerable<User>, IEnumerable<UserReadDTO>>(result);
         int pages = (total + options.Limit -1)/options.Limit;
-        var response = new UserPageableReadDTO(){Items = foundUsers, TotalItems = total, Pages = pages};
+        var response = new UserPageableReadDTO(){Items = foundUsers, TotalItems = total, TotalPages = pages};
         return response;
     }
 

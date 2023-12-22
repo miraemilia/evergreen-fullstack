@@ -29,11 +29,10 @@ This is the final project of Integrify Academy which involves creating a Fullsta
 ### User
 
 1. User Management: a user is able to...
-   - register for an user account (not admin account)
+   - register for a user account (not admin account)
    - log in and out
-   - _extra_: edit certain properties of their account
-   - _extra_: unregister
-   - _extra_: Google OAuth
+   - (backend only: edit certain properties of their account)
+   - (backend only: unregister)
 2. Products: a user is able to...
    - view all available products
    - view a single product
@@ -41,33 +40,33 @@ This is the final project of Integrify Academy which involves creating a Fullsta
 3. Cart: a user is able to...
    - add products to a shopping cart
    - manage their shopping cart
-   - checkout the shopping cart / place an order
-4. _extra_: Order Management: a user is able to...
-   - view their order history
-   - track the status of their order
-   - cancel their order (within a timeframe)
+   - (backend only: checkout the shopping cart / place an order)
+4. Order Management: a user is able to...
+   - (backend only: view their order history)
+   - (backend only: track the status of their order)
+   - (backend only: cancel their order while it is processing)
 
 ### Admin
 
 1. User Management: an admin is able to...
    - view users
    - delete users
-   - _extra_: edit user roles
-   - _extra_: create new users and admins
+   - edit user roles
+   - (backend only: create new users and admins)
 2. Product Management: an admin is able to...
    - view products in admin mode
    - add products
    - edit products
    - delete products
 3. Order Management: an admin is able to...
-   - view all orders
-   - _extra_: view order details
-   - _extra_: update order status
-   - _extra_: cancel orders
+   - (backend only: view all orders)
+   - (backend only: view order details)
+   - (backend only: update order status)
+   - (backend only: cancel orders while it is processing)
 
 ## Frontend
 
-The frontend mostly reuses the previous [frontend project](https://github.com/miraemilia/fs16_6-frontend-project/).
+The frontend mostly reuses the previous [frontend project](https://github.com/miraemilia/e-commerce/).
 
 The frontend code and documentation are found in [this repository]().
 
@@ -99,7 +98,7 @@ The frontend code and documentation are found in [this repository]().
 
 ## Deployment
 
-[Link to deployment]()
+[Link to deployment](https://evergreenbotanics.azurewebsites.net/)
 
 ## Running the project
 

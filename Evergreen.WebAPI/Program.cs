@@ -1,4 +1,3 @@
-using System.Security.Claims;
 using System.Text;
 using Evergreen.Core.src.Abstraction;
 using Evergreen.Service.src.Abstraction;
@@ -14,11 +13,9 @@ using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 
 builder.Services.Configure<RouteOptions>(options => options.LowercaseUrls = true);
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -44,6 +41,7 @@ builder.Services.AddScoped<IImageService, ImageService>();
 builder.Services.AddScoped<IProductDetailsRepository, ProductDetailsRepository>();
 builder.Services.AddScoped<IProductDetailsService, ProductDetailsService>();
 
+//authentication
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(
     options => 
     {
@@ -60,33 +58,22 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
     }
 );
 
-/* builder.Services.AddAuthorization(policy =>
-    {
-        policy.AddPolicy("SuperAdmin", policy => policy.RequireClaim(ClaimTypes.Email, "admin@mail.com"));
-    }
-); */
-
-//add automapper dependency injection
+//automapper
 builder.Services.AddAutoMapper(typeof(MapperProfile).Assembly);
 
+//exception middleware
 builder.Services.AddTransient<ExceptionMiddleware>();
 
-// Add database contect service
-
+//database context
 builder.Services.AddDbContext<DatabaseContext>(options => options.UseNpgsql());
 
-//add authentication
-
+//build
 var app = builder.Build();
 
 app.UseMiddleware<ExceptionMiddleware>();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 

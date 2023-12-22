@@ -51,7 +51,7 @@ public class ProductService : IProductService
         var total = await _productRepo.GetCountAsync(options);
         var foundProducts = _mapper.Map<IEnumerable<Product>, IEnumerable<ProductReadDTO>>(result);
         int pages = (total + options.Limit -1)/options.Limit;
-        var response = new ProductPageableReadDTO(){Items = foundProducts, TotalItems = total, Pages = pages};
+        var response = new ProductPageableReadDTO(){Items = foundProducts, TotalItems = total, TotalPages = pages};
         return response;
     }
 

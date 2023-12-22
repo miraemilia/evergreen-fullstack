@@ -41,7 +41,7 @@ public class BaseService<T, TRepo, TPageableReadDTO, TReadDTO, TCreateDTO, TUpda
         var total = await _repo.GetCountAsync(options);
         var foundItems = _mapper.Map<IEnumerable<T>, IEnumerable<TReadDTO>>(result);
         int pages = (total + options.Limit -1)/options.Limit;
-        var response = new BasePageableReadDTO<TReadDTO>(){Items = foundItems, TotalItems = total, Pages = pages};
+        var response = new BasePageableReadDTO<TReadDTO>(){Items = foundItems, TotalItems = total, TotalPages = pages};
         return response;
     }
 

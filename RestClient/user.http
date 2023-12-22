@@ -5,49 +5,31 @@ content-type: application/json
 {
   "name": "Andrew Miller",
   "email": "andrewm@mail.com",
-  "password": "12345",
+  "password": ,
   "avatar": "https://picsum.photos/200"
-}
-
-###
-POST http://localhost:5180/api/v1/auth/login HTTP/1.1
-Content-Type: application/json
-
-{
-    "email": "admin@mail.com",
-    "password": "12345"
-}
-
-###
-POST http://localhost:5180/api/v1/auth/login HTTP/1.1
-Content-Type: application/json
-
-{
-    "email": "andrewm@mail.com",
-    "password": "12345"
 }
 
 ###
 GET http://localhost:5180/api/v1/users HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIwYzYxNWRkYS1hMTUwLTRmNGItOGU2Ni0xMzcxYTllMGIzMTgiLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE3MDMxNTgyNjgsImV4cCI6MTcwMzMzMTA2OCwiaWF0IjoxNzAzMTU4MjY4LCJpc3MiOiJFdmVyZ3JlZW5BZG1pbiIsImF1ZCI6IkV2ZXJncmVlbiJ9.HONhTFTMpzJGcVxbXA3FgcIil1ZYxmz5rZfS73_-6eI
+Authorization: Bearer 
 
 ###
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI3ZmYzMTZjOS02YjZkLTQ5YzUtOWNhMi05Mjk4YjYzNzA4NTYiLCJyb2xlIjoiQ3VzdG9tZXIiLCJuYmYiOjE3MDI3MTI2MzAsImV4cCI6MTcwMjg4NTQzMCwiaWF0IjoxNzAyNzEyNjMwLCJpc3MiOiJFdmVyZ3JlZW5BZG1pbiIsImF1ZCI6IkV2ZXJncmVlbiJ9.8I_xpbP9Krr1hc00BdwwZzf-ljQB5BYNdQZk_GY-bmE
+Authorization: Bearer 
 
 ###
-PATCH http://localhost:5180/api/v1/auth/profile/password/c8a57e46-26e2-4954-bd8a-423e2780c202 HTTP/1.1
+PATCH http://localhost:5180/api/v1/auth/profile/password/0c615dda-a150-4f4b-8e66-1371a9e0b318 HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJjOGE1N2U0Ni0yNmUyLTQ5NTQtYmQ4YS00MjNlMjc4MGMyMDIiLCJyb2xlIjoiQ3VzdG9tZXIiLCJuYmYiOjE3MDI3MTU1NTUsImV4cCI6MTcwMjg4ODM1NSwiaWF0IjoxNzAyNzE1NTU1LCJpc3MiOiJFdmVyZ3JlZW5BZG1pbiIsImF1ZCI6IkV2ZXJncmVlbiJ9.UuE8_FPOjRb9cM72EzmaEjjwmS-eGqpiBS70WF-Jdg0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIwYzYxNWRkYS1hMTUwLTRmNGItOGU2Ni0xMzcxYTllMGIzMTgiLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE3MDMyNDU2OTAsImV4cCI6MTcwMzQxODQ5MCwiaWF0IjoxNzAzMjQ1NjkwLCJpc3MiOiJFdmVyZ3JlZW5BZG1pbiIsImF1ZCI6IkV2ZXJncmVlbiJ9.nYjSzWPA1gTYffp0J0zWu7YcnPXnwRMLV04j2e7C2MU
 
 {
-  "password": "sdfgh"
+  "password":
 }
 
 ###
 PATCH http://localhost:5180/api/v1/auth/profile/ed6a2c95-e2af-434d-874d-b6eefd54930c HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJlZDZhMmM5NS1lMmFmLTQzNGQtODc0ZC1iNmVlZmQ1NDkzMGMiLCJyb2xlIjoiQ3VzdG9tZXIiLCJuYmYiOjE3MDI5OTQ1NTcsImV4cCI6MTcwMzE2NzM1NywiaWF0IjoxNzAyOTk0NTU3LCJpc3MiOiJFdmVyZ3JlZW5BZG1pbiIsImF1ZCI6IkV2ZXJncmVlbiJ9.CTEH9C0md0QF4qYRvQ1qwPQDiEcS5PMdjZkfKt_4s3Q
+Authorization: Bearer 
 
 {
   "email": "andrew.miller@mail.com"
@@ -57,12 +39,12 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJlZDZhM
 ###
 DELETE http://localhost:5180/api/v1/auth/profile/a72edcea-3572-4432-936e-a1e92f7e8172 HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJhNzJlZGNlYS0zNTcyLTQ0MzItOTM2ZS1hMWU5MmY3ZTgxNzIiLCJyb2xlIjoiQ3VzdG9tZXIiLCJuYmYiOjE3MDI3MzM5NDEsImV4cCI6MTcwMjkwNjc0MSwiaWF0IjoxNzAyNzMzOTQxLCJpc3MiOiJFdmVyZ3JlZW5BZG1pbiIsImF1ZCI6IkV2ZXJncmVlbiJ9.Q4MneJcd3fMxjc-4InM-NLhZH6DabUsczjGmc20fR_c
+Authorization: Bearer 
 
 ###
 PATCH http://localhost:5180/api/v1/users/ed6a2c95-e2af-434d-874d-b6eefd54930c HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJlZDZhMmM5NS1lMmFmLTQzNGQtODc0ZC1iNmVlZmQ1NDkzMGMiLCJyb2xlIjoiQ3VzdG9tZXIiLCJuYmYiOjE3MDI5OTQ1NTcsImV4cCI6MTcwMzE2NzM1NywiaWF0IjoxNzAyOTk0NTU3LCJpc3MiOiJFdmVyZ3JlZW5BZG1pbiIsImF1ZCI6IkV2ZXJncmVlbiJ9.CTEH9C0md0QF4qYRvQ1qwPQDiEcS5PMdjZkfKt_4s3Q
+Authorization: Bearer 
 
 {
   "role": "Customer"
@@ -71,4 +53,4 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJlZDZhM
 ###
 DELETE http://localhost:5180/api/v1/users/c8a57e46-26e2-4954-bd8a-423e2780c202 HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJlOTNkZGM5NC01ZjJiLTQxMjktODEwZS05ZGJlMWRjNTA1NTkiLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE3MDI3MTU2MjcsImV4cCI6MTcwMjg4ODQyNywiaWF0IjoxNzAyNzE1NjI3LCJpc3MiOiJFdmVyZ3JlZW5BZG1pbiIsImF1ZCI6IkV2ZXJncmVlbiJ9.thHAADbS5OFqw4y8Y_n1IfIHpGBPSFVTmKipKO0UCOc
+Authorization: Bearer 

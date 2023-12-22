@@ -1,38 +1,11 @@
 ###
-POST http://localhost:5180/api/v1/auth/login HTTP/1.1
-Content-Type: application/json
-
-{
-    "email": "admin@mail.com",
-    "password": "12345"
-}
-
-###
-POST http://localhost:5180/api/v1/auth/login HTTP/1.1
-Content-Type: application/json
-
-{
-    "email": "ellie@mail.com",
-    "password": "12345"
-}
-
-###
-POST http://localhost:5180/api/v1/auth/login HTTP/1.1
-Content-Type: application/json
-
-{
-    "email": "andy@mail.com",
-    "password": "12345"
-}
-
-###
 GET http://localhost:5180/api/v1/orders HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIwYzYxNWRkYS1hMTUwLTRmNGItOGU2Ni0xMzcxYTllMGIzMTgiLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE3MDMxNTgyNjgsImV4cCI6MTcwMzMzMTA2OCwiaWF0IjoxNzAzMTU4MjY4LCJpc3MiOiJFdmVyZ3JlZW5BZG1pbiIsImF1ZCI6IkV2ZXJncmVlbiJ9.HONhTFTMpzJGcVxbXA3FgcIil1ZYxmz5rZfS73_-6eI
+Authorization: Bearer 
 
 POST http://localhost:5180/api/v1/orders HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIyYWM3NDFmMS0wZjFmLTRiMzQtOGYzMi1jYTlkMmU0ZTJmODUiLCJyb2xlIjoiQ3VzdG9tZXIiLCJuYmYiOjE3MDMxNTQ5OTEsImV4cCI6MTcwMzMyNzc5MSwiaWF0IjoxNzAzMTU0OTkxLCJpc3MiOiJFdmVyZ3JlZW5BZG1pbiIsImF1ZCI6IkV2ZXJncmVlbiJ9.Y82s_V3iFEDCC3vayt4U9qNj1DxkMxjcPDPxS3OmqPU
+Authorization: Bearer 
 
 {
   "userId": "2ac741f1-0f1f-4b34-8f32-ca9d2e4e2f85",
@@ -55,7 +28,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIyYWM3N
 ###
 PATCH http://localhost:5180/api/v1/orders/3b2ba914-2428-4da7-aa15-85ef92c143e8 HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJlOTNkZGM5NC01ZjJiLTQxMjktODEwZS05ZGJlMWRjNTA1NTkiLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE3MDI4OTgzODIsImV4cCI6MTcwMzA3MTE4MiwiaWF0IjoxNzAyODk4MzgyLCJpc3MiOiJFdmVyZ3JlZW5BZG1pbiIsImF1ZCI6IkV2ZXJncmVlbiJ9.K_96WBmrznTJuO6g82h-iexhpNaDvfPHSmLRj7TqFWg
+Authorization: Bearer 
 
 {
   "orderStatus": "Shipped"
@@ -64,4 +37,4 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJlOTNkZ
 ###
 DELETE http://localhost:5180/api/v1/orders/63acdf80-c6d5-4d88-ab67-4ea07e30a4e4 HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJlOTNkZGM5NC01ZjJiLTQxMjktODEwZS05ZGJlMWRjNTA1NTkiLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE3MDI4OTgzODIsImV4cCI6MTcwMzA3MTE4MiwiaWF0IjoxNzAyODk4MzgyLCJpc3MiOiJFdmVyZ3JlZW5BZG1pbiIsImF1ZCI6IkV2ZXJncmVlbiJ9.K_96WBmrznTJuO6g82h-iexhpNaDvfPHSmLRj7TqFWg
+Authorization: Bearer 

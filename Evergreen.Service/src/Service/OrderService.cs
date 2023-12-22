@@ -64,7 +64,7 @@ public class OrderService : IOrderService
         var total = await _orderRepo.GetCountAsync(options);
         var foundOrders = _mapper.Map<IEnumerable<Order>, IEnumerable<OrderReadDTO>>(result);
         int pages = (total + options.Limit -1)/options.Limit;
-        var response = new OrderPageableReadDTO(){Items = foundOrders, TotalItems = total, Pages = pages};
+        var response = new OrderPageableReadDTO(){Items = foundOrders, TotalItems = total, TotalPages = pages};
         return response;
     }
 

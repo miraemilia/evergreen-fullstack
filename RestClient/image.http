@@ -1,12 +1,11 @@
 ###
 GET http://localhost:5180/api/v1/images/product/e88c76fd-2eb7-4e80-b9b9-17e778ddd8f0 HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIwYzYxNWRkYS1hMTUwLTRmNGItOGU2Ni0xMzcxYTllMGIzMTgiLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE3MDI5OTE0NDgsImV4cCI6MTcwMzE2NDI0OCwiaWF0IjoxNzAyOTkxNDQ4LCJpc3MiOiJFdmVyZ3JlZW5BZG1pbiIsImF1ZCI6IkV2ZXJncmVlbiJ9.SjCHnlVscAEByTwifDYtGIlwBGQuNVS38xG74nrDbKI
-
+Authorization: Bearer 
 ###
 POST  http://localhost:5180/api/v1/images/product/e88c76fd-2eb7-4e80-b9b9-17e778ddd8f0 HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIwYzYxNWRkYS1hMTUwLTRmNGItOGU2Ni0xMzcxYTllMGIzMTgiLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE3MDI5OTE0NDgsImV4cCI6MTcwMzE2NDI0OCwiaWF0IjoxNzAyOTkxNDQ4LCJpc3MiOiJFdmVyZ3JlZW5BZG1pbiIsImF1ZCI6IkV2ZXJncmVlbiJ9.SjCHnlVscAEByTwifDYtGIlwBGQuNVS38xG74nrDbKI
+Authorization: Bearer 
 
 {
   "imageUrl": "https://picsum.photos/700"
@@ -15,7 +14,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIwYzYxN
 ###
 PATCH  http://localhost:5180/api/v1/images/product/e88c76fd-2eb7-4e80-b9b9-17e778ddd8f0 HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIwYzYxNWRkYS1hMTUwLTRmNGItOGU2Ni0xMzcxYTllMGIzMTgiLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE3MDI5OTE0NDgsImV4cCI6MTcwMzE2NDI0OCwiaWF0IjoxNzAyOTkxNDQ4LCJpc3MiOiJFdmVyZ3JlZW5BZG1pbiIsImF1ZCI6IkV2ZXJncmVlbiJ9.SjCHnlVscAEByTwifDYtGIlwBGQuNVS38xG74nrDbKI
+Authorization: Bearer 
 
 {
   "imageId": "67397370-3727-4e5f-a527-b6a39ca59feb"
@@ -24,7 +23,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIwYzYxN
 ###
 DELETE  http://localhost:5180/api/v1/images/product/e88c76fd-2eb7-4e80-b9b9-17e778ddd8f0 HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIwYzYxNWRkYS1hMTUwLTRmNGItOGU2Ni0xMzcxYTllMGIzMTgiLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE3MDI5OTE0NDgsImV4cCI6MTcwMzE2NDI0OCwiaWF0IjoxNzAyOTkxNDQ4LCJpc3MiOiJFdmVyZ3JlZW5BZG1pbiIsImF1ZCI6IkV2ZXJncmVlbiJ9.SjCHnlVscAEByTwifDYtGIlwBGQuNVS38xG74nrDbKI
+Authorization: 
 
 {
   "imageId": "9fa51757-0cd5-4ffa-9ed7-589c0094f127"
@@ -33,7 +32,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIwYzYxN
 ###
 PATCH  http://localhost:5180/api/v1/images/1f6452a4-9d24-4d2b-a2dc-581203e04fbb HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIwYzYxNWRkYS1hMTUwLTRmNGItOGU2Ni0xMzcxYTllMGIzMTgiLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE3MDI5OTE0NDgsImV4cCI6MTcwMzE2NDI0OCwiaWF0IjoxNzAyOTkxNDQ4LCJpc3MiOiJFdmVyZ3JlZW5BZG1pbiIsImF1ZCI6IkV2ZXJncmVlbiJ9.SjCHnlVscAEByTwifDYtGIlwBGQuNVS38xG74nrDbKI
+Authorization: Bearer 
 
 {
   "description": "plant"
@@ -42,4 +41,4 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIwYzYxN
 ###
 DELETE  http://localhost:5180/api/v1/images/ca7951b3-8488-45fd-bf18-85f5aa467f0f HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIwYzYxNWRkYS1hMTUwLTRmNGItOGU2Ni0xMzcxYTllMGIzMTgiLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE3MDI5OTE0NDgsImV4cCI6MTcwMzE2NDI0OCwiaWF0IjoxNzAyOTkxNDQ4LCJpc3MiOiJFdmVyZ3JlZW5BZG1pbiIsImF1ZCI6IkV2ZXJncmVlbiJ9.SjCHnlVscAEByTwifDYtGIlwBGQuNVS38xG74nrDbKI
+Authorization: Bearer 
