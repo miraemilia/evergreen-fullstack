@@ -28,7 +28,7 @@ public class DatabaseContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        var dataSourceBuilder = new NpgsqlDataSourceBuilder(_config.GetConnectionString("LocalDb"));
+        var dataSourceBuilder = new NpgsqlDataSourceBuilder(_config.GetConnectionString("LiveDb"));
         dataSourceBuilder.MapEnum<UserRole>();
         dataSourceBuilder.MapEnum<ProductSize>();
         dataSourceBuilder.MapEnum<DetailsOption>();

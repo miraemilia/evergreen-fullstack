@@ -36,7 +36,7 @@ public class CategoryServiceTests
         var categoryService = new CategoryService(repo.Object, _mapper);
         GetAllParams options = new GetAllParams(){Limit = 10, Offset = 0};
 
-        await categoryService.GetAllCategoriesAsync(options);
+        await categoryService.GetAllCategoriesAsync();
 
         repo.Verify(repo => repo.GetAllAsync(options), Times.Once);
     }
@@ -50,7 +50,7 @@ public class CategoryServiceTests
         repo.Setup(repo => repo.GetAllAsync(options)).ReturnsAsync(repoResponse);
         var categoryService = new CategoryService(repo.Object, _mapper);
         
-        var response = await categoryService.GetAllCategoriesAsync(options);
+        var response = await categoryService.GetAllCategoriesAsync();
 
         Assert.Equivalent(expected, response);
     }

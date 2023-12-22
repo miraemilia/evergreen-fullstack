@@ -31,8 +31,9 @@ public class ProductServiceTests
     {
         var repo = new Mock<IProductRepository>();
         var categoryRepo = new Mock<ICategoryRepository>();
+        var imageRepo = new Mock<IImageRepository>();
         var mapper = new Mock<IMapper>();
-        var productService = new ProductService(repo.Object, _mapper, categoryRepo.Object);
+        var productService = new ProductService(repo.Object, _mapper, categoryRepo.Object, imageRepo.Object);
         GetAllParams options = new GetAllParams(){Limit = 10, Offset = 0};
 
         await productService.GetAllProductsAsync(options);
@@ -46,9 +47,10 @@ public class ProductServiceTests
     {
         var repo = new Mock<IProductRepository>();
         var categoryRepo = new Mock<ICategoryRepository>();
+        var imageRepo = new Mock<IImageRepository>();
         GetAllParams options = new GetAllParams(){Limit = 10, Offset = 0};
         repo.Setup(repo => repo.GetAllAsync(options)).ReturnsAsync(repoResponse);
-        var productService = new ProductService(repo.Object, _mapper, categoryRepo.Object);
+        var productService = new ProductService(repo.Object, _mapper, categoryRepo.Object, imageRepo.Object);
         
         var response = await productService.GetAllProductsAsync(options);
 
@@ -73,10 +75,11 @@ public class ProductServiceTests
     {
         var repo = new Mock<IProductRepository>();
         var categoryRepo = new Mock<ICategoryRepository>();
+        var imageRepo = new Mock<IImageRepository>();
         Product product1 = new Product(){};
         repo.Setup(repo => repo.GetOneByIdAsync(It.IsAny<Guid>())).ReturnsAsync(product1);
         var mapper = new Mock<IMapper>();
-        var productService = new ProductService(repo.Object, _mapper, categoryRepo.Object);
+        var productService = new ProductService(repo.Object, _mapper, categoryRepo.Object, imageRepo.Object);
 
         await productService.GetProductByIdAsync(It.IsAny<Guid>());
 
@@ -89,8 +92,9 @@ public class ProductServiceTests
     {
         var repo = new Mock<IProductRepository>();
         var categoryRepo = new Mock<ICategoryRepository>();
+        var imageRepo = new Mock<IImageRepository>();
         repo.Setup(repo => repo.GetOneByIdAsync(It.IsAny<Guid>())).Returns(Task.FromResult(repoResponse));
-        var productService = new ProductService(repo.Object, _mapper, categoryRepo.Object);
+        var productService = new ProductService(repo.Object, _mapper, categoryRepo.Object, imageRepo.Object);
 
         if (exceptionType is not null)
         {
@@ -121,9 +125,10 @@ public class ProductServiceTests
     {
         var repo = new Mock<IProductRepository>();
         var categoryRepo = new Mock<ICategoryRepository>();
+        var imageRepo = new Mock<IImageRepository>();
         categoryRepo.Setup(categoryRepo => categoryRepo.GetOneByIdAsync(It.IsAny<Guid>())).ReturnsAsync(new Category(){});
         var mapper = new Mock<IMapper>();
-        var productService = new ProductService(repo.Object, _mapper, categoryRepo.Object);
+        var productService = new ProductService(repo.Object, _mapper, categoryRepo.Object, imageRepo.Object);
         ProductCreateDTO dto = new ProductCreateDTO(){};
 
         await productService.CreateProductAsync(dto);
@@ -138,8 +143,9 @@ public class ProductServiceTests
         var repo = new Mock<IProductRepository>();
         repo.Setup(repo => repo.CreateOneAsync(It.IsAny<Product>())).ReturnsAsync(repoResponse);
         var categoryRepo = new Mock<ICategoryRepository>();
+        var imageRepo = new Mock<IImageRepository>();
         categoryRepo.Setup(categoryRepo => categoryRepo.GetOneByIdAsync(It.IsAny<Guid>())).ReturnsAsync(categoryResponse);
-        var productService = new ProductService(repo.Object, _mapper, categoryRepo.Object);
+        var productService = new ProductService(repo.Object, _mapper, categoryRepo.Object, imageRepo.Object);
         ProductCreateDTO dto = new ProductCreateDTO(){};
 
         if (exceptionType is not null)
@@ -171,10 +177,11 @@ public class ProductServiceTests
     {
         var repo = new Mock<IProductRepository>();
         var categoryRepo = new Mock<ICategoryRepository>();
+        var imageRepo = new Mock<IImageRepository>();
         Product product1 = new Product(){};
         repo.Setup(repo => repo.GetOneByIdAsync(It.IsAny<Guid>())).ReturnsAsync(product1);
         var mapper = new Mock<IMapper>();
-        var productService = new ProductService(repo.Object, _mapper, categoryRepo.Object);
+        var productService = new ProductService(repo.Object, _mapper, categoryRepo.Object, imageRepo.Object);
 
         await productService.DeleteProductAsync(It.IsAny<Guid>());
 
@@ -187,9 +194,10 @@ public class ProductServiceTests
     {
         var repo = new Mock<IProductRepository>();
         var categoryRepo = new Mock<ICategoryRepository>();
+        var imageRepo = new Mock<IImageRepository>();
         repo.Setup(repo => repo.GetOneByIdAsync(It.IsAny<Guid>())).ReturnsAsync(foundResponse);
         repo.Setup(repo => repo.DeleteOneAsync(It.IsAny<Product>())).ReturnsAsync(repoResponse);
-        var productService = new ProductService(repo.Object, _mapper, categoryRepo.Object);
+        var productService = new ProductService(repo.Object, _mapper, categoryRepo.Object, imageRepo.Object);
 
         if (exceptionType is not null)
         {

@@ -2,6 +2,7 @@
 
 Migrations/
 publish/
+Seed/
 
 # User-specific files
 appsettings.json
