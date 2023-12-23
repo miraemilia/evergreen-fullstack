@@ -55,7 +55,7 @@ public class UserController : ControllerBase
 
     [AllowAnonymous]
     [HttpPost("emailAvailable")]
-    public async Task<ActionResult<bool>> EmailAvailable([FromBody] string email)
+    public async Task<ActionResult<bool>> EmailAvailable([FromQuery] string email)
     {
         return Ok(await _userService.EmailAvailableAsync(email));
     }

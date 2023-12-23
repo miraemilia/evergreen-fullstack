@@ -10,14 +10,17 @@
 
 This is the final project of Integrify Academy which involves creating a Fullstack project with React and Redux in the frontend and ASP.NET Core 7 in the backend. The result is an indoor plant e-commerce site called Evergreen which features basic user functionalities (registering, authentication, browsing through products, shopping cart, ordering) as well as admin functionalities for managing users, products and orders.
 
+[Link to deployed project]()
+
 ## Table of Contents
 
 1. [Technologies](#technologies)
 2. [Functionalities](#functionalities)
 3. [Frontend](#frontend)
 4. [Backend](#backend)
-5. [Deployment](#deployment)
-6. [Running the project](#running-the-project)
+   - [Design](#design)
+   - [Deployment](#deployment)
+   - [Running the project](#running-the-project)
 
 ## Technologies
 
@@ -66,46 +69,45 @@ This is the final project of Integrify Academy which involves creating a Fullsta
 
 ## Frontend
 
-The frontend mostly reuses the previous [frontend project](https://github.com/miraemilia/e-commerce/).
-
 The frontend code and documentation are found in [this repository]().
 
 ## Backend
 
-### Requirements
+### General
 
 - CLEAN architecture
 - complies with Rest API
-- unit testing (xunit)
-   - service layer (other layers recommended)
-   - implemented early and regularly
-   - good coverage for main functionalities
-- _optional_: integration testing
-- error handling
+- EF core: code-first database (with seed data)
+- error handling middleware
+- authentication and authorization
+- unit testing for service layer (xunit)
 - documentation (README.md and Swagger)
-- frontend, backend and database on live servers
+- backend and database deployed on live servers
 
-### Database
+### Design
 
-![ERD](databaseDesign/erd.png)
+#### Database design
 
-### Design and layers
+![ERD](readmeImages/erd.png)
 
-- WebAPI
-- Controller
-- Service
-- Core
+#### Architecture
 
-## Deployment
+![Clean architecture layers](readmeImages/layers.png)
 
-[Link to deployment](https://evergreenbotanics.azurewebsites.net/)
+#### Endpoints
 
-## Running the project
+![Endpoints](readmeImages/endpoints.png)
 
-### Requirements
+### Deployment
+
+[Link to backend deployment](https://evergreenbotanics.azurewebsites.net/)
+
+### Running the backend locally
+
+#### Requirements
 - [.NET](https://dotnet.microsoft.com/en-us/download)
 
-### Instructions
+#### Instructions
 - clone the project
 - run the project with `dotnet watch --project Evergreen.WebAPI`
 - run tests with `dotnet test`

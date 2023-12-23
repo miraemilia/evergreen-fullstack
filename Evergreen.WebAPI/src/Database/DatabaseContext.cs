@@ -81,10 +81,11 @@ public class DatabaseContext : DbContext
 
         modelBuilder.Entity<Product>().ToTable(p => p.HasCheckConstraint("CHK_Product_Price_Positive", "price >= 0"));
         modelBuilder.Entity<OrderProduct>().ToTable(p => p.HasCheckConstraint("CHK_OrderProduct_Quantity_Positive", "quantity >= 0"));
+        modelBuilder.Entity<Product>().ToTable(p => p.HasCheckConstraint("CHK_Product_Inventory_Positive", "inventory >= 0"));
 
         modelBuilder.Entity<User>().HasIndex(u => u.Email).IsUnique();
 
-        //modelBuilder.Entity<ImageProduct>().HasKey(ip => new { ip.ProductId, ip.ProductImagesId });
+        //modelBuilder.Entity<ImageProduct>().HasKey(ip => new { ip.ProductId, ip.ImageId });
 
 /*         var categories = ReadCsvFile<Category>("../Seed/categories.csv");
         //var products = ReadCsvFile<Product>("../Seed/products.csv");

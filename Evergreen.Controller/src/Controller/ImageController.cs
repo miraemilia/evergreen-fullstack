@@ -71,16 +71,16 @@ public class ImageController : ControllerBase
 
     [Authorize (Roles = "Admin")]
     [HttpPatch("product/{productId:Guid}")]
-    public async Task<ActionResult<ProductReadDTO>> AddProductImage([FromRoute] Guid productId, [FromBody] ProductImageDTO imageAddDTO)
+    public async Task<ActionResult<ProductReadDTO>> AddProductImage([FromRoute] Guid productId, [FromBody] ProductImageParams imageAddParams)
     {
-        return Ok(await _productService.AddProductImageAsync(productId, imageAddDTO));
+        return Ok(await _productService.AddProductImageAsync(productId, imageAddParams.ImageId));
     }
 
     [Authorize (Roles= "Admin")]
     [HttpDelete("product/{productId:Guid}")]
-    public async Task<ActionResult<bool>> RemoveProductImage([FromRoute] Guid productId, [FromBody] ProductImageDTO deleteDTO)
+    public async Task<ActionResult<bool>> RemoveProductImage([FromRoute] Guid productId, [FromBody] ProductImageParams deleteParams)
     {
-        return Ok(await _productService.RemoveProductImageAsync(productId, deleteDTO));
+        return Ok(await _productService.RemoveProductImageAsync(productId, deleteParams.ImageId));
     }
 
 }

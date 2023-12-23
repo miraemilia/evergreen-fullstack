@@ -1,11 +1,9 @@
-using System.Data.Common;
 using System.Security.Claims;
 using Evergreen.Core.src.Parameter;
 using Evergreen.Service.src.Abstraction;
 using Evergreen.Service.src.DTO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Evergreen.Controller.src.Controller;
@@ -48,42 +46,27 @@ public class AuthController : ControllerBase
     }
 
     [Authorize]
-    [HttpPatch("profile/{id:Guid}")]
-    public async Task<ActionResult<UserReadDTO>> UpdateProfile([FromRoute] Guid id, [FromBody] UserUpdateDTO updates)
+    [HttpPatch("profile")]
+    public async Task<ActionResult<UserReadDTO>> UpdateProfile([FromBody] UserUpdateDTO updates)
     {
         var userId = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
-        if (userId == id.ToString())
-        {
-            return Ok(await _authService.UpdateProfileAsync(id, updates));
-        }
-        else 
-        {
-            return Unauthorized("A user can only update their own profile.");
-        }
+        return Ok(await _authService.UpdateProfileAsync(Guid.Parse(userId), updates));
     }
 
     [Authorize]
-    [HttpPatch("profile/password/{id:Guid}")]
-    public async Task<ActionResult<UserReadDTO>> ChangePassword([FromRoute] Guid id, [FromBody] ChangePasswordParams password)
+    [HttpPatch("profile/change-password")]
+    public async Task<ActionResult<UserReadDTO>> ChangePassword([FromBody] ChangePasswordParams password)
     {
         var userId = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
-        if (userId == id.ToString())
-        {
-            return Ok(await _authService.ChangePasswordAsync(id, password.Password));
-        }
-        return Unauthorized("A user can only change their own password.");
+        return Ok(await _authService.ChangePasswordAsync(Guid.Parse(userId), password.Password));
     }
 
     [Authorize]
-    [HttpDelete("profile/{id:Guid}")]
-    public async Task<ActionResult<bool>> Unregister([FromRoute] Guid id)
+    [HttpDelete("profile")]
+    public async Task<ActionResult<bool>> Unregister()
     {
         var userId = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
-        if (userId == id.ToString())
-        {
-            return Ok(await _authService.DeleteProfileAsync(id));
-        }
-        return Unauthorized("A user can only change their own password.");
+        return Ok(await _authService.DeleteProfileAsync(Guid.Parse(userId)));
     }
 
 }
