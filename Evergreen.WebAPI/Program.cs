@@ -1,5 +1,6 @@
 using System.Text;
 using Evergreen.Core.src.Abstraction;
+using Evergreen.Core.src.Enum;
 using Evergreen.Service.src.Abstraction;
 using Evergreen.Service.src.Service;
 using Evergreen.Service.src.Shared;
@@ -10,6 +11,7 @@ using Evergreen.WebAPI.src.Service;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Npgsql;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +20,18 @@ builder.Services.Configure<RouteOptions>(options => options.LowercaseUrls = true
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+//cors
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(
+        policy =>
+        {
+            policy.AllowAnyOrigin()
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        });
+});
 
 //declare services
 builder.Services.AddScoped<IUserService, UserService>();
@@ -61,6 +75,23 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 //automapper
 builder.Services.AddAutoMapper(typeof(MapperProfile).Assembly);
 
+//database configuration
+var connectionString = builder.Configuration.GetConnectionString("LocalDb");
+var dataSourceBuilder = new NpgsqlDataSourceBuilder(connectionString);
+dataSourceBuilder.MapEnum<UserRole>();
+dataSourceBuilder.MapEnum<ProductSize>();
+dataSourceBuilder.MapEnum<DetailsOption>();
+dataSourceBuilder.MapEnum<OrderStatus>();
+var dataSource = dataSourceBuilder.Build();
+
+builder.Services.AddDbContext<DatabaseContext>(options => 
+{
+    options
+    .UseNpgsql(dataSource)
+    .UseSnakeCaseNamingConvention()
+    .AddInterceptors(new TimeStampInterceptor());
+});
+
 //exception middleware
 builder.Services.AddTransient<ExceptionMiddleware>();
 
@@ -71,6 +102,8 @@ builder.Services.AddDbContext<DatabaseContext>(options => options.UseNpgsql());
 var app = builder.Build();
 
 app.UseMiddleware<ExceptionMiddleware>();
+
+app.UseCors();
 
 app.UseSwagger();
 app.UseSwaggerUI(options =>

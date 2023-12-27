@@ -1,6 +1,7 @@
 using System.Globalization;
 using CsvHelper;
 using CsvHelper.Configuration;
+using CsvHelper.TypeConversion;
 using Evergreen.Core.src.Entity;
 using Evergreen.Core.src.Enum;
 using Microsoft.EntityFrameworkCore;
@@ -34,30 +35,22 @@ public class DatabaseContext : DbContext
         using var reader = new StreamReader(filePath);
         var config = new CsvConfiguration(CultureInfo.InvariantCulture)
         {
-            PrepareHeaderForMatch = args => args.Header.ToLower(),
             Delimiter = ";",
             HeaderValidated = null,
-            MissingFieldFound = null         
+            MissingFieldFound = null,        
         };
-        using var csv = new CsvReader(reader, config);
-        var records = csv.GetRecords<T>();
-        return records.ToList();            
+        using (var csv = new CsvReader(reader, config))
+        {
+            //csv.Context.TypeConverterCache.AddConverter<byte[]>(new CustomByteArrayConverter());
+            //csv.Context.RegisterClassMap<UserMap>();
+            var records = csv.GetRecords<T>();
+            return records.ToList();
+        }        
 
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        var dataSourceBuilder = new NpgsqlDataSourceBuilder(_config.GetConnectionString("LocalDb"));
-        dataSourceBuilder.MapEnum<UserRole>();
-        dataSourceBuilder.MapEnum<ProductSize>();
-        dataSourceBuilder.MapEnum<DetailsOption>();
-        dataSourceBuilder.MapEnum<OrderStatus>();
-        var dataSource = dataSourceBuilder.Build();
-
-        optionsBuilder
-            .UseNpgsql(dataSource)
-            .UseSnakeCaseNamingConvention()
-            .AddInterceptors(new TimeStampInterceptor());
         base.OnConfiguring(optionsBuilder);
     }
 
@@ -76,8 +69,8 @@ public class DatabaseContext : DbContext
         modelBuilder.HasPostgresEnum<OrderStatus>();
         modelBuilder.Entity<Order>(entity => entity.Property(e => e.OrderStatus).HasColumnType("order_status"));
 
-        modelBuilder.Entity<OrderProduct>()
-            .HasKey(e => new { e.OrderId, e.ProductId });
+        modelBuilder.Entity<OrderProduct>().HasKey(e => new { e.OrderId, e.ProductId });
+        //modelBuilder.Entity<ImageProduct>().HasKey(ip => new { ip.ProductId, ip.ImageId });
 
         modelBuilder.Entity<Product>().ToTable(p => p.HasCheckConstraint("CHK_Product_Price_Positive", "price >= 0"));
         modelBuilder.Entity<OrderProduct>().ToTable(p => p.HasCheckConstraint("CHK_OrderProduct_Quantity_Positive", "quantity >= 0"));
@@ -85,35 +78,34 @@ public class DatabaseContext : DbContext
 
         modelBuilder.Entity<User>().HasIndex(u => u.Email).IsUnique();
 
-        //modelBuilder.Entity<ImageProduct>().HasKey(ip => new { ip.ProductId, ip.ImageId });
-
-/*         var categories = ReadCsvFile<Category>("../Seed/categories.csv");
+        //var categories = ReadCsvFile<Category>("../Seed/categories.csv");
+        //var images = ReadCsvFile<Image>("../Seed/images.csv");
         //var products = ReadCsvFile<Product>("../Seed/products.csv");
-        var images = ReadCsvFile<Image>("../Seed/images.csv");
         //var image_product = ReadCsvFile<ImageProduct>("../Seed/image_product.csv");
-        //var orders = ReadCsvFile<Order>("../Seed/orders.csv");
-        //var orders_products = ReadCsvFile<OrderProduct>("../Seed/orders_products.csv");
         //var product_details = ReadCsvFile<ProductDetails>("../Seed/product_details.csv");
         //var users = ReadCsvFile<User>("../Seed/users.csv");
+        //var orders = ReadCsvFile<Order>("../Seed/orders.csv");
+        //var orders_products = ReadCsvFile<OrderProduct>("../Seed/orders_products.csv");
 
-
-        modelBuilder.Entity<Category>().HasData(categories);
+        //modelBuilder.Entity<Category>().HasData(categories);
+        //modelBuilder.Entity<Image>().HasData(images);
         //modelBuilder.Entity<Product>().HasData(products);
-        modelBuilder.Entity<Image>().HasData(images);
         //modelBuilder.Entity<ImageProduct>().HasData(image_product);
-        //modelBuilder.Entity<OrderProduct>().HasData(orders_products);
         //modelBuilder.Entity<ProductDetails>().HasData(product_details);
+        //modelBuilder.Entity<User>().HasData(users);
         //modelBuilder.Entity<Order>().HasData(orders);
-        //modelBuilder.Entity<User>().HasData(users); */
+        //modelBuilder.Entity<OrderProduct>().HasData(orders_products);
     }
 }
 
-/* public sealed class ProductMap : ClassMap<Product>
+/* public class CustomByteArrayConverter : ByteArrayConverter
 {
-    public ProductMap()
+    public override object ConvertFromString(string text, IReaderRow row, MemberMapData memberMapData)
     {
-        AutoMap(CultureInfo.InvariantCulture);
-        Map(p => p.ProductDetails).Ignore();
-        Map(p => p.Category).Ignore();
+        if (text.StartsWith("\\x"))
+        {
+            text = text.Substring(2);
+        }
+        return base.ConvertFromString(text, row, memberMapData);
     }
 } */
