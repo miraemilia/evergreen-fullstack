@@ -61,26 +61,4 @@ public class ImageController : ControllerBase
     {
         return Ok(await _imageService.DeleteOneAsync(id));
     }
-
-    [Authorize (Roles = "Admin")]
-    [HttpPost("product/{productId:Guid}")]
-    public async Task<ActionResult<ProductReadDTO>> CreateProductImage([FromRoute] Guid productId, [FromBody] ImageCreateDTO imageCreateDTO)
-    {
-        return Ok(await _productService.CreateProductImageAsync(productId, imageCreateDTO));
-    } 
-
-    [Authorize (Roles = "Admin")]
-    [HttpPatch("product/{productId:Guid}")]
-    public async Task<ActionResult<ProductReadDTO>> AddProductImage([FromRoute] Guid productId, [FromBody] ProductImageParams imageAddParams)
-    {
-        return Ok(await _productService.AddProductImageAsync(productId, imageAddParams.ImageId));
-    }
-
-    [Authorize (Roles= "Admin")]
-    [HttpDelete("product/{productId:Guid}")]
-    public async Task<ActionResult<bool>> RemoveProductImage([FromRoute] Guid productId, [FromBody] ProductImageParams deleteParams)
-    {
-        return Ok(await _productService.RemoveProductImageAsync(productId, deleteParams.ImageId));
-    }
-
 }

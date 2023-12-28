@@ -1,6 +1,6 @@
-namespace Evergreen.Core.src.Entity;
+namespace Evergreen.Service.src.DTO;
 
-public class ImageProduct
+public class ProductImageDTO
 {
     public Guid ImageId { get; set; }
     public Guid ProductId { get; set; }

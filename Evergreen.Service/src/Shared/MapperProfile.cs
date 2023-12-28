@@ -44,10 +44,7 @@ public class MapperProfile : Profile
             .ForMember(dest => dest.LatinName, opt => opt.Condition(src => src.LatinName != null))
             .ForMember(dest => dest.Description, opt => opt.Condition(src => src.Description != null))
             .ForMember(dest => dest.Price, opt => opt.Condition(src => src.Price > 0));
-            
-        CreateMap<List<Image>, Product>()
-            .ForMember(dest => dest.ProductImages, opt => opt.MapFrom(s => s));
-
+        
         CreateMap<OrderProduct, OrderProductReadDTO>();
         CreateMap<OrderProductCreateDTO, OrderProduct>();
 

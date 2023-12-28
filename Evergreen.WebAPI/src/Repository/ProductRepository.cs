@@ -38,7 +38,7 @@ public class ProductRepository : IProductRepository
         Console.WriteLine(options.Limit);
         Console.WriteLine(options.Offset);
 
-        var query = _products.Include("Category").Include("ProductDetails").Include("ProductImages").Where(p => p.Title.ToLower().Contains(options.Search.ToLower())).AsQueryable();
+        var query = _products.Include(p => p.Category).Include(p => p.ProductDetails).Include(p => p.ProductImages).Where(p => p.Title.ToLower().Contains(options.Search.ToLower())).AsQueryable();
         if (options.Id.HasValue && options.Id != Guid.Parse("00000000-0000-0000-0000-000000000000"))
         {
             query = query.Where(p => p.Category.Id == options.Id);
@@ -73,7 +73,7 @@ public class ProductRepository : IProductRepository
 
     public async Task<int> GetCountAsync(GetAllParams options)
     {
-        var query = _products.Include("Category").Include("ProductDetails").Include("ProductImages").Where(p => p.Title.ToLower().Contains(options.Search.ToLower())).AsQueryable();
+        var query = _products.Include(p => p.Category).Include(p => p.ProductDetails).Include(p => p.ProductImages).Where(p => p.Title.ToLower().Contains(options.Search.ToLower())).AsQueryable();
         if (options.Id.HasValue && options.Id != Guid.Parse("00000000-0000-0000-0000-000000000000"))
         {
             query = query.Where(p => p.Category.Id == options.Id);
@@ -107,17 +107,7 @@ public class ProductRepository : IProductRepository
 
     public async Task<Product?> GetOneByIdAsync(Guid id)
     {
-        return await _products.Include("Category").Include("ProductDetails").Include("ProductImages").FirstOrDefaultAsync(u => u.Id == id);
-    }
-
-    public async Task<IEnumerable<Image>> GetProductImages(Guid productId)
-    {
-        var product = await _products.Include("ProductImages").FirstOrDefaultAsync(p => p.Id == productId);
-        if (product is null)
-        {
-            throw CustomException.NotFoundException("Product not found");
-        }
-        return product.ProductImages;
+        return await _products.Include(p => p.Category).Include(p => p.ProductDetails).Include(p => p.ProductImages).FirstOrDefaultAsync(u => u.Id == id);
     }
 
     public async Task<Product> UpdateOneAsync(Product updateItem)
@@ -132,5 +122,16 @@ public class ProductRepository : IProductRepository
         var max = await _products.MaxAsync(p => p.Price);
         var min = await _products.MinAsync(p => p.Price);
         return new MaxMinPrice(){Max = max, Min = min};
+    }
+
+    public async Task<IEnumerable<Image>> GetProductImages(Guid productId)
+    {
+
+        var product = await _products.Include("ProductImages").FirstOrDefaultAsync(p => p.Id == productId);
+        if (product is null)
+        {
+            throw CustomException.NotFoundException("Product not found");
+        }
+        return product.ProductImages;
     }
 }

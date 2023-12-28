@@ -115,53 +115,6 @@ public class ProductService : IProductService
         }
     }
 
-    public async Task<ProductReadDTO> AddProductImageAsync(Guid id, Guid imageId)
-    {
-        var product = await _productRepo.GetOneByIdAsync(id);
-        var image = await _imageRepo.GetOneByIdAsync(imageId);
-        if (image is null)
-        {
-            throw CustomException.NotFoundException("Image not found");
-        }
-        if (product != null)
-        {
-            var productImages = product.ProductImages.Append(image).ToList();
-            var updatedProduct = _mapper.Map(productImages, product);
-            var updated = await _productRepo.UpdateOneAsync(updatedProduct);
-            return _mapper.Map<Product, ProductReadDTO>(updated);
-        }
-        throw CustomException.NotFoundException("Product not found");
-    }
-
-    public async Task<ProductReadDTO> RemoveProductImageAsync(Guid productId, Guid imageId)
-    {
-        var product = await _productRepo.GetOneByIdAsync(productId);
-        var image = await _imageRepo.GetOneByIdAsync(imageId);
-        if (product != null)
-        {
-            var productImages = product.ProductImages.Where(i => i.Id != imageId).ToList();
-            var updatedProduct = _mapper.Map(productImages, product);
-            var updated = await _productRepo.UpdateOneAsync(product);
-            return _mapper.Map<Product, ProductReadDTO>(updated);
-        }
-        throw CustomException.NotFoundException("Product not found");
-    }
-
-    public async Task<ProductReadDTO> CreateProductImageAsync(Guid productId, ImageCreateDTO imageCreateDTO)
-    {
-        
-        var product = await _productRepo.GetOneByIdAsync(productId);
-        if (product != null)
-        {
-            var newImage = _mapper.Map(imageCreateDTO, new Image(){});
-            var createdImage = await _imageRepo.CreateOneAsync(newImage);
-            await AddProductImageAsync(productId, createdImage.Id);
-            return await GetProductByIdAsync(productId);
-        }
-        throw CustomException.NotFoundException("Product not found");
-        
-    }
-
     public async Task<IEnumerable<ImageReadDTO>> GetImagesByProductAsync(Guid productId)
     {
         var result = await _productRepo.GetProductImages(productId);

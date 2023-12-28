@@ -12,8 +12,5 @@ public interface IProductService
     Task<ProductReadDTO> UpdateProductAsync(Guid id, ProductUpdateDTO updates);
     Task<ProductReadDTO> UpdateProductInventoryAsync(Guid id, ProductInventoryUpdateDTO updates);
     Task<IEnumerable<ImageReadDTO>> GetImagesByProductAsync(Guid productId);
-    Task<ProductReadDTO> AddProductImageAsync(Guid id, Guid imageId);
-    Task<ProductReadDTO> RemoveProductImageAsync(Guid id, Guid imageId);
-    Task<ProductReadDTO> CreateProductImageAsync(Guid id, ImageCreateDTO imageCreateDTO);
     Task<MaxMinPrice> GetMaxMinPrice();
 }
