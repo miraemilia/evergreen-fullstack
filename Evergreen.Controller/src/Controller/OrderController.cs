@@ -42,12 +42,8 @@ public class OrderController : ControllerBase
     [HttpPost()]
     public async Task<ActionResult<OrderReadDTO>> CreateOne([FromBody] OrderCreateDTO orderCreateDTO)
     {
-        var userId = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
-        if (Guid.Parse(userId) != orderCreateDTO.UserId)
-        {
-            return Unauthorized("Not authorized: customer can only place an order for themself");
-        }
-        return CreatedAtAction(nameof(CreateOne), await _orderService.CreateOrderAsync(orderCreateDTO));
+        var userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+        return CreatedAtAction(nameof(CreateOne), await _orderService.CreateOrderAsync(orderCreateDTO, userId));
     }
 
     [Authorize (Roles = "Admin")]

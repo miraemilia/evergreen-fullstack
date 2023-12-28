@@ -7,7 +7,7 @@ public interface IOrderService
 {
     Task<OrderPageableReadDTO> GetAllOrdersAsync(GetAllParams options);
     Task<OrderReadDTO> GetOrderByIdAsync(Guid id);
-    Task<OrderReadDTO> CreateOrderAsync(OrderCreateDTO newOrder);
+    Task<OrderReadDTO> CreateOrderAsync(OrderCreateDTO newOrder, Guid userId);
     Task<bool> DeleteOrderAsync(Guid id);
     Task<OrderReadDTO> UpdateOrderStatusAsync(Guid id, OrderUpdateDTO updates);
 }

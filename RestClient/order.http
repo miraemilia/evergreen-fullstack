@@ -3,12 +3,12 @@ GET http://localhost:5180/api/v1/orders HTTP/1.1
 content-type: application/json
 Authorization: Bearer 
 
+###
 POST http://localhost:5180/api/v1/orders HTTP/1.1
 content-type: application/json
-Authorization: Bearer 
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIyY2JmMTc1Zi0yMmZmLTRhMTctOTA0Zi1jNTBlZTRkYjU1ODgiLCJyb2xlIjoiQ3VzdG9tZXIiLCJuYmYiOjE3MDM3NTEyNTYsImV4cCI6MTcwMzkyNDA1NiwiaWF0IjoxNzAzNzUxMjU2LCJpc3MiOiJFdmVyZ3JlZW5BZG1pbiIsImF1ZCI6IkV2ZXJncmVlbiJ9.t-wCUd3bXMFU0sg9rrOsw_AfXgJmUkEWFwlp9uKt6t0
 
 {
-  "userId": "2ac741f1-0f1f-4b34-8f32-ca9d2e4e2f85",
   "orderDetails": [
     {
       "productId": "0bfb3b77-d015-4a52-b7d2-d2a15eae2f0e",

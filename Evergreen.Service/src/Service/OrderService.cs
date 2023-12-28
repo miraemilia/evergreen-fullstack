@@ -24,9 +24,9 @@ public class OrderService : IOrderService
         _userRepo = userRepo;
     }
 
-    public async Task<OrderReadDTO> CreateOrderAsync(OrderCreateDTO newOrder)
+    public async Task<OrderReadDTO> CreateOrderAsync(OrderCreateDTO newOrder, Guid userId)
     {
-        var user = await _userRepo.GetOneByIdAsync(newOrder.UserId);
+        var user = await _userRepo.GetOneByIdAsync(userId);
         if (user is null)
         {
             throw CustomException.NotFoundException("User not found");
@@ -40,6 +40,7 @@ public class OrderService : IOrderService
             }
         }
         var order = _mapper.Map<OrderCreateDTO, Order>(newOrder);
+        order.UserId = userId;
         var result = await _orderRepo.CreateOneAsync(order);
         return _mapper.Map<Order, OrderReadDTO>(result);
     }

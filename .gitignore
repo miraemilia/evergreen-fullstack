@@ -3,6 +3,7 @@
 Migrations/
 publish/
 Seed/
+RestClient/
 
 # User-specific files
 appsettings.json
