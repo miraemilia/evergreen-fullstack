@@ -9,4 +9,5 @@ public class OrderReadDTO
     public UserSimpleReadDTO User { get; set; }
     public OrderStatus OrderStatus { get; set; }
     public IEnumerable<OrderProductReadDTO> OrderDetails { get; set; }
+    public DateTime CreatedAt { get; set; }
 }
