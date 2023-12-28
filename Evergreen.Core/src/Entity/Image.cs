@@ -5,4 +5,6 @@ public class Image : BaseEntity
     public string ImageUrl { get; set; }
     public string? Description { get; set; }
     public IEnumerable<Product> Products { get; set; }
+    //public IEnumerable<ImageProduct> ImageProducts { get; set; }
+
 }

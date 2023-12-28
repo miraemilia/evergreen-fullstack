@@ -37,11 +37,14 @@ public class DatabaseContext : DbContext
         {
             Delimiter = ";",
             HeaderValidated = null,
-            MissingFieldFound = null,        
         };
         using (var csv = new CsvReader(reader, config))
         {
-            //csv.Context.TypeConverterCache.AddConverter<byte[]>(new CustomByteConverter());
+            csv.Context.TypeConverterCache.AddConverter<byte[]>(new CustomByteConverter());
+            csv.Context.RegisterClassMap(new ProductMap());
+            csv.Context.RegisterClassMap(new ProductDetailsMap());
+            csv.Context.RegisterClassMap(new OrderMap());
+            csv.Context.RegisterClassMap(new OrderDetailsMap());
             var records = csv.GetRecords<T>();
             return records.ToList();
         }        
@@ -77,47 +80,91 @@ public class DatabaseContext : DbContext
 
         modelBuilder.Entity<User>().HasIndex(u => u.Email).IsUnique();
 
-        //var categories = ReadCsvFile<Category>("../Seed/categories.csv");
-        //var images = ReadCsvFile<Image>("../Seed/images.csv");
-        //var products = ReadCsvFile<Product>("../Seed/products.csv");
+        var categories = ReadCsvFile<Category>("../Seed/categories.csv");
+        var images = ReadCsvFile<Image>("../Seed/images.csv");
+        var products = ReadCsvFile<Product>("../Seed/products.csv");
         //var image_product = ReadCsvFile<ImageProduct>("../Seed/image_product.csv");
-        //var product_details = ReadCsvFile<ProductDetails>("../Seed/product_details.csv");
-        //var users = ReadCsvFile<User>("../Seed/users.csv");
-        //var orders = ReadCsvFile<Order>("../Seed/orders.csv");
-        //var orders_products = ReadCsvFile<OrderProduct>("../Seed/orders_products.csv");
+        var product_details = ReadCsvFile<ProductDetails>("../Seed/product_details.csv");
+        var users = ReadCsvFile<User>("../Seed/users.csv");
+        var orders = ReadCsvFile<Order>("../Seed/orders.csv");
+        var orders_products = ReadCsvFile<OrderProduct>("../Seed/orders_products.csv");
 
-        //modelBuilder.Entity<Category>().HasData(categories);
-        //modelBuilder.Entity<Image>().HasData(images);
-        //modelBuilder.Entity<Product>().HasData(products);
+        modelBuilder.Entity<Category>().HasData(categories);
+        modelBuilder.Entity<Image>().HasData(images);
+        modelBuilder.Entity<Product>().HasData(products);
         //modelBuilder.Entity<ImageProduct>().HasData(image_product);
-        //modelBuilder.Entity<ProductDetails>().HasData(product_details);
-        //modelBuilder.Entity<User>().HasData(users);
-        //modelBuilder.Entity<Order>().HasData(orders);
-        //modelBuilder.Entity<OrderProduct>().HasData(orders_products);
+        modelBuilder.Entity<ProductDetails>().HasData(product_details);
+        modelBuilder.Entity<User>().HasData(users);
+        modelBuilder.Entity<Order>().HasData(orders);
+        modelBuilder.Entity<OrderProduct>().HasData(orders_products);
+
+        base.OnModelCreating(modelBuilder);
     }
 }
 
-/* public class CustomByteArrayConverter : ByteArrayConverter
+public sealed class ProductMap : ClassMap<Product>
 {
-    public override object ConvertFromString(string text, IReaderRow row, MemberMapData memberMapData)
+    public ProductMap()
     {
-        if (text.StartsWith("\\x"))
-        {
-            text = text.Substring(2);
-        }
-        return base.ConvertFromString(text, row, memberMapData);
+        Map(p => p.Id);
+        Map(p => p.Title);
+        Map(p => p.LatinName);
+        Map(p => p.Price);
+        Map(p => p.Description);
+        Map(p => p.CategoryId);
+        Map(p => p.Inventory);
+        Map(p => p.CreatedAt);
+        Map(p => p.UpdatedAt);
     }
-} */
+}
+
+public sealed class ProductDetailsMap : ClassMap<ProductDetails>
+{
+    public ProductDetailsMap()
+    {
+        Map(p => p.Id);
+        Map(p => p.ProductId);
+        Map(p => p.Size);
+        Map(p => p.Watering);
+        Map(p => p.Light);
+        Map(p => p.Difficulty);
+        Map(p => p.Hanging);
+        Map(p => p.NonToxic);
+        Map(p => p.AirPurifying);
+        Map(p => p.CreatedAt);
+        Map(p => p.UpdatedAt);
+    }
+}
+
+public sealed class OrderMap : ClassMap<Order>
+{
+    public OrderMap()
+    {
+        Map(p => p.Id);
+        Map(p => p.UserId);
+        Map(p => p.OrderStatus);
+        Map(p => p.CreatedAt);
+        Map(p => p.UpdatedAt);
+    }
+}
+
+public sealed class OrderDetailsMap : ClassMap<OrderProduct>
+{
+    public OrderDetailsMap()
+    {
+        Map(p => p.OrderId);
+        Map(p => p.ProductId);
+        Map(p => p.Quantity);
+    }
+}
 
 public class CustomByteConverter : ByteConverter
 {
     public override object ConvertFromString(string text, IReaderRow row, MemberMapData memberMapData)
     {
-        // Handle the conversion of the salt value here
         if (text.StartsWith("\\x"))
         {
             text = text.Substring(2);
-            // Convert hex string to byte array
             byte[] saltBytes = StringToByteArray(text);
             return saltBytes;
         }

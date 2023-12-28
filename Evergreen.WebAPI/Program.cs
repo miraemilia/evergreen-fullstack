@@ -76,7 +76,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 builder.Services.AddAutoMapper(typeof(MapperProfile).Assembly);
 
 //database configuration
-var connectionString = builder.Configuration.GetConnectionString("LocalDb");
+var connectionString = builder.Configuration.GetConnectionString("SeedDb");
 var dataSourceBuilder = new NpgsqlDataSourceBuilder(connectionString);
 dataSourceBuilder.MapEnum<UserRole>();
 dataSourceBuilder.MapEnum<ProductSize>();

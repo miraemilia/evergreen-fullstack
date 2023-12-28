@@ -9,6 +9,8 @@ public class Product : BaseEntity
     public Guid CategoryId { get; set; }
     public Category Category { get; set; }
     public IEnumerable<Image> ProductImages { get; set; }
+    //public IEnumerable<ImageProduct> ImageProducts { get; set; }
+
     public ProductDetails? ProductDetails { get; set; }
     public int Inventory { get; set; }
     public IEnumerable<OrderProduct> OrderDetails { get; set; }
