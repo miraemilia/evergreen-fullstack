@@ -41,8 +41,7 @@ public class DatabaseContext : DbContext
         };
         using (var csv = new CsvReader(reader, config))
         {
-            //csv.Context.TypeConverterCache.AddConverter<byte[]>(new CustomByteArrayConverter());
-            //csv.Context.RegisterClassMap<UserMap>();
+            //csv.Context.TypeConverterCache.AddConverter<byte[]>(new CustomByteConverter());
             var records = csv.GetRecords<T>();
             return records.ToList();
         }        
@@ -109,3 +108,29 @@ public class DatabaseContext : DbContext
         return base.ConvertFromString(text, row, memberMapData);
     }
 } */
+
+public class CustomByteConverter : ByteConverter
+{
+    public override object ConvertFromString(string text, IReaderRow row, MemberMapData memberMapData)
+    {
+        // Handle the conversion of the salt value here
+        if (text.StartsWith("\\x"))
+        {
+            text = text.Substring(2);
+            // Convert hex string to byte array
+            byte[] saltBytes = StringToByteArray(text);
+            return saltBytes;
+        }
+        return base.ConvertFromString(text, row, memberMapData);
+    }
+    private static byte[] StringToByteArray(string hex)
+    {
+        int numberChars = hex.Length;
+        byte[] bytes = new byte[numberChars / 2];
+        for (int i = 0; i < numberChars; i += 2)
+        {
+            bytes[i / 2] = Convert.ToByte(hex.Substring(i, 2), 16);
+        }
+        return bytes;
+    }
+}

@@ -25,7 +25,6 @@ public class OrderRepository : IOrderRepository
         {
             try
             {
-                //var order = new Order{User = createItem.User, OrderStatus = createItem.OrderStatus};
                 foreach(var detail in createItem.OrderDetails)
                 {
                     var product = await _products.FirstAsync(u => u.Id == detail.ProductId);
@@ -45,7 +44,7 @@ public class OrderRepository : IOrderRepository
                 _orders.Add(createItem);
                 await _database.SaveChangesAsync();
                 await transaction.CommitAsync();
-                return createItem;
+                return await _orders.Include(o => o.OrderDetails).ThenInclude(od => od.Product).FirstAsync(u => u.Id == createItem.Id);
             }
             catch (Exception e)
             {
@@ -65,7 +64,7 @@ public class OrderRepository : IOrderRepository
 
     public async Task<IEnumerable<Order>> GetAllAsync(GetAllParams options)
     {
-        return await _orders.Include("OrderDetails").Skip(options.Offset).Take(options.Limit).ToListAsync();
+        return await _orders.Include(o => o.OrderDetails).ThenInclude(od => od.Product).Skip(options.Offset).Take(options.Limit).ToListAsync();
     }
 
     public async Task<int> GetCountAsync(GetAllParams options)
@@ -75,7 +74,7 @@ public class OrderRepository : IOrderRepository
 
     public async Task<Order?> GetOneByIdAsync(Guid id)
     {
-        return await _orders.Include("OrderDetails").FirstOrDefaultAsync(u => u.Id == id);
+        return await _orders.Include(o => o.OrderDetails).ThenInclude(od => od.Product).FirstOrDefaultAsync(u => u.Id == id);
     }
 
     public async Task<Order> UpdateOneAsync(Order updateItem)

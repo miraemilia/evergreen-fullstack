@@ -58,7 +58,7 @@ public class UserRepository : IUserRepository
 
     public async Task<User?> GetOneByIdAsync(Guid id)
     {
-        return await _users.FirstOrDefaultAsync(u => u.Id == id);
+        return await _users.Include(u => u.Orders).ThenInclude(o => o.OrderDetails).ThenInclude(od => od.Product).FirstOrDefaultAsync(u => u.Id == id);
     }
 
     public async Task<User> UpdateOneAsync(User userUpdate)
