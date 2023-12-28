@@ -45,7 +45,7 @@ public class AuthService : IAuthService
         throw CustomException.WrongCredentialsException("Wrong password");
     }
 
-    public async Task<UserReadDTO> UpdateProfileAsync(Guid id, UserUpdateDTO update)
+    public async Task<ProfileReadDTO> UpdateProfileAsync(Guid id, UserUpdateDTO update)
     {
         var userToUpdate = await _userRepo.GetOneByIdAsync(id);
         if (userToUpdate != null)
@@ -60,7 +60,7 @@ public class AuthService : IAuthService
             }
             var updatedUser = _mapper.Map(update, userToUpdate);
             var updated = await _userRepo.UpdateOneAsync(updatedUser);
-            return _mapper.Map<User, UserReadDTO>(updated);
+            return _mapper.Map<User, ProfileReadDTO>(updated);
         }
         else
         {
@@ -69,17 +69,17 @@ public class AuthService : IAuthService
         
     }
 
-    public async Task<UserReadDTO> GetProfileAsync(Guid id)
+    public async Task<ProfileReadDTO> GetProfileAsync(Guid id)
     {
         var foundUser = await _userRepo.GetOneByIdAsync(id);
         if (foundUser != null)
         {
-            return _mapper.Map<User, UserReadDTO>(foundUser);            
+            return _mapper.Map<User, ProfileReadDTO>(foundUser);            
         }
         throw CustomException.NotFoundException("User not found");
     }
 
-    public async Task<UserReadDTO> ChangePasswordAsync(Guid id, string newPassword)
+    public async Task<ProfileReadDTO> ChangePasswordAsync(Guid id, string newPassword)
     {
         var userToUpdate = await _userRepo.GetOneByIdAsync(id);
         if (userToUpdate != null)
@@ -88,7 +88,7 @@ public class AuthService : IAuthService
             userToUpdate.Password = hashedPassword;
             userToUpdate.Salt = salt;
             var updated = await _userRepo.UpdateOneAsync(userToUpdate);
-            return _mapper.Map<User, UserReadDTO>(updated);
+            return _mapper.Map<User, ProfileReadDTO>(updated);
         }
         else
         {
@@ -106,7 +106,7 @@ public class AuthService : IAuthService
         throw CustomException.NotFoundException("User not found");
     }
 
-    public async Task<UserReadDTO> CreateProfileAsync(UserCreateDTO newUser)
+    public async Task<ProfileReadDTO> CreateProfileAsync(UserCreateDTO newUser)
     {
         var emailAvailable = await _userRepo.EmailAvailable(newUser.Email);
         if (!emailAvailable)
@@ -118,6 +118,6 @@ public class AuthService : IAuthService
         user.Password = hashedPassword;
         user.Salt = salt;
         var result = await _userRepo.CreateOneAsync(user);
-        return _mapper.Map<User, UserReadDTO>(result);
+        return _mapper.Map<User, ProfileReadDTO>(result);
     }
 }

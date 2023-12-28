@@ -32,7 +32,7 @@ public class AuthController : ControllerBase
 
     [Authorize]
     [HttpGet("profile")]
-    public async Task<ActionResult<UserReadDTO>> GetProfile()
+    public async Task<ActionResult<ProfileReadDTO>> GetProfile()
     {
         var userId = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
         return Ok(await _authService.GetProfileAsync(Guid.Parse(userId)));
@@ -40,14 +40,14 @@ public class AuthController : ControllerBase
 
     [AllowAnonymous]
     [HttpPost("profile")]
-    public async Task<ActionResult<UserReadDTO>> Register([FromBody] UserCreateDTO userCreateDTO)
+    public async Task<ActionResult<ProfileReadDTO>> Register([FromBody] UserCreateDTO userCreateDTO)
     {
         return CreatedAtAction(nameof(Register), await _authService.CreateProfileAsync(userCreateDTO));
     }
 
     [Authorize]
     [HttpPatch("profile")]
-    public async Task<ActionResult<UserReadDTO>> UpdateProfile([FromBody] UserUpdateDTO updates)
+    public async Task<ActionResult<ProfileReadDTO>> UpdateProfile([FromBody] UserUpdateDTO updates)
     {
         var userId = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
         return Ok(await _authService.UpdateProfileAsync(Guid.Parse(userId), updates));
@@ -55,7 +55,7 @@ public class AuthController : ControllerBase
 
     [Authorize]
     [HttpPatch("profile/change-password")]
-    public async Task<ActionResult<UserReadDTO>> ChangePassword([FromBody] ChangePasswordParams password)
+    public async Task<ActionResult<ProfileReadDTO>> ChangePassword([FromBody] ChangePasswordParams password)
     {
         var userId = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
         return Ok(await _authService.ChangePasswordAsync(Guid.Parse(userId), password.Password));

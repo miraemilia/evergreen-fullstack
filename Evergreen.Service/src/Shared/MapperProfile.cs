@@ -8,7 +8,9 @@ public class MapperProfile : Profile
 {
     public MapperProfile()
     {
-        CreateMap<User, UserReadDTO>()
+        CreateMap<User, UserReadDTO>();
+        CreateMap<User, UserSimpleReadDTO>();
+        CreateMap<User, ProfileReadDTO>()
             .ForMember(dest => dest.Orders, opt => opt.MapFrom(s => s.Orders));
         CreateMap<UserCreateDTO, User>();
         CreateMap<UserUpdateDTO, User>()
@@ -49,7 +51,8 @@ public class MapperProfile : Profile
         CreateMap<OrderProductCreateDTO, OrderProduct>();
 
         CreateMap<Order, OrderReadDTO>()
-            .ForMember(dest => dest.OrderDetails, opt => opt.MapFrom(s => s.OrderDetails));
+            .ForMember(dest => dest.OrderDetails, opt => opt.MapFrom(s => s.OrderDetails))
+            .ForMember(dest => dest.User, opt => opt.MapFrom(s => s.User));
         CreateMap<OrderCreateDTO, Order>()
             .ForMember(dest => dest.User, opt => opt.Ignore())
             .ForMember(dest => dest.OrderDetails, opt => opt.MapFrom(s => s.OrderDetails));

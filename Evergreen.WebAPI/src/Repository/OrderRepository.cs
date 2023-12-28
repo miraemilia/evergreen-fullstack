@@ -44,7 +44,7 @@ public class OrderRepository : IOrderRepository
                 _orders.Add(createItem);
                 await _database.SaveChangesAsync();
                 await transaction.CommitAsync();
-                return await _orders.Include(o => o.OrderDetails).ThenInclude(od => od.Product).FirstAsync(u => u.Id == createItem.Id);
+                return await _orders.Include(o => o.User).Include(o => o.OrderDetails).ThenInclude(od => od.Product).FirstAsync(u => u.Id == createItem.Id);
             }
             catch (Exception e)
             {
@@ -64,7 +64,7 @@ public class OrderRepository : IOrderRepository
 
     public async Task<IEnumerable<Order>> GetAllAsync(GetAllParams options)
     {
-        return await _orders.Include(o => o.OrderDetails).ThenInclude(od => od.Product).Skip(options.Offset).Take(options.Limit).ToListAsync();
+        return await _orders.Include(o => o.User).Include(o => o.OrderDetails).ThenInclude(od => od.Product).Skip(options.Offset).Take(options.Limit).ToListAsync();
     }
 
     public async Task<int> GetCountAsync(GetAllParams options)
@@ -74,7 +74,7 @@ public class OrderRepository : IOrderRepository
 
     public async Task<Order?> GetOneByIdAsync(Guid id)
     {
-        return await _orders.Include(o => o.OrderDetails).ThenInclude(od => od.Product).FirstOrDefaultAsync(u => u.Id == id);
+        return await _orders.Include(o => o.User).Include(o => o.OrderDetails).ThenInclude(od => od.Product).FirstOrDefaultAsync(u => u.Id == id);
     }
 
     public async Task<Order> UpdateOneAsync(Order updateItem)

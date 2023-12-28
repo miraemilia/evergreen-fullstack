@@ -7,9 +7,9 @@ namespace Evergreen.Service.src.Abstraction;
 public interface IAuthService
 {
         Task<string> Login(LoginParams loginParams);
-        Task<UserReadDTO> GetProfileAsync(Guid id);
-        Task<UserReadDTO> CreateProfileAsync(UserCreateDTO newUser);
-        Task<UserReadDTO> UpdateProfileAsync(Guid id, UserUpdateDTO update);
-        Task<UserReadDTO> ChangePasswordAsync(Guid id, string password);
+        Task<ProfileReadDTO> GetProfileAsync(Guid id);
+        Task<ProfileReadDTO> CreateProfileAsync(UserCreateDTO newUser);
+        Task<ProfileReadDTO> UpdateProfileAsync(Guid id, UserUpdateDTO update);
+        Task<ProfileReadDTO> ChangePasswordAsync(Guid id, string password);
         Task<bool> DeleteProfileAsync(Guid id);
 }
