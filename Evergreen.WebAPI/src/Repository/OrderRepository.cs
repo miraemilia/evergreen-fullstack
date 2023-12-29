@@ -64,7 +64,7 @@ public class OrderRepository : IOrderRepository
 
     public async Task<IEnumerable<Order>> GetAllAsync(GetAllParams options)
     {
-        return await _orders.Include(o => o.User).Include(o => o.OrderDetails).ThenInclude(od => od.Product).Skip(options.Offset).Take(options.Limit).ToListAsync();
+        return await _orders.Include(o => o.User).Include(o => o.OrderDetails).ThenInclude(od => od.Product).OrderByDescending(p => p.UpdatedAt).Skip(options.Offset).Take(options.Limit).ToListAsync();
     }
 
     public async Task<int> GetCountAsync(GetAllParams options)

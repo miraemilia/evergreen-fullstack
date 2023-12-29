@@ -8,7 +8,7 @@ public class GetAllParams
     public int Offset { get; set; } = 0;
     public Guid? Id { get; set; }
     public string Search { get; set; } = string.Empty;
-    public SortOrder SortOrder { get; set; } = SortOrder.Asc;
+    public SortOrder SortOrder { get; set; } = SortOrder.Desc;
     public SortCriterion SortCriterion { get; set; } = SortCriterion.CreatedAt;
     public int? PriceMax { get; set; }
     public int? PriceMin { get; set; }
