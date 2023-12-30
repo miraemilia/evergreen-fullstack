@@ -34,11 +34,10 @@ public class CategoryServiceTests
         var repo = new Mock<ICategoryRepository>();
         var mapper = new Mock<IMapper>();
         var categoryService = new CategoryService(repo.Object, _mapper);
-        GetAllParams options = new GetAllParams(){Limit = 10, Offset = 0};
 
         await categoryService.GetAllCategoriesAsync();
 
-        repo.Verify(repo => repo.GetAllAsync(options), Times.Once);
+        repo.Verify(repo => repo.GetAllParameterlessAsync(), Times.Once);
     }
 
     [Theory]
@@ -46,8 +45,7 @@ public class CategoryServiceTests
     public async void GetAllAsync_ShouldReturnValidResponse(IEnumerable<Category> repoResponse, IEnumerable<CategoryReadDTO> expected)
     {
         var repo = new Mock<ICategoryRepository>();
-        GetAllParams options = new GetAllParams(){Limit = 10, Offset = 0};
-        repo.Setup(repo => repo.GetAllAsync(options)).ReturnsAsync(repoResponse);
+        repo.Setup(repo => repo.GetAllParameterlessAsync()).ReturnsAsync(repoResponse);
         var categoryService = new CategoryService(repo.Object, _mapper);
         
         var response = await categoryService.GetAllCategoriesAsync();
