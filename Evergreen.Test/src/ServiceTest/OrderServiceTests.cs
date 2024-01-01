@@ -93,62 +93,6 @@ public class OrderServiceTests
         }
     }
 
-/*     [Fact]
-    public async void CreateOneAsync_ShouldInvokeRepoMethod()
-    {
-        var repo = new Mock<IOrderRepository>();
-        var mapper = new Mock<IMapper>();
-        var productRepo = new Mock<IProductRepository>();
-        productRepo.Setup(repo => repo.GetOneByIdAsync(It.IsAny<Guid>())).ReturnsAsync(new Product(){});
-        var userRepo = new Mock<IUserRepository>();
-        userRepo.Setup(repo => repo.GetOneByIdAsync(It.IsAny<Guid>())).ReturnsAsync(new User(){});
-        var orderService = new OrderService(repo.Object, _mapper, productRepo.Object, userRepo.Object);
-        OrderCreateDTO dto = new OrderCreateDTO(){};
-
-        await orderService.CreateOrderAsync(dto, It.IsAny<Guid>()); 
-
-        repo.Verify(repo => repo.CreateOneAsync(It.IsAny<Order>()), Times.Once);
-    }
-
-    [Theory]
-    [ClassData(typeof(CreateOrderData))]
-    public async void CreateOneAsync_ShouldReturnValidResponse(User? userResponse, Product? productResponse, Order repoResponse, OrderReadDTO expected, Type? exceptionType)
-    {
-        var repo = new Mock<IOrderRepository>();
-        repo.Setup(repo => repo.CreateOneAsync(It.IsAny<Order>())).ReturnsAsync(repoResponse);
-        var productRepo = new Mock<IProductRepository>();
-        productRepo.Setup(repo => repo.GetOneByIdAsync(It.IsAny<Guid>())).ReturnsAsync(productResponse);
-        var userRepo = new Mock<IUserRepository>();
-        userRepo.Setup(repo => repo.GetOneByIdAsync(It.IsAny<Guid>())).ReturnsAsync(userResponse);
-        var orderService = new OrderService(repo.Object, _mapper, productRepo.Object, userRepo.Object);
-        OrderCreateDTO dto = new OrderCreateDTO(){};
-
-        if (exceptionType is not null)
-        {
-            await Assert.ThrowsAsync(exceptionType, () => orderService.CreateOrderAsync(dto, It.IsAny<Guid>()));
-        }
-        else
-        {
-            var response = await orderService.CreateOrderAsync(dto, It.IsAny<Guid>());
-
-            Assert.Equivalent(expected, response);
-        }
-    }
-
-    public class CreateOrderData : TheoryData<User?, Product?, Order?, OrderReadDTO?, Type?>
-    {
-        public CreateOrderData()
-        {
-            Order order1 = new Order(){};
-            User user = new User(){};
-            Product product = new Product(){};
-            OrderReadDTO order1Read = new OrderReadDTO(){};
-            Add(user, product, order1, order1Read, null);
-            Add(null, product, order1, order1Read, typeof(CustomException));
-            Add(user, null, order1, order1Read, typeof(CustomException));
-        }
-    } */
-
     [Fact]
     public async void DeleteOrderAsync_ShouldInvokeRepoMethod()
     {
