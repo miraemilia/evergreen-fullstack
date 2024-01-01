@@ -22,7 +22,6 @@ public class ExceptionMiddleware : IMiddleware
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
             context.Response.StatusCode = 500;
             await context.Response.WriteAsync(e.Message);
         }

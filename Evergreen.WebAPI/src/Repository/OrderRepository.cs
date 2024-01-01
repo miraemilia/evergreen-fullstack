@@ -30,9 +30,7 @@ public class OrderRepository : IOrderRepository
                     var product = await _products.FirstAsync(u => u.Id == detail.ProductId);
                     if (product.Inventory >= detail.Quantity)
                     {
-                        Console.WriteLine($"BEFORE ____ {product.Inventory}");
                         product.Inventory -= detail.Quantity;
-                        Console.WriteLine($"AFTER ____ {product.Inventory}");
                         _products.Update(product);
                         await _database.SaveChangesAsync();
                     }
@@ -48,7 +46,6 @@ public class OrderRepository : IOrderRepository
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
                 await transaction.RollbackAsync();
                 throw;
             }

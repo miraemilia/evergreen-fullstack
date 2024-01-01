@@ -34,10 +34,6 @@ public class ProductRepository : IProductRepository
 
     public async Task<IEnumerable<Product>> GetAllAsync(GetAllParams options)
     {
-        Console.WriteLine(options.Id);
-        Console.WriteLine(options.Limit);
-        Console.WriteLine(options.Offset);
-
         var query = _products.Include(p => p.Category).Include(p => p.ProductDetails).Include(p => p.ProductImages).Where(p => p.Title.ToLower().Contains(options.Search.ToLower())).AsQueryable();
         if (options.Id.HasValue && options.Id != Guid.Parse("00000000-0000-0000-0000-000000000000"))
         {

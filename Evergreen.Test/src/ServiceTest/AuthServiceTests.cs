@@ -1,7 +1,6 @@
 using AutoMapper;
 using Evergreen.Core.src.Abstraction;
 using Evergreen.Core.src.Entity;
-using Evergreen.Core.src.Parameter;
 using Evergreen.Service.src.Abstraction;
 using Evergreen.Service.src.DTO;
 using Evergreen.Service.src.Service;
@@ -26,62 +25,6 @@ public class AuthServiceTests
             _mapper = mapper; 
         }
     }
-
-/*     [Fact]
-    public async void Login_ShouldInvokeTokenService()
-    {
-        var repo = new Mock<IUserRepository>();
-        User user = new User(){};
-        repo.Setup(repo => repo.GetOneByEmailAsync(It.IsAny<string>())).ReturnsAsync(user);
-        var mapper = new Mock<IMapper>();
-        var tokenService = new Mock<ITokenService>();
-        tokenService.Setup(ts => ts.GenerateToken(It.IsAny<User>())).Returns("token");
-        var passwordService = new Mock<IPasswordService>();
-        passwordService.Setup(ps => ps.VerifyPassword(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<byte[]>())).Returns(true);
-        var authService = new AuthService(repo.Object, _mapper, tokenService.Object);
-        var loginParams = new LoginParams(){Email = "user@mail.com", Password = "password"};
-
-        await authService.Login(It.IsAny<LoginParams>());
-
-        tokenService.Verify(service => service.GenerateToken(It.IsAny<User>()), Times.Once);
-    } */
-
-/*     [Theory]
-    [ClassData(typeof(LoginData))]
-    public async void Login_ShouldReturnValidResponse(User? foundUser, string tokenServiceResponse, string expected, Type exceptionType)
-    {
-        var repo = new Mock<IUserRepository>();
-        repo.Setup(repo => repo.GetOneByEmailAsync(It.IsAny<string>())).ReturnsAsync(foundUser);
-        var mapper = new Mock<IMapper>();
-        var tokenService = new Mock<ITokenService>();
-        tokenService.Setup(ts => ts.GenerateToken(It.IsAny<User>())).Returns(tokenServiceResponse);
-        var authService = new AuthService(repo.Object, _mapper, tokenService.Object);
-        //var passwordService = new Mock<IPasswordService>();
-        //passwordService.Setup(ps => ps.VerifyPassword(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<byte[]>())).Returns(true);
-        var loginParams = new LoginParams(){Email = "user@mail.com", Password = "password"};
-
-        if (exceptionType is not null)
-        {
-            await Assert.ThrowsAsync(exceptionType, () => authService.Login(loginParams));
-        }
-        else
-        {
-            var response = await authService.Login(loginParams);
-
-            Assert.Equivalent(expected, response);
-        }
-    } */
-
-/*     public class LoginData : TheoryData<User?, string?, string?, Type?>
-    {
-        public LoginData()
-        {
-            User user1 = new User(){Name = "John Doe", Email = "john@example.com", Password = "12345", Avatar = "https://picsum.photos/200"};
-            Add(user1, "generatedtoken", "generatedtoken", null);
-            Add(null, null, null, typeof(CustomException));
-            Add(user1, null, null, typeof(CustomException));
-        }
-    } */
 
     [Fact]
     public async void GetProfileAsync_ShouldInvokeRepoMethod()

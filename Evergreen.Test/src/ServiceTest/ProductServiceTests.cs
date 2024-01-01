@@ -41,39 +41,6 @@ public class ProductServiceTests
         repo.Verify(repo => repo.GetAllAsync(options), Times.Once);
     }
 
-/*     [Theory]
-    [ClassData(typeof(GetAllProductsData))]
-    public async void GetAllProductsAsync_ShouldReturnValidResponse(IEnumerable<Product> repoResponse, IEnumerable<ProductReadDTO> expected)
-    {
-        var repo = new Mock<IProductRepository>();
-        var categoryRepo = new Mock<ICategoryRepository>();
-        var imageRepo = new Mock<IImageRepository>();
-        GetAllParams options = new GetAllParams(){Limit = 10, Offset = 0};
-        repo.Setup(repo => repo.GetAllAsync(options)).ReturnsAsync(repoResponse);
-        var productService = new ProductService(repo.Object, _mapper, categoryRepo.Object, imageRepo.Object);
-        
-        var response = await productService.GetAllProductsAsync(options);
-
-        Assert.Equivalent(expected, response);
-    }
-
-    public class GetAllProductsData : TheoryData<IEnumerable<Product>, ProductPageableReadDTO>
-    {
-        public GetAllProductsData()
-        {
-            Product product1 = new Product(){};
-            Product product2 = new Product(){};
-            Product product3 = new Product(){};
-            IEnumerable<Product> products = new List<Product>(){product1, product2, product3};
-            ProductReadDTO product1read = new ProductReadDTO(){};
-            ProductReadDTO product2read = new ProductReadDTO(){};
-            ProductReadDTO product3read = new ProductReadDTO(){};
-            IEnumerable<ProductReadDTO> readProducts = new List<ProductReadDTO>(){product1read, product2read, product3read};
-            ProductPageableReadDTO pageableProducts = new ProductPageableReadDTO{Items = readProducts, TotalPages = 1, TotalItems = 3};
-            Add(products, pageableProducts);
-        }
-    } */
-
     [Fact]
     public async void GetProductById_ShouldInvokeRepoMethod()
     {

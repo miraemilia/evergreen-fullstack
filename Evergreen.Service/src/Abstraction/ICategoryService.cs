@@ -1,4 +1,3 @@
-using Evergreen.Core.src.Parameter;
 using Evergreen.Service.src.DTO;
 
 namespace Evergreen.Service.src.Abstraction;

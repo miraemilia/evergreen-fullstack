@@ -1,4 +1,3 @@
-using Evergreen.Core.src.Parameter;
 using Evergreen.Service.src.Abstraction;
 using Evergreen.Service.src.DTO;
 using Microsoft.AspNetCore.Authorization;

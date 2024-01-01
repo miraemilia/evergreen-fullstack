@@ -5,7 +5,6 @@ using CsvHelper.TypeConversion;
 using Evergreen.Core.src.Entity;
 using Evergreen.Core.src.Enum;
 using Microsoft.EntityFrameworkCore;
-using Npgsql;
 
 namespace Evergreen.WebAPI.src.Database;
 

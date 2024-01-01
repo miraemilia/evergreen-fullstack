@@ -3,7 +3,6 @@ using Evergreen.Core.src.Abstraction;
 using Evergreen.Core.src.Entity;
 using Evergreen.Core.src.Enum;
 using Evergreen.Core.src.Parameter;
-using Evergreen.Service.src.Abstraction;
 using Evergreen.Service.src.DTO;
 using Evergreen.Service.src.Service;
 using Evergreen.Service.src.Shared;
@@ -42,35 +41,6 @@ public class OrderServiceTests
 
         repo.Verify(repo => repo.GetAllAsync(options), Times.Once);
     }
-
-/*     [Theory]
-    [ClassData(typeof(GetAllOrdersData))]
-    public async void GetAllAsync_ShouldReturnValidResponse(IEnumerable<Order> repoResponse, IEnumerable<OrderReadDTO> expected)
-    {
-        var repo = new Mock<IOrderRepository>();
-        GetAllParams options = new GetAllParams(){Limit = 10, Offset = 0};
-        repo.Setup(repo => repo.GetAllAsync(options)).ReturnsAsync(repoResponse);
-        var productRepo = new Mock<IProductRepository>();
-        var userRepo = new Mock<IUserRepository>();
-        var orderService = new OrderService(repo.Object, _mapper, productRepo.Object, userRepo.Object);
-        
-        var response = await orderService.GetAllOrdersAsync(options);
-
-        Assert.Equivalent(expected, response);
-    }
-
-    public class GetAllOrdersData : TheoryData<IEnumerable<Order>, OrderPageableReadDTO>
-    {
-        public GetAllOrdersData()
-        {
-            Order order1 = new Order(){};
-            Order order2 = new Order(){};
-            Order order3 = new Order(){};
-            IEnumerable<Order> orders = new List<Order>(){order1, order2, order3};
-            IEnumerable<OrderReadDTO> readOrders = _mapper.Map<IEnumerable<Order>, IEnumerable<OrderReadDTO>>(orders);
-            Add(orders, new OrderPageableReadDTO{Items = readOrders, TotalItems = 3, TotalPages = 1});
-        }
-    } */
  
     [Fact]
     public async void GetOrderById_ShouldInvokeRepoMethod()
