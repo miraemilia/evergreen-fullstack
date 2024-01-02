@@ -27,7 +27,8 @@ builder.Services.AddCors(options =>
     options.AddDefaultPolicy(
         policy =>
         {
-            policy.AllowAnyOrigin()
+            policy
+                .AllowAnyOrigin()
                 .AllowAnyHeader()
                 .AllowAnyMethod();
         });
@@ -76,7 +77,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 builder.Services.AddAutoMapper(typeof(MapperProfile).Assembly);
 
 //database configuration
-var connectionString = builder.Configuration.GetConnectionString("SeedDb");
+var connectionString = builder.Configuration.GetConnectionString("ElephantDb");
 var dataSourceBuilder = new NpgsqlDataSourceBuilder(connectionString);
 dataSourceBuilder.MapEnum<UserRole>();
 dataSourceBuilder.MapEnum<ProductSize>();

@@ -10,7 +10,7 @@
 
 This is the final project of Integrify Academy which involves creating a Fullstack project with React and Redux in the frontend and ASP.NET Core 7 in the backend. The result is an indoor plant e-commerce site called Evergreen which features basic user functionalities (registering, authentication, browsing through products, shopping cart, ordering) as well as admin functionalities for managing users, products and orders.
 
-[Link to deployed project]()
+[Link to deployed project](https://evergreenbotanics.netlify.app/)
 
 ## Table of Contents
 
@@ -34,7 +34,8 @@ This is the final project of Integrify Academy which involves creating a Fullsta
 1. User Management: a user is able to...
    - register for a user account (not admin account)
    - log in and out
-   - (backend only: edit certain properties of their account)
+   - edit their name, email and avatar
+   - (backend only: change their password)
    - (backend only: unregister)
 2. Products: a user is able to...
    - view all available products
@@ -43,10 +44,9 @@ This is the final project of Integrify Academy which involves creating a Fullsta
 3. Cart: a user is able to...
    - add products to a shopping cart
    - manage their shopping cart
-   - (backend only: checkout the shopping cart / place an order)
+   - checkout the shopping cart / place an order
 4. Order Management: a user is able to...
-   - (backend only: view their order history)
-   - (backend only: track the status of their order)
+   - view their order history
    - (backend only: cancel their order while it is processing)
 
 ### Admin
@@ -62,14 +62,16 @@ This is the final project of Integrify Academy which involves creating a Fullsta
    - edit products
    - delete products
 3. Order Management: an admin is able to...
-   - (backend only: view all orders)
+   - view all orders
+   - update order status
    - (backend only: view order details)
-   - (backend only: update order status)
-   - (backend only: cancel orders while it is processing)
+   - (backend only: delete an order while it is processing)
 
 ## Frontend
 
-The frontend code and documentation are found in [this repository]().
+The frontend code and documentation are found in [this repository](https://github.com/miraemilia/evergreen).
+
+![Screenshot](readmeImages/frontpage.png)
 
 ## Backend
 
@@ -77,7 +79,7 @@ The frontend code and documentation are found in [this repository]().
 
 - CLEAN architecture
 - complies with Rest API
-- EF core: code-first database (with seed data)
+- EF core managed database
 - error handling middleware
 - authentication and authorization
 - unit testing for service layer (xunit)
@@ -94,6 +96,40 @@ The frontend code and documentation are found in [this repository]().
 
 ![Clean architecture layers](readmeImages/layers.png)
 
+##### Repositories
+   - CategoryRepository
+   - ImageRepository (inherits from BaseRepository)
+   - OrderRepository
+   - ProductDetailsRepository (inherits from BaseRepository)
+   - ProductRepository
+   - UserRepository
+
+##### Services
+   - AuthService
+   - CategoryService
+   - ImageService (inherits from BaseService)
+   - OrderService
+   - ProductDetailsService (inherits from BaseService)
+   - ProductService
+   - UserService
+
+##### Controllers
+   - AuthController
+   - CategoryController
+   - ImageController
+   - OrderController
+   - ProductController
+   - UserController
+
+##### Middleware
+   - authentication: token-based
+   - authorization: role-based policy, id check from token
+   - error handling
+
+##### Database
+   - code-first
+   - seeded with csv data
+
 #### Endpoints
 
 ![Endpoints](readmeImages/endpoints.png)
@@ -106,8 +142,31 @@ The frontend code and documentation are found in [this repository]().
 
 #### Requirements
 - [.NET](https://dotnet.microsoft.com/en-us/download)
+   - [Entity Framework tool](https://learn.microsoft.com/en-us/ef/core/cli/dotnet)
 
 #### Instructions
 - clone the project
+- create a file named appsettings.json in the Evergreen.WebAPI folder with the following content (change ***)
+```
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+  "AllowedHosts": "*",
+  "ConnectionStrings": {
+    "LiveDb": "Host=***;Database=***;Username=***;Password=***;",
+  },
+  "Jwt": {
+    "Issuer": ***,
+    "Audience": ***,
+    "Key": ***
+  }
+}
+```
+- create seed data 
+- initialize database at Evergreen.Webapi with `dotnet ef migrations add {MigrationName}` and `dotnet ef database update`
 - run the project with `dotnet watch --project Evergreen.WebAPI`
 - run tests with `dotnet test`
