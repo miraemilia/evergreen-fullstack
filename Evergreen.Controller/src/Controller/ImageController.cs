@@ -10,11 +10,9 @@ namespace Evergreen.Controller.src.Controller;
 [Route("api/v1/[controller]s")]
 public class ImageController : ControllerBase
 {
-    private IProductService _productService;
     private IImageService _imageService;
-    public ImageController(IProductService productService, IImageService imageService, IProductDetailsService detailsService)
+    public ImageController(IImageService imageService, IProductDetailsService detailsService)
     {
-        _productService = productService;
         _imageService = imageService;
     }
 
@@ -30,13 +28,6 @@ public class ImageController : ControllerBase
     public async Task<ActionResult<ImageReadDTO>> GetOne([FromRoute] Guid id)
     {
         return Ok(await _imageService.GetOneByIdAsync(id));
-    }
-
-    [AllowAnonymous]
-    [HttpGet("product/{productId:Guid}")]
-    public async Task<ActionResult<ImageReadDTO>> GetProductImages([FromRoute] Guid productId)
-    {
-        return Ok(await _productService.GetImagesByProductAsync(productId));
     }
 
     [Authorize (Roles = "Admin")]

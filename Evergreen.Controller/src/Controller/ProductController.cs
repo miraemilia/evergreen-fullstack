@@ -33,6 +33,13 @@ public class ProductController : ControllerBase
         return Ok(await _productService.GetProductByIdAsync(id));
     }
 
+    [AllowAnonymous]
+    [HttpGet("{productId:Guid}/images")]
+    public async Task<ActionResult<ImageReadDTO>> GetProductImages([FromRoute] Guid productId)
+    {
+        return Ok(await _productService.GetImagesByProductAsync(productId));
+    }
+
     [Authorize (Roles = "Admin")]
     [HttpPost()]
     public async Task<ActionResult<ProductReadDTO>> CreateOne([FromBody] ProductCreateDTO productCreateDTO)
