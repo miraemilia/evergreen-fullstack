@@ -89,7 +89,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 builder.Services.AddAutoMapper(typeof(MapperProfile).Assembly);
 
 //database configuration
-var connectionString = builder.Configuration.GetConnectionString("ElephantDb");
+var connectionString = builder.Configuration.GetConnectionString("LiveDb");
 var dataSourceBuilder = new NpgsqlDataSourceBuilder(connectionString);
 dataSourceBuilder.MapEnum<UserRole>();
 dataSourceBuilder.MapEnum<ProductSize>();
