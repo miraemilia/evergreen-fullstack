@@ -13,8 +13,6 @@ This is the final project of Integrify Academy which involves creating a Fullsta
 - [Link to deployed project](https://evergreenbotanics.netlify.app/)
 - [Walk-through of main functionalities](https://github.com/miraemilia/evergreen?tab=readme-ov-file#walk-through)
 
-![Walk-through](readmeImages/walkthrough.png)
-
 ## Table of Contents
 
 1. [Technologies](#technologies)
