@@ -29,7 +29,7 @@ public class DatabaseContext : DbContext
         _config = config;
     }
 
-    public List<T> ReadCsvFile<T>(string filePath) where T : class
+    public List<T> ReadCsvFile<T>(string filePath, ClassMap? classMap) where T : class
     {
         using var reader = new StreamReader(filePath);
         var config = new CsvConfiguration(CultureInfo.InvariantCulture)
@@ -40,11 +40,10 @@ public class DatabaseContext : DbContext
         using (var csv = new CsvReader(reader, config))
         {
             csv.Context.TypeConverterCache.AddConverter<byte[]>(new CustomByteConverter());
-            csv.Context.RegisterClassMap(new ProductMap());
-            csv.Context.RegisterClassMap(new ProductImageMap());
-            csv.Context.RegisterClassMap(new ProductDetailsMap());
-            csv.Context.RegisterClassMap(new OrderMap());
-            csv.Context.RegisterClassMap(new OrderDetailsMap());
+            if (classMap is not null)
+            {
+                csv.Context.RegisterClassMap(classMap);
+            }
             var records = csv.GetRecords<T>();
             return records.ToList();
         }        
@@ -79,13 +78,13 @@ public class DatabaseContext : DbContext
 
         modelBuilder.Entity<User>().HasIndex(u => u.Email).IsUnique();
 
-        var categories = ReadCsvFile<Category>("../Seed/categories.csv");
-        var products = ReadCsvFile<Product>("../Seed/products.csv");
-        var images = ReadCsvFile<Image>("../Seed/images.csv");
-        var product_details = ReadCsvFile<ProductDetails>("../Seed/product_details.csv");
-        var users = ReadCsvFile<User>("../Seed/users.csv");
-        var orders = ReadCsvFile<Order>("../Seed/orders.csv");
-        var orders_products = ReadCsvFile<OrderProduct>("../Seed/orders_products.csv");
+        var categories = ReadCsvFile<Category>("../Seed/categories.csv", null);
+        var products = ReadCsvFile<Product>("../Seed/products.csv", new ProductMap());
+        var images = ReadCsvFile<Image>("../Seed/images.csv", new ProductImageMap());
+        var product_details = ReadCsvFile<ProductDetails>("../Seed/product_details.csv", new ProductDetailsMap());
+        var users = ReadCsvFile<User>("../Seed/users.csv", null);
+        var orders = ReadCsvFile<Order>("../Seed/orders.csv", new OrderMap());
+        var orders_products = ReadCsvFile<OrderProduct>("../Seed/orders_products.csv", new OrderDetailsMap());
 
         modelBuilder.Entity<Category>().HasData(categories);
         modelBuilder.Entity<Product>().HasData(products);
