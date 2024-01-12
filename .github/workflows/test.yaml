@@ -1,0 +1,10 @@
+name: "Run unit tests"
+on: ["push"]
+jobs: 
+  unit-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout github repo
+        uses: actions/checkout@v4
+      - name: Run tests
+        run: dotnet test
