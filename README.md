@@ -11,6 +11,8 @@
 This is the final project of Integrify Academy which involves creating a Fullstack project with React and Redux in the frontend and ASP.NET Core 7 in the backend. The result is an indoor plant e-commerce site called Evergreen which features basic user functionalities (registering, authentication, browsing through products, shopping cart, ordering) as well as admin functionalities for managing users, products and orders.
 
 [Link to deployed project](https://evergreenbotanics.netlify.app/)
+[Walk-through of main functionalities](https://github.com/miraemilia/evergreen?tab=readme-ov-file#walk-through)
+![Walk-through](readmeImages/walkthrough.png)
 
 ## Table of Contents
 
@@ -143,6 +145,7 @@ The frontend code and documentation are found in [this repository](https://githu
 #### Requirements
 - [.NET](https://dotnet.microsoft.com/en-us/download)
    - [Entity Framework tool](https://learn.microsoft.com/en-us/ef/core/cli/dotnet)
+- Postgres database (provide connection string in appsettings.json)
 
 #### Instructions
 - clone the project
